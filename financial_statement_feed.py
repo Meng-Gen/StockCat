@@ -36,5 +36,4 @@ class FinancialStatementFeed():
                 % (self.stock_symbol, self.year, self.season, self.report_id)
 
     def __build_filepath(self):
-        return "/Users/taiwansoong/Documents/StockToolChain/data/%s_%s_%s_%s.html" \
-                % (self.stock_symbol, self.year, self.season, self.report_id)
+        return "./data/%s_%s_%s_%s.html" % (self.stock_symbol, self.year, self.season, self.report_id)

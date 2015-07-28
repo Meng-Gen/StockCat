@@ -6,7 +6,7 @@ import datetime
 import sys
 
 def main():
-    feed = FinancialStatementFeed("2330", datetime.date(2014, 12, 31), True)
+    feed = FinancialStatementFeed("2330", datetime.date(2014, 9, 30), True)
     feed.get()
 
 if __name__ == '__main__':

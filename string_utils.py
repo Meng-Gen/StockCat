@@ -11,8 +11,13 @@ class StringUtils():
             return local_string.decode('gb18030').replace('&nbsp;', ' ')
 
     def normalize_number(self, number_string):
-        return int(number_string.replace(',', ''))
+        try:
+            return int(number_string.replace(',', ''))
+        # number could be float, such as EPS
+        except ValueError:
+            return float(number_string)
 
+    # chain of responsibility
     def from_local_string_to_date(self, local_string):
         p = re.compile(u'(\d+)年(\d+)月(\d+)日')
         result = p.match(local_string)
@@ -20,3 +25,45 @@ class StringUtils():
         month = int(result.group(2))
         day = int(result.group(3))
         return datetime.date(year, month, day)
+
+    def from_local_string_to_date_interval(self, local_string):
+        try:
+            m = re.search(u'(\d+)年度', local_string)
+            year = int(m.group(1))
+            return (datetime.date(year, 1, 1), datetime.date(year, 12, 31))
+        except AttributeError:
+            self.__from_local_string_to_date_interval_step_1(local_string)
+
+    def __from_local_string_to_date_interval_step_1(self, local_string):
+        try:
+            m = re.search(u'(\d+)年第(\d+)季', local_string)
+            whole_year = int(m.group(1))
+            end_season = int(m.group(2))
+            end_date = self.from_year_season_to_date(whole_year, end_season)
+            return (datetime.date(whole_year, 1, 1), end_date)
+        except AttributeError:
+            self.__from_local_string_to_date_interval_step_2(local_string)
+
+    def __from_local_string_to_date_interval_step_2(self, local_string):
+        print local_string
+        m = re.search(u'(\d+)年(\d+)月(\d+)日至(\d+)年(\d+)月(\d+)日', local_string)
+        begin_year = int(m.group(1))
+        begin_month = int(m.group(2))
+        begin_day = int(m.group(3))
+        begin_date = datetime.date(begin_year, begin_month, begin_day)
+        end_year = int(m.group(4))
+        end_month = int(m.group(5))
+        end_day = int(m.group(6))
+        end_date = datetime.date(end_year, end_month, end_day)
+        return (begin_date, end_date)
+
+    def from_year_season_to_date(self, year, season):
+        if season == 1:
+            return datetime.date(year, 3, 31)
+        if season == 2:
+            return datetime.date(year, 6, 30)
+        if season == 3:
+            return datetime.date(year, 9, 30)
+        if season == 4:
+            return datetime.date(year, 12, 31)    
+
