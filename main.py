@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 
-from financial_statement_feed import FinancialStatementFeed
+from stockcat.feed.financial_statement_feed import FinancialStatementFeed
 
 import datetime
 import sys

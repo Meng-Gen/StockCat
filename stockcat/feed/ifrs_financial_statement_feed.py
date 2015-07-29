@@ -1,12 +1,12 @@
 #-*- coding: utf-8 -*-
 
-from financial_statement_assembler import FinancialStatementAssembler
-from string_utils import StringUtils
-from file_utils import FileUtils
+from stockcat.assembler.ifrs_financial_statement_assembler import IfrsFinancialStatementAssembler
+from stockcat.common.string_utils import StringUtils
+from stockcat.common.file_utils import FileUtils
 
 import datetime
 
-class FinancialStatementFeed():
+class IfrsFinancialStatementFeed():
     def __init__(self, stock_symbol, date, is_consolidated):
         self.stock_symbol = stock_symbol
         self.year = date.year
@@ -28,7 +28,7 @@ class FinancialStatementFeed():
         content = file_utils.read_file(self.filepath)
         string_utils = StringUtils()
         content = string_utils.normalize_string(content)
-        assembler = FinancialStatementAssembler()
+        assembler = IfrsFinancialStatementAssembler()
         assembler.assemble(content)
 
     def __build_url(self):
@@ -36,4 +36,4 @@ class FinancialStatementFeed():
                 % (self.stock_symbol, self.year, self.season, self.report_id)
 
     def __build_filepath(self):
-        return "./data/%s_%s_%s_%s.html" % (self.stock_symbol, self.year, self.season, self.report_id)
+        return "./stockcat/data/%s_%s_%s_%s.html" % (self.stock_symbol, self.year, self.season, self.report_id)

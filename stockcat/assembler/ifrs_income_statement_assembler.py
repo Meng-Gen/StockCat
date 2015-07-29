@@ -1,10 +1,10 @@
 #-*- coding: utf-8 -*-
 
-from string_utils import StringUtils
+from stockcat.common.string_utils import StringUtils
 
 import lxml.html
 
-class IncomeStatementAssembler():
+class IfrsIncomeStatementAssembler():
     def __init__(self):
         self.base_xpath = '//html/body[@id="content_d"]/center/table[@class="main_table hasBorder"]'
         self.string_utils = StringUtils()

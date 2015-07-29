@@ -45,7 +45,6 @@ class StringUtils():
             self.__from_local_string_to_date_interval_step_2(local_string)
 
     def __from_local_string_to_date_interval_step_2(self, local_string):
-        print local_string
         m = re.search(u'(\d+)年(\d+)月(\d+)日至(\d+)年(\d+)月(\d+)日', local_string)
         begin_year = int(m.group(1))
         begin_month = int(m.group(2))
