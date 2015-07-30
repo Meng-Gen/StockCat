@@ -10,10 +10,18 @@ IFRS後財報:
 
 IFRS前財報:
 ----------
-* 綜合資產負債表:
+* 合併資產負債表:
 http://mops.twse.com.tw/mops/web/t05st33?encodeURIComponent=1&step=1&firstin=1&off=1&keyword4=&code1=&TYPEK2=&checkbtn=&queryName=co_id&TYPEK=all&isnew=false&co_id=2330&year=99&season=04
 * 個別資產負債表:
 http://mops.twse.com.tw/mops/web/t05st31?encodeURIComponent=1&step=1&firstin=1&off=1&keyword4=&code1=&TYPEK2=&checkbtn=&queryName=co_id&TYPEK=all&isnew=false&co_id=2330&year=99&season=04
+* 合併損益表:
+http://mops.twse.com.tw/mops/web/t05st34?encodeURIComponent=1&step=1&firstin=1&off=1&keyword4=&code1=&TYPEK2=&checkbtn=&queryName=co_id&TYPEK=all&isnew=false&co_id=2330&year=99&season=04
+* 個別損益表:
+http://mops.twse.com.tw/mops/web/t05st32?encodeURIComponent=1&step=1&firstin=1&off=1&keyword4=&code1=&TYPEK2=&checkbtn=&queryName=co_id&TYPEK=all&isnew=false&co_id=2330&year=99&season=04
+* 合併現金流量表:
+http://mops.twse.com.tw/mops/web/t05st39?encodeURIComponent=1&step=1&firstin=1&off=1&keyword4=&code1=&TYPEK2=&checkbtn=&queryName=co_id&TYPEK=all&isnew=false&co_id=2330&year=99&season=04
+* 個別現金流量表:
+http://mops.twse.com.tw/mops/web/t05st36?encodeURIComponent=1&step=1&firstin=1&off=1&keyword4=&code1=&TYPEK2=&checkbtn=&queryName=co_id&TYPEK=all&isnew=false&co_id=2330&year=99&season=04
 
 股號:
 ----
