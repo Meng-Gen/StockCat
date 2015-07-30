@@ -16,7 +16,7 @@ class IfrsFinancialStatementFeed():
         self.filepath = self.__build_filepath()
 
     def get(self):
-        #self.__copy_url_to_file()
+        self.__copy_url_to_file()
         self.__assemble()
 
     def __copy_url_to_file(self):
@@ -36,4 +36,4 @@ class IfrsFinancialStatementFeed():
                 % (self.stock_symbol, self.year, self.season, self.report_id)
 
     def __build_filepath(self):
-        return "./stockcat/data/%s_%s_%s_%s.html" % (self.stock_symbol, self.year, self.season, self.report_id)
+        return "./stockcat/data/ifrs_financial_statement/all/%s_%s_%s_%s.html" % (self.stock_symbol, self.year, self.season, self.report_id)
