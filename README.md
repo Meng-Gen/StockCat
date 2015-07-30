@@ -54,3 +54,4 @@ http://mops.twse.com.tw/mops/web/t05st30_c?encodeURIComponent=1&step=1&firstin=1
 ----
 * 上市股號: http://isin.twse.com.tw/isin/C_public.jsp?strMode=2 
 * 上櫃股號: http://isin.twse.com.tw/isin/C_public.jsp?strMode=4
+* 公開資訊觀測站股號: http://mops.twse.com.tw/mops/web/quickpgm?encodeURIComponent=1&firstin=true&step=4&checkbtn=1&queryName=co_id&TYPEK2=&code1=&keyword4=
