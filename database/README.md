@@ -1,5 +1,4 @@
-MySQL Community Server
-----------------------
+StockCat Database
+-----------------
 
-Version: MySQL Community Server 5.6.26
-
+MySQL Community Server 5.6.26
