@@ -13,5 +13,6 @@ class FinancialStatementFeed():
 
     def __init_feed_impl(self, stock_symbol, date, is_consolidated):
         print date
+        # IFRS financial statements are available from 2013 to now
         if date >= datetime.date(2013, 1, 1):
             return IfrsFinancialStatementFeed(stock_symbol, date, is_consolidated)
