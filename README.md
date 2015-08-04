@@ -1,9 +1,6 @@
 # StockCat
 Stock analysis for Taipei market.
 
-Financial Statements Resources
-------------------------------
-
 IFRS後財報:
 ----------
 * 合併財務報表: 
@@ -49,6 +46,14 @@ http://mops.twse.com.tw/mops/web/t05st30?encodeURIComponent=1&step=1&firstin=1&o
 http://mops.twse.com.tw/mops/web/t05st29_c?encodeURIComponent=1&step=1&firstin=1&off=1&keyword4=2330&code1=&TYPEK2=&checkbtn=1&queryName=co_id&t05st29_c_ifrs=N&t05st30_c_ifrs=N&TYPEK=all&isnew=false&co_id=2330&year=99
 * 簡明合併損益表(四季):
 http://mops.twse.com.tw/mops/web/t05st30_c?encodeURIComponent=1&step=1&firstin=1&off=1&keyword4=2330&code1=&TYPEK2=&checkbtn=1&queryName=co_id&t05st29_c_ifrs=N&t05st30_c_ifrs=N&TYPEK=all&isnew=false&co_id=2330&year=99
+
+營業收入:
+--------
+* 採用IFRSs後之月營業收入資訊: 
+http://mops.twse.com.tw/mops/web/t05st10_ifrs?encodeURIComponent=1&run=Y&step=0&yearmonth=10406&colorchg=&TYPEK=sii%20&co_id=2330&off=1&year=104&month=06&firstin=true
+
+* 採用IFRSs前之開立發票及營業收入資訊(含合併營收):
+http://mops.twse.com.tw/mops/web/t05st10?encodeURIComponent=1&run=Y&step=0&yearmonth=10004&colorchg=&TYPEK=sii%20&co_id=2330&off=1&year=100&month=04&firstin=true
 
 股號:
 ----
