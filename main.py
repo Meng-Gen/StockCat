@@ -19,8 +19,9 @@ def get_operating_revenue():
     feed.get()
 
 def main():
+    get_stock_symbol()
     #get_financial_statement()
-    get_operating_revenue()
+    #get_operating_revenue()
 
 if __name__ == '__main__':
     sys.exit(main())
