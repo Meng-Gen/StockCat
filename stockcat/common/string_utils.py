@@ -3,22 +3,29 @@
 import datetime
 import re
 
-class StringUtils():
-    def normalize_string(self, local_string):
-        try:
-            return local_string.decode('big5').replace('&nbsp;', ' ')
-        except UnicodeDecodeError as dummy_error:
-            return local_string.decode('gb18030').replace('&nbsp;', ' ')
+class NormalizedStringBuilder():
+    def build(self, local_string):
+        decoded_string = self.__decode(local_string)
+        return decoded_string.replace('&nbsp;', ' ')
 
-    def normalize_number(self, number_string):
+    # chain of responsibility: try any possible codec
+    def __decode(self, local_string):
         try:
-            return int(number_string.replace(',', ''))
-        # number could be float, such as EPS
-        except ValueError:
-            return float(number_string)
+            return local_string.decode('big5-hkscs')
+        except UnicodeDecodeError:
+            return self.__decode_step_1(local_string)
 
-    # chain of responsibility
-    def from_local_string_to_date(self, local_string):
+    def __decode_step_1(self, local_string):
+        try:
+            return local_string.decode('gb18030')
+        except UnicodeDecodeError:
+            return self.__decode_step_2(local_string)
+
+    def __decode_step_2(self, local_string):
+        return local_string.decode('utf-8')
+
+class DateBuilder(): 
+    def build(self, local_string):
         p = re.compile(u'(\d+)年(\d+)月(\d+)日')
         result = p.match(local_string)
         year = int(result.group(1))
@@ -26,25 +33,27 @@ class StringUtils():
         day = int(result.group(3))
         return datetime.date(year, month, day)
 
-    def from_local_string_to_date_interval(self, local_string):
+class DateIntervalBuilder():
+    # chain of responsibility: try any possible pattern
+    def build(self, local_string):
         try:
             m = re.search(u'(\d+)年度', local_string)
             year = int(m.group(1))
             return (datetime.date(year, 1, 1), datetime.date(year, 12, 31))
         except AttributeError:
-            self.__from_local_string_to_date_interval_step_1(local_string)
+            self.__build_step_1(local_string)
 
-    def __from_local_string_to_date_interval_step_1(self, local_string):
+    def __build_step_1(self, local_string):
         try:
             m = re.search(u'(\d+)年第(\d+)季', local_string)
             whole_year = int(m.group(1))
             end_season = int(m.group(2))
-            end_date = self.from_year_season_to_date(whole_year, end_season)
+            end_date = self.__from_year_season_to_date(whole_year, end_season)
             return (datetime.date(whole_year, 1, 1), end_date)
         except AttributeError:
-            self.__from_local_string_to_date_interval_step_2(local_string)
+            self.__build_step_2(local_string)
 
-    def __from_local_string_to_date_interval_step_2(self, local_string):
+    def __build_step_2(self, local_string):
         m = re.search(u'(\d+)年(\d+)月(\d+)日至(\d+)年(\d+)月(\d+)日', local_string)
         begin_year = int(m.group(1))
         begin_month = int(m.group(2))
@@ -56,7 +65,7 @@ class StringUtils():
         end_date = datetime.date(end_year, end_month, end_day)
         return (begin_date, end_date)
 
-    def from_year_season_to_date(self, year, season):
+    def __from_year_season_to_date(self, year, season):
         if season == 1:
             return datetime.date(year, 3, 31)
         if season == 2:
@@ -64,5 +73,33 @@ class StringUtils():
         if season == 3:
             return datetime.date(year, 9, 30)
         if season == 4:
-            return datetime.date(year, 12, 31)    
+            return datetime.date(year, 12, 31)
+
+class StringUtils():
+    def __init__(self):
+        self.normalized_string_builder = NormalizedStringBuilder()
+        self.date_builder = DateBuilder()
+        self.date_interval_builder = DateIntervalBuilder()
+
+    def normalize_string(self, local_string):
+        return self.normalized_string_builder.build(local_string)
+
+    def normalize_number(self, number_string):
+        try:
+            return int(number_string.replace(',', ''))
+        # number could be float, such as EPS
+        except ValueError:
+            return float(number_string)
+
+    def from_local_string_to_date(self, local_string):
+        return self.date_builder.build(local_string)
+
+    def from_local_string_to_date_interval(self, local_string):
+        return self.date_interval_builder.build(local_string)
+
+    def from_date_to_roc_era_string(self, date):
+        return str(date.year - 1911)
+
+    def from_date_to_2_digit_month_string(self, date):
+        return '{0:02d}'.format(date.month) 
 

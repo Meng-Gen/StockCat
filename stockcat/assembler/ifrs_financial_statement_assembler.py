@@ -15,4 +15,4 @@ class IfrsFinancialStatementAssembler():
 
         #print balance_sheet
         #print income_statement
-        #print cash_flow_statement
+        print cash_flow_statement

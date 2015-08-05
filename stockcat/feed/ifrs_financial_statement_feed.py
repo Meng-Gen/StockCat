@@ -16,7 +16,7 @@ class IfrsFinancialStatementFeed():
         self.filepath = self.__build_filepath()
 
     def get(self):
-        self.__copy_url_to_file()
+        #self.__copy_url_to_file()
         self.__assemble()
 
     def __copy_url_to_file(self):
