@@ -3,10 +3,11 @@
 import datetime
 import sys
 
-def get_stock_symbol():
-    from stockcat.feed.stock_symbol_feed import StockSymbolFeed
-    feed = StockSymbolFeed()
-    feed.get()
+def set_stock_symbol_feed_cache():
+    from stockcat.feed_cache.stock_symbol_feed_cache import StockSymbolFeedCache
+    cache = StockSymbolFeedCache()
+    cache.set_stock_exchange_market()
+    cache.set_otc_market()
 
 def get_financial_statement():
     from stockcat.feed.financial_statement_feed import FinancialStatementFeed
@@ -19,7 +20,7 @@ def get_operating_revenue():
     feed.get()
 
 def main():
-    get_stock_symbol()
+    set_stock_symbol_feed_cache()
     #get_financial_statement()
     #get_operating_revenue()
 
