@@ -2,7 +2,7 @@
 
 from stockcat.common.file_utils import FileUtils
 from stockcat.common.string_utils import StringUtils
-from stockcat.assembler.stock_symbol.stock_exchange_market_assembler import StockExchangeMarketAssembler
+from stockcat.assembler.stock_symbol_assembler import StockSymbolAssembler
 
 import datetime
 
@@ -24,7 +24,7 @@ class StockExchangeMarketFeed():
         content = file_utils.read_file(self.filepath)
         string_utils = StringUtils()
         content = string_utils.normalize_string(content)
-        assembler = StockExchangeMarketAssembler()
+        assembler = StockSymbolAssembler()
         return assembler.assemble(content)
 
     def __build_url(self):

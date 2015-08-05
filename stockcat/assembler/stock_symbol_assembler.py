@@ -4,7 +4,7 @@ from stockcat.common.string_utils import StringUtils
 
 import lxml.html
 
-class StockExchangeMarketAssembler():
+class StockSymbolAssembler():
     def __init__(self):
         self.base_xpath = '//html/body/table[@class="h4"]'
         self.string_utils = StringUtils()

@@ -5,5 +5,5 @@ from stockcat.feed.stock_symbol.otc_market_feed import OtcMarketFeed
 
 class StockSymbolFeed():
     def get(self):
-        StockExchangeMarketFeed().get()
-        #OtcMarketFeed().get()
+        #StockExchangeMarketFeed().get()
+        OtcMarketFeed().get()
