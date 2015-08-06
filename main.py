@@ -14,6 +14,8 @@ def crawl_operating_revenue():
     spider = OperatingRevenueSpider()
     spider.crawl("2330", datetime.date(2010, 9, 30))
     spider.crawl("2330", datetime.date(2014, 9, 30))
+    spider.crawl("1101", datetime.date(2010, 9, 30))
+    spider.crawl("1101", datetime.date(2014, 9, 30))
 
 def crawl_cash_flow_statement():
     from stockcat.spider.cash_flow_statement_spider import CashFlowStatementSpider
@@ -36,9 +38,9 @@ def assemble_xbrl_balance_sheet():
     column_name_list, row_list = assembler.assemble(content)
 
 def main():
-    assemble_xbrl_balance_sheet()
+    #assemble_xbrl_balance_sheet()
     #crawl_stock_symbol()
-    #crawl_operating_revenue()
+    crawl_operating_revenue()
     #crawl_cash_flow_statement()
     #crawl_xbrl_financial_statement()
 

@@ -7,6 +7,7 @@ import lxml.html
 class LegacyOperatingRevenueAssembler():
     def __init__(self):
         self.base_xpath = '//html/body/table[@class="hasBorder"]'
+        self.bad_public_status = u'未公告合併營業收入(採自願公告制)'
         self.string_utils = StringUtils()
 
     def assemble(self, content):
@@ -28,10 +29,17 @@ class LegacyOperatingRevenueAssembler():
         tr_tags = relative_html_object.xpath('./tr')
         assert len(tr_tags) > 0, 'invalid tr_tags'
 
-        # traverse and sanity check
-        column_name_list = tr_tags[0].xpath('./td[@class="tblHead"]/text()')
-        assert len(column_name_list) == 2, 'invalid column_name_list size, should be 2'
-        return column_name_list
+        # check special case 未公告合併營業收入(採自願公告制).
+        # under this case, __assemble_row_list() method also works!
+        try:
+            public_status = tr_tags[0].xpath('./th/text()')[0]
+            assert public_status == self.bad_public_status
+            return [public_status]
+        except IndexError:
+            # traverse and sanity check
+            column_name_list = tr_tags[0].xpath('./td[@class="tblHead"]/text()')
+            assert len(column_name_list) == 2, 'invalid column_name_list size, should be 2'
+            return column_name_list
 
     def __assemble_row_list(self, relative_html_object):
         # skip the first row of column name list
