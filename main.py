@@ -3,11 +3,17 @@
 import datetime
 import sys
 
-def set_stock_symbol_feed_cache():
-    from stockcat.feed_cache.stock_symbol_feed_cache import StockSymbolFeedCache
-    cache = StockSymbolFeedCache()
-    cache.set_stock_exchange_market()
-    cache.set_otc_market()
+def crawl_stock_symbol():
+    from stockcat.spider.stock_symbol_spider import StockSymbolSpider
+    spider = StockSymbolSpider()
+    spider.crawl("stock_exchange_market")
+    spider.crawl("otc_market")
+
+def crawl_operating_revenue():
+    from stockcat.spider.operating_revenue_spider import OperatingRevenueSpider
+    spider = OperatingRevenueSpider()
+    spider.crawl("2330", datetime.date(2010, 9, 30))
+    spider.crawl("2330", datetime.date(2014, 9, 30))
 
 def get_financial_statement():
     from stockcat.feed.financial_statement_feed import FinancialStatementFeed
@@ -20,7 +26,8 @@ def get_operating_revenue():
     feed.get()
 
 def main():
-    set_stock_symbol_feed_cache()
+    #crawl_stock_symbol()
+    crawl_operating_revenue()
     #get_financial_statement()
     #get_operating_revenue()
 

@@ -11,10 +11,8 @@ class FileUtils():
         # if directory is not existed, need to create by ourselves
         self.__make_directory(filepath)
 
-        # use build-in wget program to retrieve content from web servers
-        params = '\"{url}\" --waitretry=3 -O \"{filepath}\"'.format(url=url, filepath=filepath)
-        cmdline = 'wget {params}'.format(params=params)
-        os.system(cmdline)
+        # use build-in curl program to retrieve content from web servers
+        self.__curl(url, filepath)
 
     def read_file(self, filepath):
         content = None
@@ -22,7 +20,16 @@ class FileUtils():
             content = file_handle.read().replace('\n', '')
         return content
 
+    def is_file(self, filepath):
+        return os.path.isfile(filepath) 
+
     def __make_directory(self, filepath):
         directory = os.path.dirname(os.path.realpath(filepath))
         if not os.path.exists(directory):
             os.makedirs(directory)
+
+    def __curl(self, url, filepath):
+        params = '''-o \"{filepath}\" \"{url}\" --connect-timeout 5 --max-time 10 --retry 5 --retry-delay 0 --retry-max-time 60'''.format(url=url, filepath=filepath)
+        cmdline = '''curl {params}'''.format(params=params)
+        os.system(cmdline)
+        
