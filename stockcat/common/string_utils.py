@@ -84,21 +84,40 @@ class DateIntervalBuilder():
         if season == 4:
             return datetime.date(year, 12, 31)
 
+class NormalizedNumberBuilder():
+    def build(self, number_string):
+        try:
+            return self.__build_int(number_string)
+        # number could be float, such as EPS
+        except ValueError:
+            return self.__build_float(number_string)
+
+    def __build_int(self, number_string):
+        # remove comma style
+        no_style = number_string.replace(',', '')
+
+        # try to parse negative sign from parentheses 
+        try:
+            m = re.search('\((\d+)\)', no_style)
+            return -int(m.group(1))
+        except AttributeError:
+            return int(no_style)
+
+    def __build_float(self, number_string):
+        return float(number_string)
+
 class StringUtils():
     def __init__(self):
-        self.normalized_string_builder = NormalizedStringBuilder()
         self.date_builder = DateBuilder()
         self.date_interval_builder = DateIntervalBuilder()
+        self.normalized_number_builder = NormalizedNumberBuilder()
+        self.normalized_string_builder = NormalizedStringBuilder()
 
     def normalize_string(self, local_string):
         return self.normalized_string_builder.build(local_string)
 
     def normalize_number(self, number_string):
-        try:
-            return int(number_string.replace(',', ''))
-        # number could be float, such as EPS
-        except ValueError:
-            return float(number_string)
+        return self.normalized_number_builder.build(number_string)
 
     def from_local_string_to_date(self, local_string):
         return self.date_builder.build(local_string)

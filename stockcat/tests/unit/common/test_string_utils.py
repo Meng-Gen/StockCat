@@ -25,6 +25,10 @@ class StringUtilsTest(unittest.TestCase):
         expected = -115859592
         self.assertEqual(actual, expected)
 
+        actual = self.string_utils.normalize_number('(27,540)')
+        expected = -27540
+        self.assertEqual(actual, expected)
+
         actual = self.string_utils.normalize_number('2.85')
         expected = 2.85
         self.assertEqual(actual, expected)
