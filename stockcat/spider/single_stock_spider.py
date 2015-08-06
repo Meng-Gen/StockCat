@@ -24,6 +24,7 @@ class SingleStockSpider():
             'stock_symbol' : stock_symbol,
             'roc_era' : self.string_utils.from_date_to_roc_era_string(date),
             'year' : str(date.year),
+            'season' : self.string_utils.from_date_to_2_digit_season_string(date),
             'month' : self.string_utils.from_date_to_2_digit_month_string(date),
         }
 
