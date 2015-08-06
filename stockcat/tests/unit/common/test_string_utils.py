@@ -101,3 +101,40 @@ class StringUtilsTest(unittest.TestCase):
         actual = self.string_utils.from_date_to_2_digit_season_string(datetime.date(2001, 12, 31))
         expected = '04'
         self.assertEqual(actual, expected)
+
+    def test_from_date_to_1_digit_season_string(self):
+        # spring
+        actual = self.string_utils.from_date_to_1_digit_season_string(datetime.date(2001, 1, 1))
+        expected = '1'
+        self.assertEqual(actual, expected)
+
+        actual = self.string_utils.from_date_to_1_digit_season_string(datetime.date(2001, 3, 31))
+        expected = '1'
+        self.assertEqual(actual, expected)
+
+        # summer
+        actual = self.string_utils.from_date_to_1_digit_season_string(datetime.date(2001, 4, 1))
+        expected = '2'
+        self.assertEqual(actual, expected)
+
+        actual = self.string_utils.from_date_to_1_digit_season_string(datetime.date(2001, 6, 30))
+        expected = '2'
+        self.assertEqual(actual, expected)
+
+        # fall
+        actual = self.string_utils.from_date_to_1_digit_season_string(datetime.date(2001, 7, 1))
+        expected = '3'
+        self.assertEqual(actual, expected)
+
+        actual = self.string_utils.from_date_to_1_digit_season_string(datetime.date(2001, 9, 30))
+        expected = '3'
+        self.assertEqual(actual, expected)
+
+        # winter
+        actual = self.string_utils.from_date_to_1_digit_season_string(datetime.date(2001, 10, 1))
+        expected = '4'
+        self.assertEqual(actual, expected)
+
+        actual = self.string_utils.from_date_to_1_digit_season_string(datetime.date(2001, 12, 31))
+        expected = '4'
+        self.assertEqual(actual, expected)

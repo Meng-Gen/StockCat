@@ -134,3 +134,7 @@ class StringUtils():
     def from_date_to_2_digit_season_string(self, date):
         season = (date.month - 1) // 3 + 1
         return '{0:02d}'.format(season) 
+
+    def from_date_to_1_digit_season_string(self, date):
+        season = (date.month - 1) // 3 + 1
+        return str(season)

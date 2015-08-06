@@ -4,12 +4,13 @@ from stockcat.common.string_utils import StringUtils
 
 import lxml.html
 
-class IfrsCashFlowStatementAssembler():
+class XbrlCashFlowStatementAssembler():
     def __init__(self):
         self.base_xpath = '//html/body[@id="content_d"]/center/table[@class="main_table hasBorder"]'
         self.string_utils = StringUtils()
 
-    def assemble(self, html_object):
+    def assemble(self, content):
+        html_object = lxml.html.fromstring(content)
         relative_html_object = self.__traverse_to_relative_html_object(html_object)
         column_name_list = self.__assemble_column_name_list(relative_html_object)
         row_list = self.__assemble_row_list(relative_html_object)

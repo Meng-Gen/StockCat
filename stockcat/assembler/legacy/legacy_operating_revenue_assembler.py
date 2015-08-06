@@ -10,6 +10,7 @@ class LegacyOperatingRevenueAssembler():
         self.string_utils = StringUtils()
 
     def assemble(self, content):
+        content = self.string_utils.normalize_string(content)
         html_object = lxml.html.fromstring(content)
         relative_html_object = self.__traverse_to_relative_html_object(html_object)
         column_name_list = self.__assemble_column_name_list(relative_html_object)
@@ -49,5 +50,4 @@ class LegacyOperatingRevenueAssembler():
         assert len(th_texts) == 1, 'invalid td_texts size, should be 1'
         number_string = td_texts[0]
         number = self.string_utils.normalize_number(number_string)
-
         return [item, number]
