@@ -6,7 +6,7 @@ from stockcat.common.file_utils import FileUtils
 import datetime
 import unittest
 
-class LegacyOperatingRevenueAssemblerTest(unittest.TestCase):
+class LegacyIncomeStatementAssemblerTest(unittest.TestCase):
     def setUp(self):
         self.assembler = LegacyIncomeStatementAssembler()
         self.file_utils = FileUtils()
