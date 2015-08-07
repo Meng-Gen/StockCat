@@ -27,7 +27,7 @@ class NormalizedStringBuilder():
 class DateBuilder(): 
     def build(self, local_string):
         try:
-            m = re.search(u'(\d+)年(\d+)月(\d+)日', local_string)
+            m = re.search(u'^(\d{4})年(\d+)月(\d+)日$', local_string)
             year = int(m.group(1))
             month = int(m.group(2))
             day = int(m.group(3))
@@ -35,8 +35,18 @@ class DateBuilder():
         except AttributeError:
             return self.__build_step_1(local_string)
 
-    def __build_step_1(self, local_string):    
-        m = re.search('(\d+)/(\d+)/(\d+)', local_string)
+    def __build_step_1(self, local_string):
+        try:
+            m = re.search(u'^(\d{2,3})年(\d+)月(\d+)日$', local_string)
+            year = int(m.group(1)) + 1911 # expect roc era
+            month = int(m.group(2))
+            day = int(m.group(3))
+            return datetime.date(year, month, day)
+        except AttributeError:
+            return self.__build_step_2(local_string)
+
+    def __build_step_2(self, local_string):    
+        m = re.search('^(\d+)/(\d+)/(\d+)$', local_string)
         year = int(m.group(1))
         month = int(m.group(2))
         day = int(m.group(3))
@@ -54,7 +64,7 @@ class DateIntervalBuilder():
 
     def __build_step_1(self, local_string):
         try:
-            m = re.search(u'(\d+)年第(\d+)季', local_string)
+            m = re.search(u'^(\d+)年第(\d+)季$', local_string)
             whole_year = int(m.group(1))
             end_season = int(m.group(2))
             end_date = self.__from_year_season_to_date(whole_year, end_season)
@@ -63,7 +73,7 @@ class DateIntervalBuilder():
             return self.__build_step_2(local_string)
 
     def __build_step_2(self, local_string):
-        m = re.search(u'(\d+)年(\d+)月(\d+)日至(\d+)年(\d+)月(\d+)日', local_string)
+        m = re.search(u'^(\d+)年(\d+)月(\d+)日至(\d+)年(\d+)月(\d+)日$', local_string)
         begin_year = int(m.group(1))
         begin_month = int(m.group(2))
         begin_day = int(m.group(3))
@@ -98,7 +108,7 @@ class NormalizedNumberBuilder():
 
         # try to parse negative sign from parentheses 
         try:
-            m = re.search('\((\d+)\)', no_style)
+            m = re.search('^\((\d+)\)$', no_style)
             return -int(m.group(1))
         except AttributeError:
             return int(no_style)
