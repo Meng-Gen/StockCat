@@ -37,12 +37,16 @@ def assemble_xbrl_balance_sheet():
     content = file_utils.read_file('./stockcat/tests/unit/data/xbrl_financial_statement/2330/2014/03.html')
     column_name_list, row_list = assembler.assemble(content)
 
+def assemble_legacy_income_statement():
+    from stockcat.assembler.legacy.legacy_income_statement_assembler import LegacyIncomeStatementAssembler
+    from stockcat.common.file_utils import FileUtils
+    assembler = LegacyIncomeStatementAssembler()
+    file_utils = FileUtils()
+    content = file_utils.read_file('./stockcat/tests/unit/data/legacy_income_statement/2330/2010/03.html')
+    column_name_list, row_list = assembler.assemble(content)
+
 def main():
-    #assemble_xbrl_balance_sheet()
-    #crawl_stock_symbol()
-    crawl_operating_revenue()
-    #crawl_cash_flow_statement()
-    #crawl_xbrl_financial_statement()
+    assemble_legacy_income_statement()
 
 if __name__ == '__main__':
     sys.exit(main())

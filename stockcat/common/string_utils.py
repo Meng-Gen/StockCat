@@ -96,6 +96,9 @@ class DateIntervalBuilder():
 
 class NormalizedNumberBuilder():
     def build(self, number_string):
+        # remove comma style
+        number_string = number_string.replace(',', '')
+
         try:
             return self.__build_int(number_string)
         # number could be float, such as EPS
@@ -103,15 +106,12 @@ class NormalizedNumberBuilder():
             return self.__build_float(number_string)
 
     def __build_int(self, number_string):
-        # remove comma style
-        no_style = number_string.replace(',', '')
-
         # try to parse negative sign from parentheses 
         try:
-            m = re.search('^\((\d+)\)$', no_style)
+            m = re.search('^\((\d+)\)$', number_string)
             return -int(m.group(1))
         except AttributeError:
-            return int(no_style)
+            return int(number_string)
 
     def __build_float(self, number_string):
         return float(number_string)

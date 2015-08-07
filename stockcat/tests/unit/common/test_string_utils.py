@@ -33,6 +33,10 @@ class StringUtilsTest(unittest.TestCase):
         expected = 2.85
         self.assertEqual(actual, expected)
 
+        actual = self.string_utils.normalize_number('170,270,395.00')
+        expected = 170270395
+        self.assertEqual(actual, expected)
+
     def test_from_local_string_to_date(self):
         actual = self.string_utils.from_local_string_to_date(u'2013年12月31日')
         expected = datetime.date(2013, 12, 31)
