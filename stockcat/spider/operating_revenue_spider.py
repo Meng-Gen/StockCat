@@ -25,3 +25,11 @@ class OperatingRevenueSpider():
         # Otherwise we use legacy data
         else:
             return self.legacy_spider.is_crawled(stock_symbol, date)
+
+    def get_crawled(self, stock_symbol, date):
+        # IFRS are available from 2013 to now
+        if date >= datetime.date(2013, 1, 1):
+            return self.ifrs_spider.get_crawled(stock_symbol, date)
+        # Otherwise we use legacy data
+        else:
+            return self.legacy_spider.get_crawled(stock_symbol, date)

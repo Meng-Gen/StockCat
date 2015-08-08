@@ -19,7 +19,7 @@ class IfrsOperatingRevenueAssemblerTest(unittest.TestCase):
         # online: http://mops.twse.com.tw/mops/web/ajax_t05st10_ifrs?encodeURIComponent=1&run=Y&step=0&colorchg=&TYPEK=sii%20&co_id=2330&off=1&year=103&month=09&firstin=true
         content = self.file_utils.read_file('./stockcat/tests/unit/data/ifrs_operating_revenue/2330/2014/09.html')
 
-        dao = self.assembler.assemble(content)
+        dao = self.assembler.assemble(content, '2330', datetime.date(2014, 9, 30))
         column_name_list = dao.get_column_name_list()
         row_list = dao.get_row_list()
 
@@ -37,7 +37,7 @@ class IfrsOperatingRevenueAssemblerTest(unittest.TestCase):
         # online: http://mops.twse.com.tw/mops/web/ajax_t05st10_ifrs?encodeURIComponent=1&run=Y&step=0&colorchg=&TYPEK=sii%20&co_id=1101&off=1&year=103&month=09&firstin=true        
         content = self.file_utils.read_file('./stockcat/tests/unit/data/ifrs_operating_revenue/1101/2014/09.html')
 
-        dao = self.assembler.assemble(content)
+        dao = self.assembler.assemble(content, '1101', datetime.date(2014, 9, 30))
         column_name_list = dao.get_column_name_list()
         row_list = dao.get_row_list()
 

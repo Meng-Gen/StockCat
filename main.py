@@ -64,7 +64,7 @@ def assemble_legacy_cash_flow_statement():
 def run_operating_revenue_pipeline():
     from stockcat.pipeline.operating_revenue_pipeline import OperatingRevenuePipeline
     pipeline = OperatingRevenuePipeline()
-    pipeline.run('2330')
+    pipeline.run('2330', datetime.date(2010, 1, 1))
 
 def main():
     run_operating_revenue_pipeline()

@@ -19,6 +19,11 @@ class SingleStockSpider():
         key = self.build_key(params)
         return self.storage.contains(key)
 
+    def get_crawled(self, stock_symbol, date):
+        params = self.__parse_params(stock_symbol, date)
+        key = self.build_key(params)
+        return self.storage.get(key)
+
     def __parse_params(self, stock_symbol, date):
         return {
             'stock_symbol' : stock_symbol,
