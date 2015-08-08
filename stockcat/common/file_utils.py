@@ -17,7 +17,7 @@ class FileUtils():
     def read_file(self, filepath):
         content = None
         with open(filepath) as file_handle:
-            content = file_handle.read().replace('\n', '')
+            content = file_handle.read()
         return content
 
     def is_file(self, filepath):

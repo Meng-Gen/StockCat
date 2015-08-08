@@ -53,8 +53,16 @@ def assemble_legacy_balance_sheet():
     content = file_utils.read_file('./stockcat/tests/unit/data/legacy_balance_sheet/2330/2010/03.html')
     column_name_list, row_list = assembler.assemble(content)
 
+def assemble_legacy_cash_flow_statement():
+    from stockcat.assembler.legacy.legacy_cash_flow_statement_assembler import LegacyCashFlowStatementAssembler
+    from stockcat.common.file_utils import FileUtils
+    assembler = LegacyCashFlowStatementAssembler()
+    file_utils = FileUtils()
+    content = file_utils.read_file('./stockcat/tests/unit/data/legacy_cash_flow_statement/2330/2010/03.html')
+    column_name_list, row_list = assembler.assemble(content)
+
 def main():
-    assemble_legacy_balance_sheet()
+    assemble_legacy_cash_flow_statement()
 
 if __name__ == '__main__':
     sys.exit(main())
