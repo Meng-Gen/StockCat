@@ -61,8 +61,13 @@ def assemble_legacy_cash_flow_statement():
     content = file_utils.read_file('./stockcat/tests/unit/data/legacy_cash_flow_statement/2330/2010/03.html')
     column_name_list, row_list = assembler.assemble(content)
 
+def run_operating_revenue_pipeline():
+    from stockcat.pipeline.operating_revenue_pipeline import OperatingRevenuePipeline
+    pipeline = OperatingRevenuePipeline()
+    pipeline.run('2330')
+
 def main():
-    assemble_legacy_cash_flow_statement()
+    run_operating_revenue_pipeline()
 
 if __name__ == '__main__':
     sys.exit(main())

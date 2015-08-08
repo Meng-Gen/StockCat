@@ -72,6 +72,10 @@ class StringUtilsTest(unittest.TestCase):
         expected = datetime.date(1962, 2, 9)
         self.assertEqual(actual, expected)
 
+        actual = self.string_utils.from_local_string_to_date(u'民國103年09月')
+        expected = datetime.date(2014, 9, 30)
+        self.assertEqual(actual, expected)
+
     def test_roc_era_from_local_string_to_date(self):
         actual = self.string_utils.from_local_string_to_date(u'99年09月30日')
         expected = datetime.date(2010, 9, 30)

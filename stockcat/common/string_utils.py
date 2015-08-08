@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 
+import calendar
 import datetime
 import re
 
@@ -111,11 +112,24 @@ class DateBuilder():
             return self.__build_step_2(local_string)
 
     def __build_step_2(self, local_string):    
-        m = re.search('^(\d+)/(\d+)/(\d+)$', local_string)
-        year = int(m.group(1))
+        try:
+            m = re.search('^(\d+)/(\d+)/(\d+)$', local_string)
+            year = int(m.group(1))
+            month = int(m.group(2))
+            day = int(m.group(3))
+            return datetime.date(year, month, day)
+        except AttributeError:
+            return self.__build_step_3(local_string)
+
+    def __build_step_3(self, local_string):
+        m = re.search(u'^民國(\d{2,3})年(\d+)月$', local_string)
+        year = int(m.group(1)) + 1911 # expect roc era
         month = int(m.group(2))
-        day = int(m.group(3))
+        day = self.__get_last_day_of_month(year, month)
         return datetime.date(year, month, day)
+
+    def __get_last_day_of_month(self, year, month):
+        return calendar.monthrange(year, month)[1]
 
 class DateIntervalBuilder():
     def __init__(self):

@@ -1,12 +1,13 @@
 #-*- coding: utf-8 -*-
 
 from stockcat.common.string_utils import StringUtils
+from stockcat.dao.operating_revenue_dao import OperatingRevenueDao
 
 import lxml.html
 
 class IfrsOperatingRevenueAssembler():
     def __init__(self):
-        self.base_xpath = '//html/body/table[@class="hasBorder"]'
+        self.base_xpath = '//html/body'
         self.string_utils = StringUtils()
 
     def assemble(self, content):
@@ -15,7 +16,7 @@ class IfrsOperatingRevenueAssembler():
         relative_html_object = self.__traverse_to_relative_html_object(html_object)
         column_name_list = self.__assemble_column_name_list(relative_html_object)
         row_list = self.__assemble_row_list(relative_html_object)
-        return (column_name_list, row_list)
+        return OperatingRevenueDao(column_name_list, row_list)
 
     def __traverse_to_relative_html_object(self, html_object):
         relative_html_object_list = html_object.xpath(self.base_xpath)
@@ -24,17 +25,28 @@ class IfrsOperatingRevenueAssembler():
 
     def __assemble_column_name_list(self, relative_html_object):
         # traverse and sanity check
-        tr_tags = relative_html_object.xpath('./tr')
+        tr_tags = relative_html_object.xpath('./table[@class="hasBorder"]/tr')
         assert len(tr_tags) > 0, 'invalid tr_tags'
 
         # traverse and sanity check
-        column_name_list = tr_tags[0].xpath('./th/text()')
-        assert len(column_name_list) == 2, 'invalid column_name_list size, should be 2'
-        return column_name_list
+        th_texts = tr_tags[0].xpath('./th/text()')
+        assert len(th_texts) == 2, 'invalid th_texts size, should be 2'
+        # should be account
+        account = th_texts[0]
+
+        # traverse and sanity check
+        table_tags = relative_html_object.xpath('./table[@class="noBorder"]')
+        assert len(table_tags) > 0, 'invalid table_tags'
+        td_tags = table_tags[2].xpath('./td')
+        assert len(td_tags) > 0, 'invalid td_tags'
+        # should be snapdate
+        snapdate = self.string_utils.from_local_string_to_date(td_tags[1].text)
+
+        return [account, snapdate]
 
     def __assemble_row_list(self, relative_html_object):
         # skip one row of column name list
-        tr_tags = relative_html_object.xpath('./tr')[1:]
+        tr_tags = relative_html_object.xpath('./table[@class="hasBorder"]/tr')[1:]
         return [self.__assemble_row(tr_tag) for tr_tag in tr_tags]
 
     def __assemble_row(self, relative_html_object):
