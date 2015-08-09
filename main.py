@@ -66,8 +66,17 @@ def run_operating_revenue_pipeline():
     pipeline = OperatingRevenuePipeline()
     pipeline.run('2330', datetime.date(2010, 1, 1))
 
+def check_database():
+    from stockcat.database.database_health_checker import DatabaseHealthChecker
+    connection_string = "dbname='stockcat' user='stockcat' host='localhost' password='stockcat'"
+    checker = DatabaseHealthChecker(connection_string)
+    checker.check_connection()
+    checker.check_table_existed('operating_revenue')
+
+
 def main():
-    run_operating_revenue_pipeline()
+    check_database()
+    #run_operating_revenue_pipeline()
 
 if __name__ == '__main__':
     sys.exit(main())
