@@ -18,4 +18,3 @@ class OperatingRevenueDao():
 
     def get_date(self):
         return self.date
-     

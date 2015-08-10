@@ -1,5 +1,7 @@
 #-*- coding: utf-8 -*-
 
+from stockcat.common.date_utils import DateUtils
+
 import calendar
 import datetime
 import re
@@ -91,6 +93,9 @@ class NormalizedNumberBuilder():
         return number
 
 class DateBuilder(): 
+    def __init__(self):
+        self.date_utils = DateUtils()
+
     def build(self, local_string):
         try:
             m = re.search(u'^(\d{4})年(\d+)月(\d+)日$', local_string)
@@ -125,11 +130,8 @@ class DateBuilder():
         m = re.search(u'^民國(\d{2,3})年(\d+)月$', local_string)
         year = int(m.group(1)) + 1911 # expect roc era
         month = int(m.group(2))
-        day = self.__get_last_day_of_month(year, month)
+        day = self.date_utils.get_last_day_of_month(year, month)
         return datetime.date(year, month, day)
-
-    def __get_last_day_of_month(self, year, month):
-        return calendar.monthrange(year, month)[1]
 
 class DateIntervalBuilder():
     def __init__(self):

@@ -1,11 +1,10 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.dao.operating_revenue_dao import OperatingRevenueDao
+from stockcat.database.postgres_database import PostgresDatabase
 
 class Database():
-    def insert_operating_revenue(self, dao):
-        print dao.get_stock_symbol()
-        print dao.get_date()
-        print dao.get_column_name_list()[0], dao.get_column_name_list()[1]
-        for row in dao.get_row_list():
-            print row[0], row[1]
+    def __init__(self):
+        self.impl = PostgresDatabase("dbname='stockcat' user='stockcat' host='localhost' password='stockcat'")
+
+    def store_operating_revenue(self, feed):
+        return self.impl.store_operating_revenue(feed)
