@@ -6,7 +6,7 @@ import calendar
 import datetime
 import re
 
-class NormalizedStringBuilder():
+class StringBuilder():
     def build(self, local_string):
         decoded_string = self.__decode(local_string)
         return decoded_string.replace('&nbsp;', ' ')
@@ -27,7 +27,7 @@ class NormalizedStringBuilder():
     def __decode_step_2(self, local_string):
         return local_string.decode('utf-8')
 
-class NormalizedNumberBuilder():
+class NumberBuilder():
     def __init__(self):
         self.chinese_value = {
             u'ㄧ' : 1,
@@ -133,9 +133,9 @@ class DateBuilder():
         day = self.date_utils.get_last_day_of_month(year, month)
         return datetime.date(year, month, day)
 
-class DateIntervalBuilder():
+class DatePeriodBuilder():
     def __init__(self):
-        self.normalized_number_builder = NormalizedNumberBuilder()
+        self.number_builder = NumberBuilder()
 
     # chain of responsibility: try any possible pattern
     def build(self, local_string):
@@ -150,8 +150,8 @@ class DateIntervalBuilder():
         try:
             m = re.search(u'^(\d+)年第(\d+)季$', local_string)
             whole_year = int(m.group(1))
-            end_season = int(m.group(2))
-            end_date = self.__from_year_season_to_date(whole_year, end_season)
+            end_quarter = int(m.group(2))
+            end_date = self.__from_year_quarter_to_date(whole_year, end_quarter)
             return (datetime.date(whole_year, 1, 1), end_date)
         except AttributeError:
             return self.__build_step_2(local_string)
@@ -174,41 +174,41 @@ class DateIntervalBuilder():
     def __build_step_3(self, local_string):
         m = re.search(u'^(.*)年前(.*)季$', local_string)
         whole_year = self.__build_chinese_number(m.group(1)) + 1911 # expect roc era
-        end_season = self.__build_chinese_number(m.group(2))
-        end_date = self.__from_year_season_to_date(whole_year, end_season)
+        end_quarter = self.__build_chinese_number(m.group(2))
+        end_date = self.__from_year_quarter_to_date(whole_year, end_quarter)
         return (datetime.date(whole_year, 1, 1), end_date)
 
-    def __from_year_season_to_date(self, year, season):
-        if season == 1:
+    def __from_year_quarter_to_date(self, year, quarter):
+        if quarter == 1:
             return datetime.date(year, 3, 31)
-        if season == 2:
+        if quarter == 2:
             return datetime.date(year, 6, 30)
-        if season == 3:
+        if quarter == 3:
             return datetime.date(year, 9, 30)
-        if season == 4:
+        if quarter == 4:
             return datetime.date(year, 12, 31)
 
     def __build_chinese_number(self, number_string):
-        return self.normalized_number_builder.build_chinese_number(number_string)
+        return self.number_builder.build_chinese_number(number_string)
 
 class StringUtils():
     def __init__(self):
         self.date_builder = DateBuilder()
-        self.date_interval_builder = DateIntervalBuilder()
-        self.normalized_number_builder = NormalizedNumberBuilder()
-        self.normalized_string_builder = NormalizedStringBuilder()
-
-    def normalize_string(self, local_string):
-        return self.normalized_string_builder.build(local_string)
+        self.date_period_builder = DatePeriodBuilder()
+        self.number_builder = NumberBuilder()
+        self.string_builder = StringBuilder()
 
     def normalize_number(self, number_string):
-        return self.normalized_number_builder.build(number_string)
+        return self.number_builder.build(number_string)
+
+    def normalize_string(self, local_string):
+        return self.string_builder.build(local_string)
 
     def from_local_string_to_date(self, local_string):
         return self.date_builder.build(local_string)
 
-    def from_local_string_to_date_interval(self, local_string):
-        return self.date_interval_builder.build(local_string)
+    def from_local_string_to_date_period(self, local_string):
+        return self.date_period_builder.build(local_string)
 
     def from_date_to_roc_era_string(self, date):
         return str(date.year - 1911)
@@ -216,13 +216,13 @@ class StringUtils():
     def from_date_to_2_digit_month_string(self, date):
         return '{0:02d}'.format(date.month) 
 
-    def from_date_to_2_digit_season_string(self, date):
-        season = (date.month - 1) // 3 + 1
-        return '{0:02d}'.format(season) 
+    def from_date_to_2_digit_quarter_string(self, date):
+        quarter = (date.month - 1) // 3 + 1
+        return '{0:02d}'.format(quarter) 
 
-    def from_date_to_1_digit_season_string(self, date):
-        season = (date.month - 1) // 3 + 1
-        return str(season)
+    def from_date_to_1_digit_quarter_string(self, date):
+        quarter = (date.month - 1) // 3 + 1
+        return str(quarter)
 
     def is_match(self, regex, string):
         return re.match(regex, string) is not None

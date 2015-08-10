@@ -82,12 +82,12 @@ class StringUtilsTest(unittest.TestCase):
         self.assertEqual(actual, expected)
 
     def test_from_local_string_to_date_interval(self):
-        actual = self.string_utils.from_local_string_to_date_interval(u'2013年01月01日至2013年12月31日')
+        actual = self.string_utils.from_local_string_to_date_period(u'2013年01月01日至2013年12月31日')
         expected = datetime.date(2013, 1, 1), datetime.date(2013, 12, 31)
         self.assertEqual(actual, expected)
 
-    def test_roc_era_from_local_string_to_date_interval(self):
-        actual = self.string_utils.from_local_string_to_date_interval(u'九十八年前三季')
+    def test_roc_era_from_local_string_to_date_period(self):
+        actual = self.string_utils.from_local_string_to_date_period(u'九十八年前三季')
         expected = datetime.date(2009, 1, 1), datetime.date(2009, 9, 30)
         self.assertEqual(actual, expected)
         
@@ -105,77 +105,77 @@ class StringUtilsTest(unittest.TestCase):
         expected = '10'
         self.assertEqual(actual, expected)
 
-    def test_from_date_to_2_digit_season_string(self):
+    def test_from_date_to_2_digit_quarter_string(self):
         # spring
-        actual = self.string_utils.from_date_to_2_digit_season_string(datetime.date(2001, 1, 1))
+        actual = self.string_utils.from_date_to_2_digit_quarter_string(datetime.date(2001, 1, 1))
         expected = '01'
         self.assertEqual(actual, expected)
 
-        actual = self.string_utils.from_date_to_2_digit_season_string(datetime.date(2001, 3, 31))
+        actual = self.string_utils.from_date_to_2_digit_quarter_string(datetime.date(2001, 3, 31))
         expected = '01'
         self.assertEqual(actual, expected)
 
         # summer
-        actual = self.string_utils.from_date_to_2_digit_season_string(datetime.date(2001, 4, 1))
+        actual = self.string_utils.from_date_to_2_digit_quarter_string(datetime.date(2001, 4, 1))
         expected = '02'
         self.assertEqual(actual, expected)
 
-        actual = self.string_utils.from_date_to_2_digit_season_string(datetime.date(2001, 6, 30))
+        actual = self.string_utils.from_date_to_2_digit_quarter_string(datetime.date(2001, 6, 30))
         expected = '02'
         self.assertEqual(actual, expected)
 
         # fall
-        actual = self.string_utils.from_date_to_2_digit_season_string(datetime.date(2001, 7, 1))
+        actual = self.string_utils.from_date_to_2_digit_quarter_string(datetime.date(2001, 7, 1))
         expected = '03'
         self.assertEqual(actual, expected)
 
-        actual = self.string_utils.from_date_to_2_digit_season_string(datetime.date(2001, 9, 30))
+        actual = self.string_utils.from_date_to_2_digit_quarter_string(datetime.date(2001, 9, 30))
         expected = '03'
         self.assertEqual(actual, expected)
 
         # winter
-        actual = self.string_utils.from_date_to_2_digit_season_string(datetime.date(2001, 10, 1))
+        actual = self.string_utils.from_date_to_2_digit_quarter_string(datetime.date(2001, 10, 1))
         expected = '04'
         self.assertEqual(actual, expected)
 
-        actual = self.string_utils.from_date_to_2_digit_season_string(datetime.date(2001, 12, 31))
+        actual = self.string_utils.from_date_to_2_digit_quarter_string(datetime.date(2001, 12, 31))
         expected = '04'
         self.assertEqual(actual, expected)
 
-    def test_from_date_to_1_digit_season_string(self):
+    def test_from_date_to_1_digit_quarter_string(self):
         # spring
-        actual = self.string_utils.from_date_to_1_digit_season_string(datetime.date(2001, 1, 1))
+        actual = self.string_utils.from_date_to_1_digit_quarter_string(datetime.date(2001, 1, 1))
         expected = '1'
         self.assertEqual(actual, expected)
 
-        actual = self.string_utils.from_date_to_1_digit_season_string(datetime.date(2001, 3, 31))
+        actual = self.string_utils.from_date_to_1_digit_quarter_string(datetime.date(2001, 3, 31))
         expected = '1'
         self.assertEqual(actual, expected)
 
         # summer
-        actual = self.string_utils.from_date_to_1_digit_season_string(datetime.date(2001, 4, 1))
+        actual = self.string_utils.from_date_to_1_digit_quarter_string(datetime.date(2001, 4, 1))
         expected = '2'
         self.assertEqual(actual, expected)
 
-        actual = self.string_utils.from_date_to_1_digit_season_string(datetime.date(2001, 6, 30))
+        actual = self.string_utils.from_date_to_1_digit_quarter_string(datetime.date(2001, 6, 30))
         expected = '2'
         self.assertEqual(actual, expected)
 
         # fall
-        actual = self.string_utils.from_date_to_1_digit_season_string(datetime.date(2001, 7, 1))
+        actual = self.string_utils.from_date_to_1_digit_quarter_string(datetime.date(2001, 7, 1))
         expected = '3'
         self.assertEqual(actual, expected)
 
-        actual = self.string_utils.from_date_to_1_digit_season_string(datetime.date(2001, 9, 30))
+        actual = self.string_utils.from_date_to_1_digit_quarter_string(datetime.date(2001, 9, 30))
         expected = '3'
         self.assertEqual(actual, expected)
 
         # winter
-        actual = self.string_utils.from_date_to_1_digit_season_string(datetime.date(2001, 10, 1))
+        actual = self.string_utils.from_date_to_1_digit_quarter_string(datetime.date(2001, 10, 1))
         expected = '4'
         self.assertEqual(actual, expected)
 
-        actual = self.string_utils.from_date_to_1_digit_season_string(datetime.date(2001, 12, 31))
+        actual = self.string_utils.from_date_to_1_digit_quarter_string(datetime.date(2001, 12, 31))
         expected = '4'
         self.assertEqual(actual, expected)
 
