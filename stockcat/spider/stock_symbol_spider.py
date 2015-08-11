@@ -22,3 +22,7 @@ class StockSymbolSpider():
     def is_crawled(self, market_type):
         key = self.key[market_type]
         return self.storage.contains(key)
+
+    def get_crawled(self, market_type):
+        key = self.key[market_type]
+        return self.storage.get(key)

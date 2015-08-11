@@ -8,3 +8,6 @@ class Database():
 
     def store_operating_revenue(self, feed):
         return self.impl.store_operating_revenue(feed)
+
+    def store_stock_symbol(self, feed):
+        return self.impl.store_stock_symbol(feed)

@@ -61,10 +61,17 @@ def assemble_legacy_cash_flow_statement():
     content = file_utils.read_file('./stockcat/tests/unit/data/legacy_cash_flow_statement/2330/2010/03.html')
     column_name_list, row_list = assembler.assemble(content)
 
+def check_postgres_database():
+    from stockcat.database.postgres_database_health_checker import PostgresDatabaseHealthChecker
+    connection_string = "dbname='stockcat' user='stockcat' host='localhost' password='stockcat'"
+    checker = PostgresDatabaseHealthChecker(connection_string)
+    checker.check_connection()
+    checker.check_table_existed('operating_revenue')
+
 def run_operating_revenue_pipeline():
     from stockcat.pipeline.operating_revenue_pipeline import OperatingRevenuePipeline
     pipeline = OperatingRevenuePipeline()
-    pipeline.run('2330', datetime.date(2010, 1, 1))
+    pipeline.run('2330', datetime.date(2010, 1, 1), ['spider'])
 
 def run_many_operating_revenue_pipeline():
     from stockcat.pipeline.operating_revenue_pipeline import OperatingRevenuePipeline
@@ -73,16 +80,13 @@ def run_many_operating_revenue_pipeline():
     #pipeline.run_many('2330', date_period, ['spider', 'assembler', 'database'])
     pipeline.run_many('2330', date_period)
 
-def check_postgres_database():
-    from stockcat.database.postgres_database_health_checker import PostgresDatabaseHealthChecker
-    connection_string = "dbname='stockcat' user='stockcat' host='localhost' password='stockcat'"
-    checker = PostgresDatabaseHealthChecker(connection_string)
-    checker.check_connection()
-    checker.check_table_existed('operating_revenue')
+def run_stock_symbol_pipeline():
+    from stockcat.pipeline.stock_symbol_pipeline import StockSymbolPipeline
+    pipeline = StockSymbolPipeline()
+    pipeline.run()
 
 def main():
-    #check_postgres_database()
-    run_many_operating_revenue_pipeline()
+    run_stock_symbol_pipeline()
 
 if __name__ == '__main__':
     sys.exit(main())

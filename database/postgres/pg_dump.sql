@@ -47,6 +47,24 @@ CREATE TABLE operating_revenue (
 ALTER TABLE operating_revenue OWNER TO stockcat;
 
 --
+-- Name: stock_symbol; Type: TABLE; Schema: public; Owner: stockcat; Tablespace: 
+--
+
+CREATE TABLE stock_symbol (
+    creation_dt timestamp without time zone DEFAULT now(),
+    stock_symbol text NOT NULL,
+    stock_name text,
+    isin_code text,
+    listing_date date,
+    market_category text,
+    industry_category text,
+    cfi_code text
+);
+
+
+ALTER TABLE stock_symbol OWNER TO stockcat;
+
+--
 -- Name: public; Type: ACL; Schema: -; Owner: stockcat
 --
 

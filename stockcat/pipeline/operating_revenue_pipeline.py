@@ -48,7 +48,6 @@ class OperatingRevenuePipeline():
     def __run_spider(self, param):
         if 'spider' in param['enable_list']:
             self.spider.crawl(param['stock_symbol'], param['date'])
-            content = self.spider.get_crawled(param['stock_symbol'], param['date'])
         return param
 
     def __run_assembler(self, param):
