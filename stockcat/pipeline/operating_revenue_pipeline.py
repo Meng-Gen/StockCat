@@ -1,11 +1,16 @@
 #-*- coding: utf-8 -*-
 
+from stockcat.assembler.assemble_error import AssembleError
+from stockcat.assembler.assemble_error import NoRecordAssembleError
+from stockcat.assembler.assemble_error import OverQueryAssembleError
+from stockcat.assembler.content_screener import ContentScreener
 from stockcat.common.date_utils import DateUtils
 from stockcat.database.database import Database
 from stockcat.feed.operating_revenue_feed import OperatingRevenueFeed
 from stockcat.spider.operating_revenue_spider import OperatingRevenueSpider
 from stockcat.assembler.operating_revenue_assembler import OperatingRevenueAssembler
 
+import random
 import time
 
 class OperatingRevenuePipeline():
@@ -15,18 +20,27 @@ class OperatingRevenuePipeline():
         self.feed = OperatingRevenueFeed()
         self.database = Database()
         self.date_utils = DateUtils()
+        self.content_screener = ContentScreener()
 
     def run(self, stock_symbol, date, enable_list=['assembler', 'database']):
-        param = self.__build_param(stock_symbol, date, enable_list)
-        param = self.__run_spider(param)
-        param = self.__run_assembler(param)
-        param = self.__run_database(param)
+        try:
+            param = self.__build_param(stock_symbol, date, enable_list)
+            param = self.__run_spider(param)
+            param = self.__run_assembler(param)
+            param = self.__run_database(param)
+        except OverQueryAssembleError as e:
+            print e, 'We will force to run spider without over query error'
+            param = self.__force_run_spider_without_over_query_error(param)
+            param = self.__run_assembler(param)
+            param = self.__run_database(param)
+        except NoRecordAssembleError as e:
+            print e, 'We will abort this pipeline'
 
     def run_many(self, stock_symbol, date_period, enable_list=['assembler', 'database']):
         begin_date, end_date = date_period
         for date in self.date_utils.range_date_by_month(begin_date, end_date):
             self.run(stock_symbol, date, enable_list)
-            #self.__avoid_blocking()
+            self.__avoid_blocking()
             
     def __build_param(self, stock_symbol, date, enable_list):
         return { 'stock_symbol' : stock_symbol, 'date' : date, 'enable_list' : enable_list, }
@@ -49,5 +63,17 @@ class OperatingRevenuePipeline():
             self.database.store_operating_revenue(feed)
         return param
 
-    def __avoid_blocking(self):
-        time.sleep(3)
+    def __force_run_spider_without_over_query_error(self, param):
+        while True:
+            self.spider.crawl(param['stock_symbol'], param['date'])
+            content = self.spider.get_crawled(param['stock_symbol'], param['date'])
+            try:
+                self.content_screener.screen(content, param['stock_symbol'], param['date'])
+            except OverQueryAssembleError:
+                self.__avoid_blocking()
+            except AssembleError:
+                break
+        return param
+
+    def __avoid_blocking(self, a=3, b=5):
+        time.sleep(random.randint(a, b))

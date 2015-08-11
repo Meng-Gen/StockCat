@@ -1,5 +1,8 @@
 #-*- coding: utf-8 -*-
 
+from stockcat.assembler.assemble_error import NoPublishAssembleError
+from stockcat.assembler.assemble_error import NoRecordAssembleError
+from stockcat.assembler.assemble_error import OverQueryAssembleError
 from stockcat.assembler.ifrs.ifrs_operating_revenue_assembler import IfrsOperatingRevenueAssembler
 from stockcat.common.file_utils import FileUtils
 
@@ -20,10 +23,12 @@ class IfrsOperatingRevenueAssemblerTest(unittest.TestCase):
         content = self.file_utils.read_file('./stockcat/tests/unit/data/ifrs_operating_revenue/2330/2014/09.html')
 
         dao = self.assembler.assemble(content, '2330', datetime.date(2014, 9, 30))
-        column_name_list = dao.get_column_name_list()
-        row_list = dao.get_row_list()
 
-        self.assertEqual(column_name_list, [u'項目', datetime.date(2014, 9, 30)])
+        self.assertEqual(dao.get_column_name_list(), [u'項目', datetime.date(2014, 9, 30)])
+        self.assertEqual(dao.get_stock_symbol(), '2330')
+        self.assertEqual(dao.get_date(), datetime.date(2014, 9, 30))
+
+        row_list = dao.get_row_list()
         self.assertEqual(row_list[0], [u'本月', 74846313])
         self.assertEqual(row_list[1], [u'去年同期', 55382473])
         self.assertEqual(row_list[2], [u'增減金額', 19463840])
@@ -45,3 +50,17 @@ class IfrsOperatingRevenueAssemblerTest(unittest.TestCase):
         self.assertEqual(row_list[2], [u'增減金額', -244950])
         self.assertEqual(row_list[3], [u'增減百分比', -2.43])
         self.assertEqual(row_list[7], [u'增減百分比', 7.00])
+
+    def test_assemble_raise_over_query_assemble_error(self):
+        content = self.file_utils.read_file('./stockcat/tests/unit/data/error/too_much_query_error.html')
+        with self.assertRaises(OverQueryAssembleError) as context:
+            self.assembler.assemble(content, '2330', datetime.date(2010, 9, 30))
+        self.assertEqual(context.exception.stock_symbol, '2330')
+        self.assertEqual(context.exception.date, datetime.date(2010, 9, 30))
+
+    def test_assemble_raise_no_record_assemble_error(self):
+        content = self.file_utils.read_file('./stockcat/tests/unit/data/error/no_record_error.html')
+        with self.assertRaises(NoRecordAssembleError) as context:
+            self.assembler.assemble(content, '2330', datetime.date(2015, 8, 31))
+        self.assertEqual(context.exception.stock_symbol, '2330')
+        self.assertEqual(context.exception.date, datetime.date(2015, 8, 31))        

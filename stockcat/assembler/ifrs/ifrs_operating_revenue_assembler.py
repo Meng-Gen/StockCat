@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 
+from stockcat.assembler.content_screener import ContentScreener
 from stockcat.common.string_utils import StringUtils
 from stockcat.dao.operating_revenue_dao import OperatingRevenueDao
 
@@ -8,9 +9,11 @@ import lxml.html
 class IfrsOperatingRevenueAssembler():
     def __init__(self):
         self.base_xpath = '//html/body'
+        self.content_screener = ContentScreener()
         self.string_utils = StringUtils()
 
     def assemble(self, content, stock_symbol, date):
+        self.content_screener.screen(content, stock_symbol, date)        
         content = self.string_utils.normalize_string(content)
         html_object = lxml.html.fromstring(content)
         relative_html_object = self.__traverse_to_relative_html_object(html_object)

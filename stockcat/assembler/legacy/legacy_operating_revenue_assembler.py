@@ -1,8 +1,6 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.assembler.assembler_error import NoPublishAssembleError
-from stockcat.assembler.assembler_error import NoRecordAssembleError
-from stockcat.assembler.assembler_error import OverQueryAssembleError
+from stockcat.assembler.content_screener import ContentScreener
 from stockcat.common.string_utils import StringUtils
 from stockcat.dao.operating_revenue_dao import OperatingRevenueDao
 
@@ -11,26 +9,17 @@ import lxml.html
 class LegacyOperatingRevenueAssembler():
     def __init__(self):
         self.base_xpath = '//html/body'
+        self.content_screener = ContentScreener()
         self.string_utils = StringUtils()
 
     def assemble(self, content, stock_symbol, date):
-        self.__screen_content(content, stock_symbol, date)
-
+        self.content_screener.screen(content, stock_symbol, date)
         content = self.string_utils.normalize_string(content)
         html_object = lxml.html.fromstring(content)
         relative_html_object = self.__traverse_to_relative_html_object(html_object)
         column_name_list = self.__assemble_column_name_list(relative_html_object)
         row_list = self.__assemble_row_list(relative_html_object)
         return OperatingRevenueDao(column_name_list, row_list, stock_symbol, date)
-
-    def __screen_content(self, content, stock_symbol, date):
-        decoded = content.decode('utf-8')
-        if u'查詢過於頻繁，請於稍後再查詢' in decoded:
-            raise OverQueryAssembleError(stock_symbol, date)
-        if u'未公告合併營業收入(採自願公告制)' in decoded:
-            raise NoPublishAssembleError(stock_symbol, date)
-        if u'資料庫中查無需求資料' in decoded:
-            raise NoRecordAssembleError(stock_symbol, date)
 
     def __traverse_to_relative_html_object(self, html_object):
         relative_html_object_list = html_object.xpath(self.base_xpath)
