@@ -41,7 +41,7 @@ class XbrlIncomeStatementAssembler():
         # should be date interval
         for local_string in column_th_texts[1:]:
             # of (datetime.date, datetime.date) type
-            snapshot_date = self.string_utils.from_local_string_to_date_interval(local_string) 
+            snapshot_date = self.string_utils.from_local_string_to_date_period(local_string) 
             column_name_list.append(snapshot_date)
 
         return column_name_list

@@ -18,6 +18,10 @@ class XbrlCashFlowStatementAssembler():
 
     def __traverse_to_relative_html_object(self, html_object):
         relative_html_object_list = html_object.xpath(self.base_xpath)
+
+        from lxml import etree
+        print etree.tostring(self.base_xpath, pretty_print=True)
+
         assert len(relative_html_object_list) > 1, 'invalid base_xpath'
         return relative_html_object_list[1]
 

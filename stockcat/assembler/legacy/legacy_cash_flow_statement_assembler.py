@@ -22,8 +22,8 @@ class DeloitteParser():
 
         column_name_list = [u'會計科目']
         for local_string in lines[7].split():
-            date_interval = self.string_utils.from_local_string_to_date_interval(local_string)
-            snapshot_date = date_interval[1]
+            date_period = self.string_utils.from_local_string_to_date_period(local_string)
+            snapshot_date = date_period[1]
             column_name_list.append(snapshot_date)
         return column_name_list
 

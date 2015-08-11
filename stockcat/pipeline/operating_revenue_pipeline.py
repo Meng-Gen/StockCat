@@ -26,7 +26,7 @@ class OperatingRevenuePipeline():
         begin_date, end_date = date_period
         for date in self.date_utils.range_date_by_month(begin_date, end_date):
             self.run(stock_symbol, date, enable_list)
-            self.__avoid_blocking()
+            #self.__avoid_blocking()
             
     def __build_param(self, stock_symbol, date, enable_list):
         return { 'stock_symbol' : stock_symbol, 'date' : date, 'enable_list' : enable_list, }
@@ -34,6 +34,7 @@ class OperatingRevenuePipeline():
     def __run_spider(self, param):
         if 'spider' in param['enable_list']:
             self.spider.crawl(param['stock_symbol'], param['date'])
+            content = self.spider.get_crawled(param['stock_symbol'], param['date'])
         return param
 
     def __run_assembler(self, param):

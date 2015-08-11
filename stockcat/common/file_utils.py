@@ -1,14 +1,9 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.common.user_agent import UserAgent
-
 import os
 import os.path
 
 class FileUtils():
-    def __init__(self):
-        self.user_agent = UserAgent()
-
     def join_paths(self, path, *paths):
         return os.path.join(path, *paths)
 

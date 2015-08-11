@@ -69,7 +69,7 @@ def run_operating_revenue_pipeline():
 def run_many_operating_revenue_pipeline():
     from stockcat.pipeline.operating_revenue_pipeline import OperatingRevenuePipeline
     pipeline = OperatingRevenuePipeline()
-    date_period = datetime.date(2010, 1, 1), datetime.date(2015, 8, 10)
+    date_period = datetime.date(2015, 8, 1), datetime.date(2015, 8, 10)
     pipeline.run_many('2330', date_period, ['spider'])
     #pipeline.run_many('2330', date_period)
 
@@ -92,9 +92,9 @@ def curl_study():
         time.sleep(3)
 
 def main():
-    curl_study()
+    #curl_study()
     #check_postgres_database()
-    #run_many_operating_revenue_pipeline()
+    run_many_operating_revenue_pipeline()
 
 if __name__ == '__main__':
     sys.exit(main())
