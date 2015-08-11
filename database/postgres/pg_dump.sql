@@ -1,0 +1,62 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: operating_revenue; Type: TABLE; Schema: public; Owner: stockcat; Tablespace: 
+--
+
+CREATE TABLE operating_revenue (
+    creation_dt timestamp without time zone DEFAULT now(),
+    release_date date NOT NULL,
+    stock_symbol text NOT NULL,
+    stmt_date date NOT NULL,
+    account text NOT NULL,
+    account_order smallint NOT NULL,
+    value double precision NOT NULL
+);
+
+
+ALTER TABLE operating_revenue OWNER TO stockcat;
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: stockcat
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM stockcat;
+GRANT ALL ON SCHEMA public TO stockcat;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
