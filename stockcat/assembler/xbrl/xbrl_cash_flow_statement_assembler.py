@@ -18,10 +18,6 @@ class XbrlCashFlowStatementAssembler():
 
     def __traverse_to_relative_html_object(self, html_object):
         relative_html_object_list = html_object.xpath(self.base_xpath)
-
-        from lxml import etree
-        print etree.tostring(self.base_xpath, pretty_print=True)
-
         assert len(relative_html_object_list) > 1, 'invalid base_xpath'
         return relative_html_object_list[1]
 
@@ -45,7 +41,7 @@ class XbrlCashFlowStatementAssembler():
         # should be date interval
         for local_string in column_th_texts[1:]:
             # of (datetime.date, datetime.date) type
-            snapshot_date = self.string_utils.from_local_string_to_date_interval(local_string) 
+            snapshot_date = self.string_utils.from_local_string_to_date_period(local_string) 
             column_name_list.append(snapshot_date)
 
         return column_name_list

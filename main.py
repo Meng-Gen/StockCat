@@ -82,7 +82,7 @@ def run_many_operating_revenue_pipeline():
 
 def run_stock_symbol_pipeline():
     from stockcat.pipeline.stock_symbol_pipeline import StockSymbolPipeline
-    pipeline = StockSymbolPipeline()
+    pipeline = StockSymbolPipeline(['spider'])
     pipeline.run()
 
 def main():
