@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
 
 from stockcat.common.string_utils import StringUtils
+from stockcat.dao.stock_symbol_dao import StockSymbolDao
 
 import lxml.html
 
@@ -10,11 +11,12 @@ class StockSymbolAssembler():
         self.string_utils = StringUtils()
 
     def assemble(self, content):
+        content = self.string_utils.normalize_string(content)
         html_object = lxml.html.fromstring(content)
         relative_html_object = self.__traverse_to_relative_html_object(html_object)
         column_name_list = self.__assemble_column_name_list(relative_html_object)
         row_list = self.__assemble_row_list(relative_html_object)
-        return (column_name_list, row_list)
+        return StockSymbolDao(column_name_list, row_list)
 
     def __traverse_to_relative_html_object(self, html_object):
         relative_html_object_list = html_object.xpath(self.base_xpath)
