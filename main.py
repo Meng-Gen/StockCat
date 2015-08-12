@@ -77,16 +77,22 @@ def run_many_operating_revenue_pipeline():
     from stockcat.pipeline.operating_revenue_pipeline import OperatingRevenuePipeline
     pipeline = OperatingRevenuePipeline()
     date_period = datetime.date(2010, 1, 1), datetime.date(2015, 8, 10)
-    #pipeline.run_many('2330', date_period, ['spider', 'assembler', 'database'])
+    # may take a lot of time
+    pipeline.run_many('2330', date_period, ['spider', 'assembler', 'database'])
     pipeline.run_many('2330', date_period)
 
 def run_stock_symbol_pipeline():
     from stockcat.pipeline.stock_symbol_pipeline import StockSymbolPipeline
-    pipeline = StockSymbolPipeline(['spider'])
+    pipeline = StockSymbolPipeline()
     pipeline.run()
 
+def analyze_stock_symbol():
+    from stockcat.analyzer.stock_symbol_analyzer import StockSymbolAnalyzer
+    analyzer = StockSymbolAnalyzer()
+    analyzer.analyze()
+
 def main():
-    run_stock_symbol_pipeline()
+    analyze_stock_symbol()
 
 if __name__ == '__main__':
     sys.exit(main())
