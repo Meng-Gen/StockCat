@@ -82,11 +82,16 @@ def run_many_operating_revenue_pipeline():
 
 def run_stock_symbol_pipeline():
     from stockcat.pipeline.stock_symbol_pipeline import StockSymbolPipeline
-    pipeline = StockSymbolPipeline(['spider'])
+    pipeline = StockSymbolPipeline()
     pipeline.run()
 
+def get_database():
+    from stockcat.database.database import Database
+    database = Database()
+    database.get_stock_symbol()
+
 def main():
-    run_stock_symbol_pipeline()
+    get_database()
 
 if __name__ == '__main__':
     sys.exit(main())
