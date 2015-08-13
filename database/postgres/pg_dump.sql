@@ -52,6 +52,7 @@ ALTER TABLE operating_revenue OWNER TO stockcat;
 
 CREATE TABLE stock_symbol (
     creation_dt timestamp without time zone DEFAULT now(),
+    release_date date NOT NULL,
     stock_symbol text NOT NULL,
     stock_name text,
     isin_code text,

@@ -7,25 +7,41 @@ import lxml.html
 
 class StockSymbolAssembler():
     def __init__(self):
-        self.base_xpath = '//html/body/table[@class="h4"]'
+        self.base_xpath = '//html/body'
         self.string_utils = StringUtils()
 
     def assemble(self, content):
         content = self.string_utils.normalize_string(content)
         html_object = lxml.html.fromstring(content)
         relative_html_object = self.__traverse_to_relative_html_object(html_object)
+        release_date = self.__assemble_release_date(relative_html_object)
         column_name_list = self.__assemble_column_name_list(relative_html_object)
         row_list = self.__assemble_row_list(relative_html_object)
-        return StockSymbolDao(column_name_list, row_list)
+        return StockSymbolDao(column_name_list, row_list, release_date)
 
     def __traverse_to_relative_html_object(self, html_object):
         relative_html_object_list = html_object.xpath(self.base_xpath)
         assert len(relative_html_object_list) == 1, 'invalid base_xpath'
         return relative_html_object_list[0]
 
+    def __assemble_release_date(self, relative_html_object):
+        # try to get release date
+        table_tags = relative_html_object.xpath('./table')
+        assert len(table_tags) > 0, 'invalid table_tags'
+
+        headline_tags = table_tags[0].xpath('./h2')
+        assert len(headline_tags) > 0, 'invalid headline_tags'
+        
+        headline_texts = headline_tags[1].xpath('./strong/center')
+        groups = self.string_utils.match(u'^最近更新日期:(.*)$', headline_texts[0].text.strip())
+        assert len(groups) > 0, 'could not match ^最近更新日期:(.*)$'
+        
+        release_date = self.string_utils.from_local_string_to_date(groups[0])
+        return release_date
+
     def __assemble_column_name_list(self, relative_html_object):
         # traverse and sanity check
-        tr_tags = relative_html_object.xpath('./tr')
+        tr_tags = relative_html_object.xpath('./table[@class="h4"]/tr')
         assert len(tr_tags) > 0, 'invalid tr_tags'
 
         # traverse and sanity check
@@ -44,7 +60,7 @@ class StockSymbolAssembler():
 
     def __assemble_row_list(self, relative_html_object):
         # skip one row of column name list
-        tr_tags = relative_html_object.xpath('./tr')[1:]
+        tr_tags = relative_html_object.xpath('./table[@class="h4"]/tr')[1:]
 
         row_list = []
         for tr_tag in tr_tags:

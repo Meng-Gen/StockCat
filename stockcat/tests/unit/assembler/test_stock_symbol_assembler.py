@@ -30,6 +30,8 @@ class StockSymbolAssemblerTest(unittest.TestCase):
         for row in row_list:
             self.assertEqual(len(row), 8)
 
+        self.assertEqual(dao.get_release_date(), datetime.date(2015, 8, 7))
+
     def test_assemble_otc_market(self):
         # online: http://isin.twse.com.tw/isin/C_public.jsp?strMode=4
         content = self.file_utils.read_file('./stockcat/tests/unit/data/stock_symbol/otc_market.html')
@@ -43,3 +45,5 @@ class StockSymbolAssemblerTest(unittest.TestCase):
         self.assertEqual(row_list[0], [u'5364', u'力麗店', u'TW0005364004', datetime.date(2013, 8, 26), u'上櫃', u'其他業', u'ESVUFR', u''])
         for row in row_list:
             self.assertEqual(len(row), 8)
+
+        self.assertEqual(dao.get_release_date(), datetime.date(2015, 8, 7))

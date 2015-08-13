@@ -91,8 +91,13 @@ def analyze_stock_symbol():
     analyzer = StockSymbolAnalyzer()
     analyzer.analyze()
 
+def get_database():
+    from stockcat.database.database import Database
+    database = Database()
+    database.get_stock_symbol()
+
 def main():
-    analyze_stock_symbol()
+    get_database()
 
 if __name__ == '__main__':
     sys.exit(main())
