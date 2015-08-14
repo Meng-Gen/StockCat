@@ -16,7 +16,7 @@ class OperatingRevenueSummaryAssemblerTest(unittest.TestCase):
         self.assembler = None
         self.file_utils = None
     
-    def test_assemble_stock_exchange_market(self):
+    def test_assemble_stock_exchange_market_in_2010(self):
         # online: http://mops.twse.com.tw/nas/t21/sii/t21sc03_99_9.html
         content = self.file_utils.read_file('./stockcat/tests/unit/data/operating_revenue_summary/stock_exchange_market/2010/9.html')
         dao = self.assembler.assemble(content, datetime.date(2010, 9, 30))
@@ -33,6 +33,9 @@ class OperatingRevenueSummaryAssemblerTest(unittest.TestCase):
         self.assertEqual(dao.get_stmt_date(), datetime.date(2010, 9, 30))
         self.assertEqual(dao.get_release_date(), datetime.date(2013, 5, 7))
 
-    def test_assemble_otc_market(self):
+    def test_assemble_otc_market_in_2014(self):
         # online: http://mops.twse.com.tw/nas/t21/otc/t21sc03_104_1.html
-        pass
+        content = self.file_utils.read_file('./stockcat/tests/unit/data/operating_revenue_summary/otc_market/2014/9.html')
+        dao = self.assembler.assemble(content, datetime.date(2014, 9, 30))
+
+        self.assertEqual(dao.get_stmt_date(), datetime.date(2014, 9, 30))
