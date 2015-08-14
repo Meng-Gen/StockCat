@@ -89,15 +89,29 @@ def run_stock_symbol_pipeline():
 def analyze_stock_symbol():
     from stockcat.analyzer.stock_symbol_analyzer import StockSymbolAnalyzer
     analyzer = StockSymbolAnalyzer()
-    analyzer.analyze()
+    stock_symbol_list = analyzer.analyze()
+    print stock_symbol_list[:10]
 
 def get_database():
     from stockcat.database.database import Database
     database = Database()
-    database.get_stock_symbol()
+    stock_symbol_list = database.get_stock_symbol()
+    print stock_symbol_list[:10]
+
+def crawl_operating_revenue_summary():
+    from stockcat.spider.operating_revenue_summary_spider import OperatingRevenueSummarySpider
+    spider = OperatingRevenueSummarySpider()
+    spider.crawl("stock_exchange_market", datetime.date(2010, 9, 30))
+    spider.crawl("otc_market", datetime.date(2014, 9, 30))
+
+def run_operating_revenue_summary_pipeline():
+    from stockcat.pipeline.operating_revenue_summary_pipeline import OperatingRevenueSummaryPipeline
+    pipeline = OperatingRevenueSummaryPipeline()
+    #pipeline.run(datetime.date(2010, 9, 30), ['spider'])
+    pipeline.run(datetime.date(2010, 9, 30))
 
 def main():
-    get_database()
+    run_operating_revenue_summary_pipeline()
 
 if __name__ == '__main__':
     sys.exit(main())

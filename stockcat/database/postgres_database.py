@@ -27,7 +27,6 @@ class PostgresDatabase():
         cursor = connection.cursor()
         cursor.execute("select stock_symbol, listing_date from stock_symbol where release_date in (select max(release_date) from stock_symbol) and cfi_code = 'ESVUFR'")
         records = cursor.fetchall()
-        print records[:10]
         connection.commit()
         connection.close()
-
+        return records

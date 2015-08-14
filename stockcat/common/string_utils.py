@@ -63,7 +63,7 @@ class NumberBuilder():
             return self.__build_float(number_string)
         # number could be - (means zero)
         except ValueError:
-            return self.__build_hyphen_number(number_string)
+            return self.__build_zero_number(number_string)
 
     def __build_int(self, number_string):
         # try to parse negative sign from parentheses 
@@ -76,8 +76,8 @@ class NumberBuilder():
     def __build_float(self, number_string):
         return float(number_string)
 
-    def __build_hyphen_number(self, number_string):
-        if number_string.strip() == u'-':
+    def __build_zero_number(self, number_string):
+        if number_string.strip() in [u'-', u'']:
             return 0
         else: 
             raise ValueError
@@ -118,7 +118,7 @@ class DateBuilder():
 
     def __build_step_2(self, local_string):    
         try:
-            m = re.search('^(\d+)/(\d+)/(\d+)$', local_string)
+            m = re.search('^(\d{4})/(\d+)/(\d+)$', local_string)
             year = int(m.group(1))
             month = int(m.group(2))
             day = int(m.group(3))
@@ -126,7 +126,17 @@ class DateBuilder():
         except AttributeError:
             return self.__build_step_3(local_string)
 
-    def __build_step_3(self, local_string):
+    def __build_step_3(self, local_string):    
+        try:
+            m = re.search('^(\d{2,3})/(\d+)/(\d+)$', local_string)
+            year = int(m.group(1)) + 1911 # expect roc era
+            month = int(m.group(2))
+            day = int(m.group(3))
+            return datetime.date(year, month, day)
+        except AttributeError:
+            return self.__build_step_4(local_string)
+
+    def __build_step_4(self, local_string):
         m = re.search(u'^民國(\d{2,3})年(\d+)月$', local_string)
         year = int(m.group(1)) + 1911 # expect roc era
         month = int(m.group(2))

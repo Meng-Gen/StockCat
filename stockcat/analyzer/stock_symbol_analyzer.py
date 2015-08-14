@@ -7,5 +7,4 @@ class StockSymbolAnalyzer():
         self.database = Database()
 
     def analyze(self):
-        # TODO: select stock_symbol, listing_date from stock_symbol where cfi_code = 'ESVUFR';
-        pass
+        return self.database.get_stock_symbol()
