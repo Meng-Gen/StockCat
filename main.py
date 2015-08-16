@@ -101,18 +101,16 @@ def get_database():
 def crawl_operating_revenue_summary():
     from stockcat.spider.operating_revenue_summary_spider import OperatingRevenueSummarySpider
     spider = OperatingRevenueSummarySpider()
-    spider.crawl("stock_exchange_market", datetime.date(2010, 9, 30))
-    spider.crawl("otc_market", datetime.date(2014, 9, 30))
+    spider.crawl("stock_exchange_market", datetime.date(2015, 1, 31))
 
 def run_operating_revenue_summary_pipeline():
     from stockcat.pipeline.operating_revenue_summary_pipeline import OperatingRevenueSummaryPipeline
     pipeline = OperatingRevenueSummaryPipeline()
-    #pipeline.run(datetime.date(2010, 9, 30), ['spider'])
-    pipeline.run(datetime.date(2015, 1, 31))
+    date_period = datetime.date(2010, 1, 1), datetime.date(2015, 8, 10)
+    pipeline.run_many(date_period, ['spider'])
 
 def main():
-    run_operating_revenue_pipeline()
-    #run_operating_revenue_summary_pipeline()
+    run_operating_revenue_summary_pipeline()
 
 if __name__ == '__main__':
     sys.exit(main())
