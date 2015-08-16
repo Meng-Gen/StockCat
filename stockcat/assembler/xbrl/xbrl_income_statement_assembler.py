@@ -10,6 +10,7 @@ class XbrlIncomeStatementAssembler():
         self.string_utils = StringUtils()
 
     def assemble(self, content):
+        content = self.string_utils.normalize_string(content)
         html_object = lxml.html.fromstring(content)
         relative_html_object = self.__traverse_to_relative_html_object(html_object)
         column_name_list = self.__assemble_column_name_list(relative_html_object)

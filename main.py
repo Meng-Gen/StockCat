@@ -71,7 +71,7 @@ def check_postgres_database():
 def run_operating_revenue_pipeline():
     from stockcat.pipeline.operating_revenue_pipeline import OperatingRevenuePipeline
     pipeline = OperatingRevenuePipeline()
-    pipeline.run('2330', datetime.date(2010, 1, 1), ['spider'])
+    pipeline.run('2330', datetime.date(2010, 1, 1))
 
 def run_many_operating_revenue_pipeline():
     from stockcat.pipeline.operating_revenue_pipeline import OperatingRevenuePipeline
@@ -108,10 +108,11 @@ def run_operating_revenue_summary_pipeline():
     from stockcat.pipeline.operating_revenue_summary_pipeline import OperatingRevenueSummaryPipeline
     pipeline = OperatingRevenueSummaryPipeline()
     #pipeline.run(datetime.date(2010, 9, 30), ['spider'])
-    pipeline.run(datetime.date(2010, 9, 30))
+    pipeline.run(datetime.date(2015, 1, 31))
 
 def main():
-    run_operating_revenue_summary_pipeline()
+    run_operating_revenue_pipeline()
+    #run_operating_revenue_summary_pipeline()
 
 if __name__ == '__main__':
     sys.exit(main())

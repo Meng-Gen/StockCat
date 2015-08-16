@@ -3,8 +3,7 @@
 class AccountSynonym():
     def __init__(self):
         self.inverse_synonym = {
-            u'本月' : [ u'本月' ],
-            u'去年同期' : [ u'去年同期' ], 
+            u'當月營收' : [ u'本月', u'當月營收' ],
         }
         self.synonym = self.__init_synonym()
 
