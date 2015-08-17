@@ -12,5 +12,8 @@ class Database():
     def store_stock_symbol(self, feed):
         return self.impl.store_stock_symbol(feed)
 
+    def store_capital_increase_history(self, feed):
+        return self.impl.store_capital_increase_history(feed)
+
     def get_stock_symbol(self):
         return self.impl.get_stock_symbol()

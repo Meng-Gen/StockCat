@@ -22,6 +22,14 @@ class PostgresDatabase():
         connection.commit()
         connection.close()
 
+    def store_capital_increase_history(self, feed):
+        connection = psycopg2.connect(self.connection_string)
+        cursor = connection.cursor()
+        for entry in feed:
+            cursor.execute('INSERT INTO capital_increase_history(release_date,stock_symbol,stmt_date,account,account_order,value) VALUES (%(release_date)s, %(stock_symbol)s, %(stmt_date)s, %(account)s, %(account_order)s, %(value)s)', entry)
+        connection.commit()
+        connection.close()
+
     def get_stock_symbol(self):
         connection = psycopg2.connect(self.connection_string)
         cursor = connection.cursor()

@@ -122,8 +122,13 @@ def assemble_capital_increase_history():
     content = file_utils.read_file('./stockcat/tests/unit/data/capital_increase_history/2498.html')
     assembler.assemble(content, '2498')
 
+def run_capital_increase_history_pipeline():
+    from stockcat.pipeline.capital_increase_history_pipeline import CapitalIncreaseHistoryPipeline
+    pipeline = CapitalIncreaseHistoryPipeline()
+    pipeline.run('2498', ['spider', 'assembler', 'database'])
+
 def main():
-    assemble_capital_increase_history()
+    run_capital_increase_history_pipeline()
 
 if __name__ == '__main__':
     sys.exit(main())

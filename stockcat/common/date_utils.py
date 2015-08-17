@@ -55,3 +55,7 @@ class DateUtils():
             quarter_list.append(curr)
             curr = self.get_last_date_of_next_quarter(curr)
         return quarter_list
+
+    def now_date(self):
+        now = datetime.datetime.now()
+        return datetime.date(now.year, now.month, now.day)

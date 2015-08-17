@@ -3,7 +3,10 @@
 class AccountSynonym():
     def __init__(self):
         self.inverse_synonym = {
-            u'當月營收' : [ u'本月', u'當月營收' ],
+            u'當月營收' : [ u'本月', u'當月營收', ],
+            u'現金增資' : [ u'現金增資', ], 
+            u'盈餘轉增資' : [ u'盈餘轉增資', ],
+            u'公積及其他' : [ u'公積及其他', ], 
         }
         self.synonym = self.__init_synonym()
 
