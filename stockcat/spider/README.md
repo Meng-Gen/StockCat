@@ -46,6 +46,10 @@ http://mops.twse.com.tw/mops/web/ajax_t05st29_c?encodeURIComponent=1&step=1&firs
 * 簡明合併損益表(四季):
 http://mops.twse.com.tw/mops/web/ajax_t05st30_c?encodeURIComponent=1&step=1&firstin=1&off=1&keyword4=2330&code1=&TYPEK2=&checkbtn=1&queryName=co_id&t05st29_c_ifrs=N&t05st30_c_ifrs=N&TYPEK=all&isnew=false&co_id=2330&year=99
 
+資料簡報:
+--------
+* 上市股票公司財務資料簡報: http://www.twse.com.tw/ch/statistics/statistics_list.php?tm=05&stm=001 (如遇有上市股票公司重編財務報表，本報表不回溯重新編製)
+
 營業收入:
 --------
 * 採用IFRSs後之月營業收入資訊: 
