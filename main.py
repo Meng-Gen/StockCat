@@ -107,7 +107,7 @@ def run_operating_revenue_summary_pipeline():
     from stockcat.pipeline.operating_revenue_summary_pipeline import OperatingRevenueSummaryPipeline
     pipeline = OperatingRevenueSummaryPipeline()
     date_period = datetime.date(2010, 1, 1), datetime.date(2015, 8, 10)
-    pipeline.run_many(date_period, ['spider'])
+    pipeline.run_many(date_period)
 
 def main():
     run_operating_revenue_summary_pipeline()

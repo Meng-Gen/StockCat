@@ -1,8 +1,8 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.assembler.assemble_error import NoPublishAssembleError
 from stockcat.assembler.assemble_error import NoRecordAssembleError
 from stockcat.assembler.assemble_error import OverQueryAssembleError
+from stockcat.assembler.assemble_error import PrivateRecordAssembleError
 from stockcat.assembler.ifrs.ifrs_operating_revenue_assembler import IfrsOperatingRevenueAssembler
 from stockcat.common.file_utils import FileUtils
 
@@ -55,12 +55,12 @@ class IfrsOperatingRevenueAssemblerTest(unittest.TestCase):
         content = self.file_utils.read_file('./stockcat/tests/unit/data/error/too_much_query_error.html')
         with self.assertRaises(OverQueryAssembleError) as context:
             self.assembler.assemble(content, '2330', datetime.date(2010, 9, 30))
-        self.assertEqual(context.exception.stock_symbol, '2330')
-        self.assertEqual(context.exception.date, datetime.date(2010, 9, 30))
+        self.assertEqual(context.exception.param['stock_symbol'], '2330')
+        self.assertEqual(context.exception.param['date'], datetime.date(2010, 9, 30))
 
     def test_assemble_raise_no_record_assemble_error(self):
         content = self.file_utils.read_file('./stockcat/tests/unit/data/error/no_record_error.html')
         with self.assertRaises(NoRecordAssembleError) as context:
             self.assembler.assemble(content, '2330', datetime.date(2015, 8, 31))
-        self.assertEqual(context.exception.stock_symbol, '2330')
-        self.assertEqual(context.exception.date, datetime.date(2015, 8, 31))        
+        self.assertEqual(context.exception.param['stock_symbol'], '2330')
+        self.assertEqual(context.exception.param['date'], datetime.date(2015, 8, 31))        

@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 
+from stockcat.assembler.assemble_error import NoRecordAssembleError
 from stockcat.assembler.operating_revenue_summary_assembler import OperatingRevenueSummaryAssembler
 from stockcat.common.file_utils import FileUtils
 
@@ -32,6 +33,25 @@ class OperatingRevenueSummaryAssemblerTest(unittest.TestCase):
         self.assertEqual(dao.get_stmt_date(), datetime.date(2010, 9, 30))
         self.assertEqual(dao.get_release_date(), datetime.date(2013, 5, 7))
 
+    def test_assemble_stock_exchange_market_in_2012(self):
+        # online: http://mops.twse.com.tw/nas/t21/sii/t21sc03_101_1.html
+        content = self.file_utils.read_file('./stockcat/tests/unit/data/operating_revenue_summary/stock_exchange_market/2012/1.html')
+        dao = self.assembler.assemble(content, datetime.date(2012, 1, 31))
+
+        actual = dao.get_column_name_list()
+        expected = [u'公司代號', u'公司名稱', u'當月營收', u'上月營收', u'去年當月營收', u'上月比較增減(%)', u'去年同月增減(%)', u'當月累計營收', u'去年累計營收', u'前期比較增減(%)']
+        self.assertEqual(actual, expected)
+
+        row_list = dao.get_row_list()
+        self.assertEqual(row_list[0], [u'1101', u'台泥', 1752202, 2072570, 2337946, -15.45, -25.05, 1752202, 2337946, -25.05])
+        self.assertEqual(row_list[7], [u'1201', u'味全公司', 1115106, 1127058, 1110017, -1.06, 0.45, 1115106, 1110017, 0.45])
+        self.assertEqual(row_list[-1], [u'912398', u'友佳國際', 420469, 576524, 742870, -27.06, -43.39, 420469, 742870, -43.39])
+        for row in row_list:
+            self.assertEqual(len(row), 10)
+
+        self.assertEqual(dao.get_stmt_date(), datetime.date(2012, 1, 31))
+        self.assertEqual(dao.get_release_date(), datetime.date(2015, 6, 25))
+
     def test_assemble_stock_exchange_market_in_2015(self):
         # online: http://mops.twse.com.tw/nas/t21/sii/t21sc03_104_1.html
         content = self.file_utils.read_file('./stockcat/tests/unit/data/operating_revenue_summary/stock_exchange_market/2015/1.html')
@@ -47,7 +67,7 @@ class OperatingRevenueSummaryAssemblerTest(unittest.TestCase):
             self.assertEqual(len(row), 10)
 
         self.assertEqual(dao.get_stmt_date(), datetime.date(2015, 1, 31))
-        self.assertEqual(dao.get_release_date(), datetime.date(2015, 8, 14))
+        self.assertEqual(dao.get_release_date(), datetime.date(2015, 8, 16))
 
     def test_assemble_otc_market_in_2010(self):
         # online: http://mops.twse.com.tw/nas/t21/otc/t21sc03_99_9.html
@@ -81,7 +101,7 @@ class OperatingRevenueSummaryAssemblerTest(unittest.TestCase):
             self.assertEqual(len(row), 10)
 
         self.assertEqual(dao.get_stmt_date(), datetime.date(2014, 9, 30))
-        self.assertEqual(dao.get_release_date(), datetime.date(2015, 8, 14))
+        self.assertEqual(dao.get_release_date(), datetime.date(2015, 8, 16))
 
     def test_assemble_otc_market_in_2015(self):
         # online: http://mops.twse.com.tw/nas/t21/otc/t21sc03_104_1.html
@@ -98,4 +118,11 @@ class OperatingRevenueSummaryAssemblerTest(unittest.TestCase):
             self.assertEqual(len(row), 10)
 
         self.assertEqual(dao.get_stmt_date(), datetime.date(2015, 1, 31))
-        self.assertEqual(dao.get_release_date(), datetime.date(2015, 8, 14))
+        self.assertEqual(dao.get_release_date(), datetime.date(2015, 8, 16))
+
+    def test_assemble_raise_no_record_assemble_error(self):
+        # online: http://mops.twse.com.tw/nas/t21/sii/t21sc03_105_1.html
+        content = self.file_utils.read_file('./stockcat/tests/unit/data/error/url_not_found_error.html')
+        with self.assertRaises(NoRecordAssembleError) as context:
+            self.assembler.assemble(content, datetime.date(2016, 1, 31))
+        self.assertEqual(context.exception.param['date'], datetime.date(2016, 1, 31))   
