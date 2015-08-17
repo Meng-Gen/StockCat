@@ -1,8 +1,8 @@
 #-*- coding: utf-8 -*-
 
+from stockcat.assembler.assemble_error import NoRecordAssembleError
 from stockcat.assembler.capital_increase_history_assembler import CapitalIncreaseHistoryAssembler
 from stockcat.common.file_utils import FileUtils
-from stockcat.dao.capital_increase_history_dao import CapitalIncreaseHistoryDao
 
 import datetime
 import unittest
@@ -34,8 +34,7 @@ class StockCapitalIncreaseHistoryAssembler(unittest.TestCase):
 
     def test_assemble_raise_no_record_assemble_error(self):
         # online: http://jdata.yuanta.com.tw/z/zc/zcb/zcb_3009.djhtm
-        pass
-        #content = self.file_utils.read_file('./stockcat/tests/unit/data/error/url_not_found_error.html')
-        #with self.assertRaises(NoRecordAssembleError) as context:
-        #    self.assembler.assemble(content, datetime.date(2016, 1, 31))
-        #self.assertEqual(context.exception.param['date'], datetime.date(2016, 1, 31))   
+        content = self.file_utils.read_file('./stockcat/tests/unit/data/error/capital_increase_history_not_found_error.html')
+        with self.assertRaises(NoRecordAssembleError) as context:
+            self.assembler.assemble(content, '3009')
+        self.assertEqual(context.exception.param['stock_symbol'], '3009')   
