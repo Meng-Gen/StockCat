@@ -39,8 +39,8 @@ CREATE TABLE operating_revenue (
     stock_symbol text NOT NULL,
     stmt_date date NOT NULL,
     account text NOT NULL,
-    account_order smallint NOT NULL,
-    value double precision NOT NULL
+    account_order smallint,
+    value double precision
 );
 
 

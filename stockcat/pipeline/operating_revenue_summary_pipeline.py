@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 
+from stockcat.assembler.assemble_error import NoRecordAssembleError
 from stockcat.common.date_utils import DateUtils
 from stockcat.database.database import Database
 from stockcat.feed.operating_revenue_summary_feed import OperatingRevenueSummaryFeed
@@ -18,16 +19,18 @@ class OperatingRevenueSummaryPipeline():
         self.date_utils = DateUtils()
 
     def run(self, date, enable_list=['assembler', 'database']):
-        param = self.__build_param(date, enable_list)
-        param = self.__run_spider(param)
-        param = self.__run_assembler(param)
-        param = self.__run_database(param)
+        try:
+            param = self.__build_param(date, enable_list)
+            param = self.__run_spider(param)
+            param = self.__run_assembler(param)
+            param = self.__run_database(param)
+        except NoRecordAssembleError as e:
+            print e, '=> We will abort this pipeline'
 
     def run_many(self, date_period, enable_list=['assembler', 'database']):
         begin_date, end_date = date_period
         for date in self.date_utils.range_date_by_month(begin_date, end_date):
             self.run(date, enable_list)
-            self.__avoid_blocking()
             
     def __build_param(self, date, enable_list):
         return { 'date' : date, 'enable_list' : enable_list, }
@@ -37,6 +40,7 @@ class OperatingRevenueSummaryPipeline():
             self.spider.crawl('stock_exchange_market', param['date'])
             self.__avoid_blocking()
             self.spider.crawl('otc_market', param['date'])
+            self.__avoid_blocking()
         return param
 
     def __run_assembler(self, param):

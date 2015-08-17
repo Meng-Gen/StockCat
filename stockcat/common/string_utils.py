@@ -14,18 +14,18 @@ class StringBuilder():
     # chain of responsibility: try any possible codec
     def __decode(self, local_string):
         try:
-            return local_string.decode('big5-hkscs')
+            return local_string.decode('utf-8')
         except UnicodeDecodeError:
             return self.__decode_step_1(local_string)
 
     def __decode_step_1(self, local_string):
         try:
-            return local_string.decode('gb18030')
+            return local_string.decode('big5-hkscs', 'ignore')
         except UnicodeDecodeError:
             return self.__decode_step_2(local_string)
 
     def __decode_step_2(self, local_string):
-        return local_string.decode('utf-8')
+        return local_string.decode('gb18030')
 
 class NumberBuilder():
     def __init__(self):
@@ -63,7 +63,7 @@ class NumberBuilder():
             return self.__build_float(number_string)
         # number could be - (means zero)
         except ValueError:
-            return self.__build_zero_number(number_string)
+            return self.__build_none_number(number_string)
 
     def __build_int(self, number_string):
         # try to parse negative sign from parentheses 
@@ -76,9 +76,9 @@ class NumberBuilder():
     def __build_float(self, number_string):
         return float(number_string)
 
-    def __build_zero_number(self, number_string):
-        if number_string.strip() in [u'-', u'']:
-            return 0
+    def __build_none_number(self, number_string):
+        if number_string.strip() in [u'-', u'', u'不適用']:
+            return None
         else: 
             raise ValueError
 

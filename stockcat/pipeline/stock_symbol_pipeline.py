@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 
+from stockcat.assembler.assemble_error import NoRecordAssembleError
 from stockcat.assembler.stock_symbol_assembler import StockSymbolAssembler
 from stockcat.database.database import Database
 from stockcat.feed.stock_symbol_feed import StockSymbolFeed

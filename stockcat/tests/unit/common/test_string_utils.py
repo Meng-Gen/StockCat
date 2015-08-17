@@ -41,9 +41,17 @@ class StringUtilsTest(unittest.TestCase):
         expected = -10117111
         self.assertEqual(actual, expected)
 
-    def test_normalize_hyphen_number(self):
+    def test_normalize_none_number(self):
         actual = self.string_utils.normalize_number(u'-')
-        expected = 0
+        expected = None
+        self.assertEqual(actual, expected)
+
+        actual = self.string_utils.normalize_number(u'')
+        expected = None
+        self.assertEqual(actual, expected)
+
+        actual = self.string_utils.normalize_number(u'不適用')
+        expected = None
         self.assertEqual(actual, expected)
 
     def test_normalize_chinese_number(self):

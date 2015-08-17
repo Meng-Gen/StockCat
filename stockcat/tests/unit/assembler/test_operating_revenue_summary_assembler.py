@@ -52,6 +52,41 @@ class OperatingRevenueSummaryAssemblerTest(unittest.TestCase):
         self.assertEqual(dao.get_stmt_date(), datetime.date(2012, 1, 31))
         self.assertEqual(dao.get_release_date(), datetime.date(2015, 6, 25))
 
+    def test_assemble_stock_exchange_market_in_February_2013(self):
+        # online: http://mops.twse.com.tw/nas/t21/sii/t21sc03_102_2.html
+        content = self.file_utils.read_file('./stockcat/tests/unit/data/operating_revenue_summary/stock_exchange_market/2013/2.html')
+        dao = self.assembler.assemble(content, datetime.date(2013, 2, 28))
+
+        actual = dao.get_column_name_list()
+        expected = [u'公司代號', u'公司名稱', u'當月營收', u'上月營收', u'去年當月營收', u'上月比較增減(%)', u'去年同月增減(%)', u'當月累計營收', u'去年累計營收', u'前期比較增減(%)']
+        self.assertEqual(actual, expected)
+
+        row_list = dao.get_row_list()
+        self.assertEqual(row_list[0], [u'1101', u'台泥', 5540346, 9134465, 7983023, -39.34, -30.59, 14674811, 15108059, -2.86])
+        self.assertEqual(row_list[-1], [u'912398', u'友佳國際', 245279, 547037, 701056, -55.16, -65.01, 792316, 1121522, -29.35])
+        for row in row_list:
+            self.assertEqual(len(row), 10)
+
+        self.assertEqual(dao.get_stmt_date(), datetime.date(2013, 2, 28))
+        self.assertEqual(dao.get_release_date(), datetime.date(2015, 6, 25))
+
+    def test_assemble_stock_exchange_market_in_2014(self):
+        # online: http://mops.twse.com.tw/nas/t21/sii/t21sc03_103_1.html
+        content = self.file_utils.read_file('./stockcat/tests/unit/data/operating_revenue_summary/stock_exchange_market/2014/1.html')
+        dao = self.assembler.assemble(content, datetime.date(2014, 1, 31))
+
+        actual = dao.get_column_name_list()
+        expected = [u'公司代號', u'公司名稱', u'當月營收', u'上月營收', u'去年當月營收', u'上月比較增減(%)', u'去年同月增減(%)', u'當月累計營收', u'去年累計營收', u'前期比較增減(%)']
+        self.assertEqual(actual, expected)
+
+        row_list = dao.get_row_list()
+        self.assertEqual(row_list[0], [u'1101', u'台泥', 9801691, 11416657, 9134465, -14.14, 7.30, 9801691, 9134465, 7.30])
+        for row in row_list:
+            self.assertEqual(len(row), 10)
+
+        self.assertEqual(dao.get_stmt_date(), datetime.date(2014, 1, 31))
+        self.assertEqual(dao.get_release_date(), datetime.date(2015, 2, 1))
+
     def test_assemble_stock_exchange_market_in_2015(self):
         # online: http://mops.twse.com.tw/nas/t21/sii/t21sc03_104_1.html
         content = self.file_utils.read_file('./stockcat/tests/unit/data/operating_revenue_summary/stock_exchange_market/2015/1.html')
