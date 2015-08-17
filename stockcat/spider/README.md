@@ -49,6 +49,8 @@ http://mops.twse.com.tw/mops/web/ajax_t05st30_c?encodeURIComponent=1&step=1&firs
 資料簡報:
 --------
 * 上市股票公司財務資料簡報: http://www.twse.com.tw/ch/statistics/statistics_list.php?tm=05&stm=001 (如遇有上市股票公司重編財務報表，本報表不回溯重新編製)
+* 財務比率季表(元大): http://jdata.yuanta.com.tw/z/zc/zcr/zcr_1101.djhtm
+* 財務比率年表(元大): http://jdata.yuanta.com.tw/z/zc/zcr/zcra/zcra_1101.djhtm
 
 營業收入:
 --------
