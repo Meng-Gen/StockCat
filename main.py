@@ -101,7 +101,7 @@ def get_database():
 def crawl_operating_revenue_summary():
     from stockcat.spider.operating_revenue_summary_spider import OperatingRevenueSummarySpider
     spider = OperatingRevenueSummarySpider()
-    spider.crawl("stock_exchange_market", datetime.date(2015, 1, 31))
+    spider.crawl('stock_exchange_market', datetime.date(2015, 1, 31))
 
 def run_operating_revenue_summary_pipeline():
     from stockcat.pipeline.operating_revenue_summary_pipeline import OperatingRevenueSummaryPipeline
@@ -109,8 +109,21 @@ def run_operating_revenue_summary_pipeline():
     date_period = datetime.date(2015, 8, 1), datetime.date(2015, 8, 10)
     pipeline.run_many(date_period)
 
+def crawl_capital_increase_history():
+    from stockcat.spider.capital_increase_history_spider import CapitalIncreaseHistorySpider
+    spider = CapitalIncreaseHistorySpider()
+    spider.crawl('2498')
+
+def assemble_capital_increase_history():
+    from stockcat.assembler.capital_increase_history_assembler import CapitalIncreaseHistoryAssembler
+    from stockcat.common.file_utils import FileUtils
+    assembler = CapitalIncreaseHistoryAssembler()
+    file_utils = FileUtils()
+    content = file_utils.read_file('./stockcat/tests/unit/data/capital_increase_history/2498.html')
+    assembler.assemble(content, '2498')
+
 def main():
-    run_operating_revenue_summary_pipeline()
+    assemble_capital_increase_history()
 
 if __name__ == '__main__':
     sys.exit(main())

@@ -1,13 +1,13 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.spider.single_stock_spider import SingleStockSpider
+from stockcat.spider.aries_spider import AriesSpider
 
 import datetime
 
-class XbrlFinancialStatementSpider(SingleStockSpider):
+class XbrlFinancialStatementSpider(AriesSpider):
     def crawl(self, stock_symbol, date):
         if date >= datetime.date(2013, 1, 1):
-            return SingleStockSpider.crawl(self, stock_symbol, date)
+            return AriesSpider.crawl(self, stock_symbol, date)
 
     def build_url(self, params):
         return '''http://mops.twse.com.tw/server-java/t164sb01?step=1&CO_ID=%s&SYEAR=%s&season=%s&REPORT_ID=C''' \

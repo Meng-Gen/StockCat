@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.spider.spider_storage import SpiderStorage
+from stockcat.spider.storage.spider_storage import SpiderStorage
 
 class StockSymbolSpider():
     def __init__(self):

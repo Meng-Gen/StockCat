@@ -67,6 +67,11 @@ class StringUtilsTest(unittest.TestCase):
         expected = 3
         self.assertEqual(actual, expected)
 
+    def test_normalize_percentage(self):
+        actual = self.string_utils.normalize_number(u'20.92%')
+        expected = 0.2092
+        self.assertAlmostEqual(actual, expected)
+
     def test_from_local_string_to_date(self):
         actual = self.string_utils.from_local_string_to_date(u'2013年12月31日')
         expected = datetime.date(2013, 12, 31)
@@ -86,6 +91,10 @@ class StringUtilsTest(unittest.TestCase):
 
         actual = self.string_utils.from_local_string_to_date(u'民國103年09月')
         expected = datetime.date(2014, 9, 30)
+        self.assertEqual(actual, expected)
+
+        actual = self.string_utils.from_local_string_to_date(u'104')
+        expected = datetime.date(2015, 12, 31)
         self.assertEqual(actual, expected)
 
     def test_roc_era_from_local_string_to_date(self):

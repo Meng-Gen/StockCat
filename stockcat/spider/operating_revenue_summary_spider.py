@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.spider.spider_storage import SpiderStorage
+from stockcat.spider.storage.spider_storage import SpiderStorage
 from stockcat.common.string_utils import StringUtils
 
 class OperatingRevenueSummarySpider():

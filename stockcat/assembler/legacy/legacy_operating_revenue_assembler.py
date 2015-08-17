@@ -24,7 +24,6 @@ class LegacyOperatingRevenueAssembler():
     def __traverse_to_relative_html_object(self, html_object):
         relative_html_object_list = html_object.xpath(self.base_xpath)
         assert len(relative_html_object_list) == 1, 'invalid base_xpath'
-        # skip the first table because it is irrelevant
         return relative_html_object_list[0]
 
     def __assemble_column_name_list(self, relative_html_object):

@@ -42,46 +42,6 @@ class NumberBuilder():
             u'十' : 10,
         }
 
-    def build(self, number_string):
-        try:
-            return self.build_arabic_number(number_string)
-        except ValueError:
-            return self.build_chinese_number(number_string)
-
-    def build_arabic_number(self, number_string):
-        # remove comma style
-        number_string = number_string.replace(',', '')
-
-        try:
-            return self.__build_int(number_string)
-        except ValueError:
-            return self.__build_arabic_number_step_1(number_string)
-
-    def __build_arabic_number_step_1(self, number_string):
-        # number could be float, such as EPS
-        try: 
-            return self.__build_float(number_string)
-        # number could be - (means zero)
-        except ValueError:
-            return self.__build_none_number(number_string)
-
-    def __build_int(self, number_string):
-        # try to parse negative sign from parentheses 
-        try:
-            m = re.search('^\((.+)\)$', number_string)
-            return -int(m.group(1))
-        except AttributeError:
-            return int(number_string)
-
-    def __build_float(self, number_string):
-        return float(number_string)
-
-    def __build_none_number(self, number_string):
-        if number_string.strip() in [u'-', u'', u'不適用']:
-            return None
-        else: 
-            raise ValueError
-
     def build_chinese_number(self, number_string):
         number = 0
         for digit in number_string:
@@ -91,6 +51,44 @@ class NumberBuilder():
             else:
                 number *= n
         return number
+
+    def build(self, number_string):
+        # remove comma style
+        number_string = number_string.replace(',', '')
+        # try to parse negative sign from parentheses 
+        try:
+            m = re.search('^\((.+)\)$', number_string)
+            return -int(m.group(1))
+        except AttributeError:
+            return self.__build_step_1(number_string)
+
+    def __build_step_1(self, number_string):
+        try:
+            return int(number_string)
+        except ValueError:
+            return self.__build_step_2(number_string)
+
+    def __build_step_2(self, number_string):
+        try:
+            return float(number_string)
+        except ValueError:
+            return self.__build_step_3(number_string)
+
+    def __build_step_3(self, number_string):
+        try:
+            m = re.search('^(.+)%$', number_string)
+            return float(m.group(1)) * 0.01
+        except AttributeError:
+            return self.__build_step_4(number_string)
+
+    def __build_step_4(self, number_string):
+        if number_string.strip() in [u'-', u'', u'不適用']:
+            return None
+        else: 
+            return self.__build_step_5(number_string)
+
+    def __build_step_5(self, number_string):
+        return self.build_chinese_number(number_string)
 
 class DateBuilder(): 
     def __init__(self):
@@ -136,7 +134,15 @@ class DateBuilder():
         except AttributeError:
             return self.__build_step_4(local_string)
 
-    def __build_step_4(self, local_string):
+    def __build_step_4(self, local_string):    
+        try:
+            m = re.search('^(\d{2,3})$', local_string)
+            year = int(m.group(1)) + 1911 # expect roc era
+            return datetime.date(year, 12, 31)
+        except AttributeError:
+            return self.__build_step_5(local_string)
+
+    def __build_step_5(self, local_string):
         m = re.search(u'^民國(\d{2,3})年(\d+)月$', local_string)
         year = int(m.group(1)) + 1911 # expect roc era
         month = int(m.group(2))

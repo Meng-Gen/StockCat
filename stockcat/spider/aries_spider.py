@@ -1,9 +1,9 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.spider.spider_storage import SpiderStorage
+from stockcat.spider.storage.spider_storage import SpiderStorage
 from stockcat.common.string_utils import StringUtils
 
-class SingleStockSpider():
+class AriesSpider():
     def __init__(self):
         self.storage = SpiderStorage()
         self.string_utils = StringUtils()
