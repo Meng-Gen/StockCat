@@ -54,8 +54,20 @@ http://mops.twse.com.tw/mops/web/ajax_t05st10_ifrs?encodeURIComponent=1&run=Y&st
 * 採用IFRSs前之開立發票及營業收入資訊(含合併營收):
 http://mops.twse.com.tw/mops/web/ajax_t05st10?encodeURIComponent=1&run=Y&step=0&colorchg=&TYPEK=sii%20&co_id=2330&off=1&year=99&month=09&firstin=true
 
+* 營業收入統計表: 
+  * http://mops.twse.com.tw/nas/t21/otc/t21sc03_102_1.html
+  * http://mops.twse.com.tw/nas/t21/sii/t21sc03_103_1.html
+
 股號:
 ----
 * 上市股號: http://isin.twse.com.tw/isin/C_public.jsp?strMode=2 
 * 上櫃股號: http://isin.twse.com.tw/isin/C_public.jsp?strMode=4
 * 公開資訊觀測站股號: http://mops.twse.com.tw/mops/web/quickpgm?encodeURIComponent=1&firstin=true&step=4&checkbtn=1&queryName=co_id&TYPEK2=&code1=&keyword4=
+
+股本形成:
+--------
+* 元大: http://jdata.yuanta.com.tw/z/zc/zcb/zcb_1301.djhtm
+
+股利政策:
+--------
+* 元大: http://jdata.yuanta.com.tw/z/zc/zcc/zcc_1301.djhtm
