@@ -38,7 +38,7 @@ class BalanceSheetPipeline():
 
     def run_many(self, stock_symbol, date_period, enable_list=['assembler', 'database']):
         begin_date, end_date = date_period
-        for date in self.date_utils.range_date_by_month(begin_date, end_date):
+        for date in self.date_utils.range_date_by_quarter(begin_date, end_date):
             self.run(stock_symbol, date, enable_list)
             self.__avoid_blocking()
             
