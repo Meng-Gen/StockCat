@@ -100,6 +100,38 @@ CREATE TABLE stock_symbol (
 ALTER TABLE stock_symbol OWNER TO stockcat;
 
 --
+-- Name: capital_increase_history_unique_key; Type: CONSTRAINT; Schema: public; Owner: stockcat; Tablespace: 
+--
+
+ALTER TABLE ONLY capital_increase_history
+    ADD CONSTRAINT capital_increase_history_unique_key UNIQUE (release_date, stock_symbol, stmt_date, account);
+
+
+--
+-- Name: dividend_policy_unique_key; Type: CONSTRAINT; Schema: public; Owner: stockcat; Tablespace: 
+--
+
+ALTER TABLE ONLY dividend_policy
+    ADD CONSTRAINT dividend_policy_unique_key UNIQUE (release_date, stock_symbol, stmt_date, account);
+
+
+--
+-- Name: operating_revenue_unique_key; Type: CONSTRAINT; Schema: public; Owner: stockcat; Tablespace: 
+--
+
+ALTER TABLE ONLY operating_revenue
+    ADD CONSTRAINT operating_revenue_unique_key UNIQUE (release_date, stock_symbol, stmt_date, account);
+
+
+--
+-- Name: stock_symbol_unique_key; Type: CONSTRAINT; Schema: public; Owner: stockcat; Tablespace: 
+--
+
+ALTER TABLE ONLY stock_symbol
+    ADD CONSTRAINT stock_symbol_unique_key UNIQUE (release_date, stock_symbol);
+
+
+--
 -- Name: public; Type: ACL; Schema: -; Owner: stockcat
 --
 
