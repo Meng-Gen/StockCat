@@ -30,6 +30,40 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: capital_increase_history; Type: TABLE; Schema: public; Owner: stockcat; Tablespace: 
+--
+
+CREATE TABLE capital_increase_history (
+    creation_dt timestamp without time zone DEFAULT now(),
+    release_date date NOT NULL,
+    stock_symbol text NOT NULL,
+    stmt_date date NOT NULL,
+    account text NOT NULL,
+    account_order smallint,
+    value double precision
+);
+
+
+ALTER TABLE capital_increase_history OWNER TO stockcat;
+
+--
+-- Name: dividend_policy; Type: TABLE; Schema: public; Owner: stockcat; Tablespace: 
+--
+
+CREATE TABLE dividend_policy (
+    creation_dt timestamp without time zone DEFAULT now(),
+    release_date date NOT NULL,
+    stock_symbol text NOT NULL,
+    stmt_date date NOT NULL,
+    account text NOT NULL,
+    account_order smallint,
+    value double precision
+);
+
+
+ALTER TABLE dividend_policy OWNER TO stockcat;
+
+--
 -- Name: operating_revenue; Type: TABLE; Schema: public; Owner: stockcat; Tablespace: 
 --
 

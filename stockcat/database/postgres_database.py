@@ -30,6 +30,14 @@ class PostgresDatabase():
         connection.commit()
         connection.close()
 
+    def store_dividend_policy(self, feed):
+        connection = psycopg2.connect(self.connection_string)
+        cursor = connection.cursor()
+        for entry in feed:
+            cursor.execute('INSERT INTO dividend_policy(release_date,stock_symbol,stmt_date,account,account_order,value) VALUES (%(release_date)s, %(stock_symbol)s, %(stmt_date)s, %(account)s, %(account_order)s, %(value)s)', entry)
+        connection.commit()
+        connection.close()
+
     def get_stock_symbol(self):
         connection = psycopg2.connect(self.connection_string)
         cursor = connection.cursor()

@@ -25,3 +25,5 @@ class ContentScreener():
         if 'stock_symbol' in params:
             if u'查無(%s)股本形成資料' % (params['stock_symbol']) in decoded:
                 raise NoRecordAssembleError(params)
+            if u'(%s)個股代碼錯誤' % (params['stock_symbol']) in decoded:
+                raise NoRecordAssembleError(params)

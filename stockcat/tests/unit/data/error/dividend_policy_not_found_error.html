@@ -1,0 +1,170 @@
+<!DOCTYPE>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=big5">
+<script type="text/javascript" src="/z/js/jquery.djjs"></script>
+<script language="JavaScript" src="/z/js/jsFunction.djjs"></script>
+<script language="JavaScript" src="/z/js/isSpecialKind.djjs"></script>
+<script language="JavaScript" src="/z/js/mdj.js"></script>
+<script type="text/javascript" src="/z/js/Applet2Canvas.djjs"></script>
+<script type="text/javascript" src="/z/js/DJWebGraph.djjs"></script>
+<script type="text/javascript" src="/z/js/xml2jsonJS.djjs"></script>
+<script type="text/javascript" src="/z/js/json2xmlJS.djjs"></script>
+<script type="text/javascript" src="/z/js/json2.djjs"></script>
+<link rel=stylesheet href="/z/js/mdj.css" type="text/css">
+<title>個股股利政策-3009</title>
+</head>
+<script language="JavaScript"><!--
+CheckMenu(4, '3009');
+function chkSetUpMenu(){ 
+	if (typeof(SetUpMenu) == 'function'){
+		SetUpMenu(4,'3009');
+}
+	else
+		setTimeout(function(){chkSetUpMenu();},5000);
+}
+// --></script>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<div id="SysJustIFRAMEDIV">
+<table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td colspan="3" valign="top" align="left">
+<script language="javascript" src="/z/js/SU.js"></script>
+<script language="javascript"><!--
+ chkSetUpMenu();
+//--></script>
+</td></tr>
+<tr><td valign="top" align="left">
+<script language="javascript" src="/z/js/SL.js"></script>
+<script language="javascript"><!--
+ SetLeftMenu(4,'3009')
+//--></script>
+</td><td valign="top" width="99%">
+<script language="javascript"><!--
+if(typeof(ContentCenterBegin) == 'function'){ 	ContentCenterBegin();
+ } 
+//--></script>
+<script language="javascript"></script>
+<table border="0"><tr><td class="t0" valign="top">
+<table class="t01" border="0" cellspacing="1" cellpadding="1" width="100%">
+<tr><td class="t10">(3009)個股代碼錯誤</td></tr>
+</table>
+</td></tr>
+<tr><td class="t3t1">註：除權息日請查詢「重大行事曆」</td></tr>
+</table>
+
+<script type="text/javascript"><!--
+	var $DJWebGraph1;
+	var sRenderTo = 'SysJustWebGraphDIV';
+
+    $(document).ready(function () {
+        if (!!$DJWebGraph) {
+        	$DJWebGraph1 = new $DJWebGraph();
+        	$DJWebGraph1.CallBack = GetBcdData;
+        	$DJWebGraph1.ResponseType = '2';
+        	$DJWebGraph1.CreateGraphObject({
+                'CanvasClass': 'canvasgif', //表示為複合式圖形 
+                'ID': 'ZCC',
+                'Width': '500',
+                'Height': '375',
+                'RenderTo': sRenderTo,
+                'Type': [['StackBar']],
+                'Title': [['現金股利', '盈餘配股', '公積配股']],
+                'LineColor': [['FF7701', '55F054', '5094FF']],
+                'BgColor': 'FFFFFF',
+                'BCDUrl': '/z/mda.xdjxml?x=combo_s7&StockID=3009&Count=20'
+            })
+        }
+    });
+
+
+    function GetBcdData(data) {
+        var str1 = '';
+        var str2 = new Array();
+        var a1 = new Array();
+        var s, ss;
+        var j = 1, i;
+        var v1 = '', v2 = '';
+        var sAry = new Array();
+
+        var tmpData = data;
+
+        //tmpData = String2XML(data);
+
+        var sObj = XML2jsobj(tmpData.documentElement);
+
+        
+        if (sObj) {
+            var sRecords = sObj.Records;
+            var sFields = sObj.Fields;
+        }
+
+        
+        // 無資料時候的處理
+        if (sRecords == 0 || sFields == 0) {
+            $DJWebGraph1.SetPoster("無資料");
+        }
+        else {
+            if (sObj && sObj.Data.Row) {
+                for (j = 1; j <= sFields; j++) {
+                    v1 = '';
+					if (sObj.Records > 1)
+					{					
+						for (i = 0; i < sObj.Data.Row.length; i++) {
+							if (j == 1) {
+								ss = eval('sObj.Data.Row[' + i + '].V' + j) - 1911;
+							}
+							else {
+								ss = parseFloat(eval('sObj.Data.Row[' + i + '].V' + j).toString()).toFixed(2);
+							}
+
+							if (v1 != '')
+								v1 = v1 + ',';
+
+							v1 = v1 + ss;
+						}
+
+						if (j == 1) {
+							str1 = v1;
+						}
+						else {
+							sAry[j] = v1;
+						}
+					}
+					else
+					{
+						if (j==1)
+							str1 = eval('sObj.Data.Row["V' + j + '"]');						
+						else						
+							ss = parseFloat(eval('sObj.Data.Row["V'+ j + '"]').toString()).toFixed(2);
+						if (v1 != '')
+							v1 = v1 + ',';
+						v1 = v1 + ss;
+						sAry[j] = v1;
+					}
+					
+                }
+            }
+
+            for (var ct = 2; ct <= sFields; ct++)
+                str2[ct - 2] = sAry[ct];
+
+            a1[0] = str2;
+
+            $DJWebGraph1.SetGraphBcd({ 'X': str1, 'Y': a1 });
+        }
+    }
+--></script>
+<script language="javascript"><!--
+if(typeof(ContentCenterEnd) == 'function'){ 	ContentCenterEnd();
+ } 
+//--></script>
+</td><td valign="top" align="right">
+<script language="javascript" src="/z/js/SR.js"></script>
+</td></tr>
+<tr><td colspan="3" valign="top">
+<script language="javascript" src="/z/js/SD.js"></script>
+</td></tr></table>
+</div>
+</body>
+</html>
+<!--2015/08/18 11:30:00-->

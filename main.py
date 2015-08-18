@@ -127,8 +127,13 @@ def run_capital_increase_history_pipeline():
     pipeline = CapitalIncreaseHistoryPipeline()
     pipeline.run('2498', ['spider', 'assembler', 'database'])
 
+def run_dividend_policy_pipeline():
+    from stockcat.pipeline.dividend_policy_pipeline import DividendPolicyPipeline
+    pipeline = DividendPolicyPipeline()
+    pipeline.run('2498', ['assembler', 'database'])
+
 def main():
-    run_capital_increase_history_pipeline()
+    run_dividend_policy_pipeline()
 
 if __name__ == '__main__':
     sys.exit(main())
