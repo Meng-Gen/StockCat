@@ -8,6 +8,7 @@ class PostgresDatabaseHealthChecker():
 
     def check_connection(self):
         connection = psycopg2.connect(self.connection_string)
+        connection.close()
 
     def check_table_existed(self, table):
         # fetch table names

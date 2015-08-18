@@ -38,7 +38,7 @@ class PostgresDatabase():
         connection.commit()
         connection.close()
 
-    def get_stock_symbol(self):
+    def get_stock_symbol_list(self):
         connection = psycopg2.connect(self.connection_string)
         cursor = connection.cursor()
         cursor.execute("select stock_symbol, listing_date from stock_symbol where release_date in (select max(release_date) from stock_symbol) and cfi_code = 'ESVUFR'")

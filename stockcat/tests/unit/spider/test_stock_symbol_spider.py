@@ -12,10 +12,10 @@ class StockSymbolSpiderTest(unittest.TestCase):
         self.spider = None
 
     def test_crawl(self):
-        market_type = "stock_exchange_market"
+        market_type = 'stock_exchange_market'
         self.spider.crawl(market_type)
         self.assertTrue(self.spider.is_crawled(market_type))
 
-        market_type = "otc_market"
+        market_type = 'otc_market'
         self.spider.crawl(market_type)
         self.assertTrue(self.spider.is_crawled(market_type))

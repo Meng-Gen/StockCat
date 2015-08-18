@@ -2,7 +2,7 @@
 
 from stockcat.database.database import Database
 
-class StockSymbolAnalyzer():
+class CapitalIncreaseHistoryAnalyzer():
     def __init__(self):
         self.database = Database()
 
