@@ -16,4 +16,7 @@ class PostgresDatabaseTest(unittest.TestCase):
         self.checker.check_connection()
 
     def test_check_table_existed(self):
+        self.checker.check_table_existed('stock_symbol')
         self.checker.check_table_existed('operating_revenue')
+        self.checker.check_table_existed('capital_increase_history')
+        self.checker.check_table_existed('dividend_policy')

@@ -20,3 +20,12 @@ class Database():
 
     def get_stock_symbol_list(self):
         return self.impl.get_stock_symbol_list()
+
+    def get_capital_increase_by_cash(self, stock_symbol):
+        return self.impl.get_capital_increase_by_cash(stock_symbol)
+
+    def get_capital_increase_by_earnings(self, stock_symbol):
+        return self.impl.get_capital_increase_by_earnings(stock_symbol)
+
+    def get_capital_increase_by_surplus(self, stock_symbol):
+        return self.impl.get_capital_increase_by_surplus(stock_symbol)

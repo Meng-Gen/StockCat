@@ -6,5 +6,11 @@ class CapitalIncreaseHistoryAnalyzer():
     def __init__(self):
         self.database = Database()
 
-    def get_stock_symbol_list(self):
-        return self.database.get_stock_symbol_list()
+    def get_capital_increase_by_cash(self, stock_symbol):
+        return self.database.get_capital_increase_by_cash(stock_symbol)
+
+    def get_capital_increase_by_earnings(self, stock_symbol):
+        return self.database.get_capital_increase_by_earnings(stock_symbol)
+
+    def get_capital_increase_by_surplus(self, stock_symbol):
+        return self.database.get_capital_increase_by_surplus(stock_symbol)
