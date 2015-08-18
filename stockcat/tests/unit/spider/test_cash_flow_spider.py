@@ -1,13 +1,13 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.spider.cash_flow_statement_spider import CashFlowStatementSpider
+from stockcat.spider.cash_flow_spider import CashFlowSpider
 
 import datetime
 import unittest
 
-class CashFlowStatementSpiderTest(unittest.TestCase):
+class CashFlowSpiderTest(unittest.TestCase):
     def setUp(self):
-        self.spider = CashFlowStatementSpider()
+        self.spider = CashFlowSpider()
 
     def tearDown(self):
         self.spider = None

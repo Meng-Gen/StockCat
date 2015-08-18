@@ -1,14 +1,14 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.assembler.legacy.legacy_cash_flow_statement_assembler import LegacyCashFlowStatementAssembler
+from stockcat.assembler.legacy.legacy_cash_flow_assembler import LegacyCashFlowAssembler
 from stockcat.common.file_utils import FileUtils
 
 import datetime
 import unittest
 
-class LegacyCashFlowStatementAssemblerTest(unittest.TestCase):
+class LegacyCashFlowAssemblerTest(unittest.TestCase):
     def setUp(self):
-        self.assembler = LegacyCashFlowStatementAssembler()
+        self.assembler = LegacyCashFlowAssembler()
         self.file_utils = FileUtils()
 
     def tearDown(self):
@@ -17,7 +17,7 @@ class LegacyCashFlowStatementAssemblerTest(unittest.TestCase):
 
     def test_assemble_2330(self):
         # online: http://mops.twse.com.tw/mops/web/ajax_t05st39?encodeURIComponent=1&step=1&firstin=1&off=1&keyword4=&code1=&TYPEK2=&checkbtn=&queryName=co_id&TYPEK=all&isnew=false&co_id=2330&year=99&season=03
-        content = self.file_utils.read_file('./stockcat/tests/unit/data/legacy_cash_flow_statement/2330/2010/03.html')
+        content = self.file_utils.read_file('./stockcat/tests/unit/data/legacy_cash_flow/2330/2010/03.html')
         column_name_list, row_list = self.assembler.assemble(content)
         self.assertEqual(column_name_list, [u'會計科目', datetime.date(2010, 9, 30), datetime.date(2009, 9, 30)])
         self.assertEqual(row_list[0], [])

@@ -1,14 +1,14 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.assembler.xbrl.xbrl_cash_flow_statement_assembler import XbrlCashFlowStatementAssembler
+from stockcat.assembler.xbrl.xbrl_cash_flow_assembler import XbrlCashFlowAssembler
 from stockcat.common.file_utils import FileUtils
 
 import datetime
 import unittest
 
-class XbrlCashFlowStatementAssemblerTest(unittest.TestCase):
+class XbrlCashFlowAssemblerTest(unittest.TestCase):
     def setUp(self):
-        self.assembler = XbrlCashFlowStatementAssembler()
+        self.assembler = XbrlCashFlowAssembler()
         self.file_utils = FileUtils()
 
     def tearDown(self):

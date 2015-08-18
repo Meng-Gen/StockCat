@@ -4,7 +4,7 @@ from stockcat.common.string_utils import StringUtils
 
 import lxml.html
 
-class XbrlCashFlowStatementAssembler():
+class XbrlCashFlowAssembler():
     def __init__(self):
         self.base_xpath = '//html/body[@id="content_d"]/center/table[@class="main_table hasBorder"]'
         self.string_utils = StringUtils()

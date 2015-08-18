@@ -1,14 +1,14 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.spider.ifrs.ifrs_cash_flow_statement_spider import IfrsCashFlowStatementSpider
-from stockcat.spider.legacy.legacy_cash_flow_statement_spider import LegacyCashFlowStatementSpider
+from stockcat.spider.ifrs.ifrs_cash_flow_spider import IfrsCashFlowSpider
+from stockcat.spider.legacy.legacy_cash_flow_spider import LegacyCashFlowSpider
 
 import datetime
 
-class CashFlowStatementSpider():
+class CashFlowSpider():
     def __init__(self):
-        self.ifrs_spider = IfrsCashFlowStatementSpider()
-        self.legacy_spider = LegacyCashFlowStatementSpider()
+        self.ifrs_spider = IfrsCashFlowSpider()
+        self.legacy_spider = LegacyCashFlowSpider()
 
     def crawl(self, stock_symbol, date):
         # IFRS are available from 2013 to now

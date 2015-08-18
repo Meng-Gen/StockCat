@@ -129,7 +129,7 @@ class DeloitteParser():
     def __is_tail_splitted_account(self, account):
         return u'（' not in account and u'）' in account
 
-class LegacyCashFlowStatementAssembler():
+class LegacyCashFlowAssembler():
     def __init__(self):
         self.base_xpath = '//html/body/table[@class="hasBorder"]/tr/td/pre'
         self.string_utils = StringUtils()
