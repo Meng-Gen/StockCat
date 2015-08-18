@@ -1,0 +1,16 @@
+#-*- coding: utf-8 -*-
+
+from stockcat.pipeline.balance_sheet_pipeline import BalanceSheetPipeline
+
+import datetime
+import unittest
+
+class BalanceSheetPipelineTest(unittest.TestCase):
+    def setUp(self):
+        self.pipeline = BalanceSheetPipeline()
+
+    def tearDown(self):
+        self.pipeline = None
+    
+    def test_run_2330(self):
+        self.pipeline.run('2330', datetime.date(2010, 9, 30), ['spider', 'assembler', 'database'])

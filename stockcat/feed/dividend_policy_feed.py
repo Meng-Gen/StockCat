@@ -1,7 +1,6 @@
 #-*- coding: utf-8 -*-
 
 from stockcat.common.date_utils import DateUtils
-from stockcat.dao.capital_increase_history_dao import CapitalIncreaseHistoryDao
 
 class DividendPolicyFeed():
     def __init__(self):

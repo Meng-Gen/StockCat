@@ -1,7 +1,6 @@
 #-*- coding: utf-8 -*-
 
 from stockcat.common.date_utils import DateUtils
-from stockcat.dao.operating_revenue_dao import OperatingRevenueDao
 from stockcat.synonym.account_synonym import AccountSynonym
 
 class OperatingRevenueFeed():

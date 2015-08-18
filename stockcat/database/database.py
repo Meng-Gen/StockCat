@@ -18,6 +18,9 @@ class Database():
     def store_dividend_policy(self, feed):
         return self.impl.store_dividend_policy(feed)
 
+    def store_balance_sheet(self, feed):
+        return self.impl.store_balance_sheet(feed)
+
     def get_stock_symbol_list(self):
         return self.impl.get_stock_symbol_list()
 

@@ -1,7 +1,6 @@
 #-*- coding: utf-8 -*-
 
 from stockcat.common.date_utils import DateUtils
-from stockcat.dao.operating_revenue_summary_dao import OperatingRevenueSummaryDao
 
 class OperatingRevenueSummaryFeed():
     def __init__(self):

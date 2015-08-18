@@ -20,6 +20,9 @@ class PostgresDatabase():
     def store_dividend_policy(self, feed):
         self.store_command.store_dividend_policy(feed)
 
+    def store_balance_sheet(self, feed):
+        self.store_command.store_balance_sheet(feed)
+
     def get_stock_symbol_list(self):
         return self.get_command.get_stock_symbol_list()
 

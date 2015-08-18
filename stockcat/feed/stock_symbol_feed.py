@@ -1,7 +1,5 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.dao.stock_symbol_dao import StockSymbolDao
-
 class StockSymbolFeed():
     def get(self, dao):
         feed = []

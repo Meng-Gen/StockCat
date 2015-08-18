@@ -22,6 +22,10 @@ class PostgresStoreCommand():
         operation = 'INSERT INTO dividend_policy(release_date,stock_symbol,stmt_date,account,account_order,value) VALUES (%(release_date)s, %(stock_symbol)s, %(stmt_date)s, %(account)s, %(account_order)s, %(value)s)'
         self.__store_feed(operation, feed)
 
+    def store_balance_sheet(self, feed):
+        operation = 'INSERT INTO balance_sheet(release_date,stock_symbol,stmt_date,account,account_order,value) VALUES (%(release_date)s, %(stock_symbol)s, %(stmt_date)s, %(account)s, %(account_order)s, %(value)s)'
+        self.__store_feed(operation, feed)
+
     def __store_feed(self, operation, feed):
         connection = psycopg2.connect(self.connection_string)
         cursor = connection.cursor()
