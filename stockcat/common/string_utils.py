@@ -156,7 +156,7 @@ class DatePeriodBuilder():
     # chain of responsibility: try any possible pattern
     def build(self, local_string):
         try:
-            m = re.search(u'(\d+)年度', local_string)
+            m = re.search(u'(\d{4})年度', local_string)
             year = int(m.group(1))
             return (datetime.date(year, 1, 1), datetime.date(year, 12, 31))
         except AttributeError:
@@ -164,7 +164,7 @@ class DatePeriodBuilder():
 
     def __build_step_1(self, local_string):
         try:
-            m = re.search(u'^(\d+)年第(\d+)季$', local_string)
+            m = re.search(u'^(\d{4})年第(\d+)季$', local_string)
             whole_year = int(m.group(1))
             end_quarter = int(m.group(2))
             end_date = self.__from_year_quarter_to_date(whole_year, end_quarter)
@@ -174,7 +174,7 @@ class DatePeriodBuilder():
 
     def __build_step_2(self, local_string):
         try:
-            m = re.search(u'^(\d+)年(\d+)月(\d+)日至(\d+)年(\d+)月(\d+)日$', local_string)
+            m = re.search(u'^(\d{4})年(\d+)月(\d+)日至(\d{4})年(\d+)月(\d+)日$', local_string)
             begin_year = int(m.group(1))
             begin_month = int(m.group(2))
             begin_day = int(m.group(3))
@@ -188,6 +188,15 @@ class DatePeriodBuilder():
             return self.__build_step_3(local_string)
 
     def __build_step_3(self, local_string):
+        try:
+            m = re.search(u'^(\d{2,3})年第一季$', local_string)
+            whole_year = int(m.group(1)) + 1911 # expect roc era
+            end_date = self.__from_year_quarter_to_date(whole_year, 1)
+            return (datetime.date(whole_year, 1, 1), end_date)
+        except AttributeError:
+            return self.__build_step_4(local_string)
+
+    def __build_step_4(self, local_string):
         m = re.search(u'^(.*)年前(.*)季$', local_string)
         whole_year = self.__build_chinese_number(m.group(1)) + 1911 # expect roc era
         end_quarter = self.__build_chinese_number(m.group(2))
