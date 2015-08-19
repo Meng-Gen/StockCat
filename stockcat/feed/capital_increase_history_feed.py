@@ -1,12 +1,20 @@
 #-*- coding: utf-8 -*-
 
+from stockcat.feed.aries_feed import AriesFeed
 from stockcat.common.date_utils import DateUtils
 
-class CapitalIncreaseHistoryFeed():
+class CapitalIncreaseHistoryFeed(AriesFeed):
+    pass
+
+class CapitalIncreaseHistoryFeedBuilder():
     def __init__(self):
         self.date_utils = DateUtils()
 
-    def get(self, dao):
+    def build(self, dao):
+        tuple_feed = self.__build_tuple(dao)
+        return CapitalIncreaseHistoryFeed(tuple_feed)
+
+    def __build_tuple(self, dao):
         feed = []
         stock_symbol = dao.get_stock_symbol()
         release_date = self.date_utils.now_date()

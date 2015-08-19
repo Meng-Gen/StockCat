@@ -3,7 +3,7 @@
 from stockcat.assembler.assemble_error import NoRecordAssembleError
 from stockcat.assembler.stock_symbol_assembler import StockSymbolAssembler
 from stockcat.database.database import Database
-from stockcat.feed.stock_symbol_feed import StockSymbolFeed
+from stockcat.feed.stock_symbol_feed import StockSymbolFeedBuilder
 from stockcat.spider.stock_symbol_spider import StockSymbolSpider
 
 import random
@@ -13,7 +13,7 @@ class StockSymbolPipeline():
     def __init__(self):
         self.spider = StockSymbolSpider()
         self.assembler = StockSymbolAssembler()
-        self.feed = StockSymbolFeed()
+        self.feed_builder = StockSymbolFeedBuilder()
         self.database = Database()
 
     def run(self, enable_list=['assembler', 'database']):
@@ -41,11 +41,11 @@ class StockSymbolPipeline():
     def __run_database(self, param):
         if 'database' in param['enable_list']:
             if 'stock_exchange_market_dao' in param:
-                feed = self.feed.get(param['stock_exchange_market_dao'])
-                self.database.store_stock_symbol(feed)
+                feed = self.feed_builder.build(param['stock_exchange_market_dao'])
+                self.database.store(feed)
             if 'otc_market_dao' in param:
-                feed = self.feed.get(param['otc_market_dao'])
-                self.database.store_stock_symbol(feed)
+                feed = self.feed_builder.build(param['otc_market_dao'])
+                self.database.store(feed)
         return param
 
     def __avoid_blocking(self, a=3, b=5):

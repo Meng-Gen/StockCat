@@ -6,9 +6,9 @@ from stockcat.assembler.assemble_error import OverQueryAssembleError
 from stockcat.assembler.content_screener import ContentScreener
 from stockcat.common.date_utils import DateUtils
 from stockcat.database.database import Database
-from stockcat.feed.operating_revenue_feed import OperatingRevenueFeed
 from stockcat.spider.operating_revenue_spider import OperatingRevenueSpider
 from stockcat.assembler.operating_revenue_assembler import OperatingRevenueAssembler
+from stockcat.feed.operating_revenue_feed import OperatingRevenueFeedBuilder
 
 import random
 import time
@@ -17,7 +17,7 @@ class OperatingRevenuePipeline():
     def __init__(self):
         self.spider = OperatingRevenueSpider()
         self.assembler = OperatingRevenueAssembler()
-        self.feed = OperatingRevenueFeed()
+        self.feed_builder = OperatingRevenueFeedBuilder()
         self.database = Database()
         self.date_utils = DateUtils()
         self.content_screener = ContentScreener()
@@ -58,8 +58,8 @@ class OperatingRevenuePipeline():
 
     def __run_database(self, param):
         if 'database' in param['enable_list'] and 'dao' in param:
-            feed = self.feed.get(param['dao'])
-            self.database.store_operating_revenue(feed)
+            feed = self.feed_builder.build(param['dao'])
+            self.database.store(feed)
         return param
 
     def __force_run_spider_without_over_query_error(self, param):

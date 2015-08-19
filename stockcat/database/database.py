@@ -9,27 +9,6 @@ class Database():
     def store(self, feed):
         return self.impl.store(feed)
 
-    def store_operating_revenue(self, feed):
-        return self.impl.store_operating_revenue(feed)
-
-    def store_stock_symbol(self, feed):
-        return self.impl.store_stock_symbol(feed)
-
-    def store_capital_increase_history(self, feed):
-        return self.impl.store_capital_increase_history(feed)
-
-    def store_dividend_policy(self, feed):
-        return self.impl.store_dividend_policy(feed)
-
-    def store_balance_sheet(self, feed):
-        return self.impl.store_balance_sheet(feed)
-
-    def store_income_statement(self, feed):
-        return self.impl.store_income_statement(feed)
-
-    def store_cash_flow(self, feed):
-        return self.impl.store_cash_flow(feed)
-
     def get_stock_symbol_list(self):
         return self.impl.get_stock_symbol_list()
 

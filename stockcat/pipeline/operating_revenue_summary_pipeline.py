@@ -3,9 +3,9 @@
 from stockcat.assembler.assemble_error import NoRecordAssembleError
 from stockcat.common.date_utils import DateUtils
 from stockcat.database.database import Database
-from stockcat.feed.operating_revenue_summary_feed import OperatingRevenueSummaryFeed
 from stockcat.spider.operating_revenue_summary_spider import OperatingRevenueSummarySpider
 from stockcat.assembler.operating_revenue_summary_assembler import OperatingRevenueSummaryAssembler
+from stockcat.feed.operating_revenue_feed import OperatingRevenueSummaryFeedBuilder
 
 import random
 import time
@@ -14,7 +14,7 @@ class OperatingRevenueSummaryPipeline():
     def __init__(self):
         self.spider = OperatingRevenueSummarySpider()
         self.assembler = OperatingRevenueSummaryAssembler()
-        self.feed = OperatingRevenueSummaryFeed()
+        self.feed_builder = OperatingRevenueSummaryFeedBuilder()
         self.database = Database()
         self.date_utils = DateUtils()
 
@@ -54,11 +54,11 @@ class OperatingRevenueSummaryPipeline():
     def __run_database(self, param):
         if 'database' in param['enable_list']:
             if 'stock_exchange_market_dao' in param:
-                feed = self.feed.get(param['stock_exchange_market_dao'])
-                self.database.store_operating_revenue(feed)
+                feed = self.feed_builder.build(param['stock_exchange_market_dao'])
+                self.database.store(feed)                
             if 'otc_market_dao' in param:
-                feed = self.feed.get(param['otc_market_dao'])
-                self.database.store_operating_revenue(feed)
+                feed = self.feed_builder.build(param['otc_market_dao'])
+                self.database.store(feed)                
         return param
 
     def __avoid_blocking(self, a=3, b=5):
