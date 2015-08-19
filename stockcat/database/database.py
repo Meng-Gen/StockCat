@@ -6,6 +6,9 @@ class Database():
     def __init__(self):
         self.impl = PostgresDatabase("dbname='stockcat' user='stockcat' host='localhost' password='stockcat'")
 
+    def store(self, feed):
+        return self.impl.store(feed)
+
     def store_operating_revenue(self, feed):
         return self.impl.store_operating_revenue(feed)
 
@@ -20,6 +23,12 @@ class Database():
 
     def store_balance_sheet(self, feed):
         return self.impl.store_balance_sheet(feed)
+
+    def store_income_statement(self, feed):
+        return self.impl.store_income_statement(feed)
+
+    def store_cash_flow(self, feed):
+        return self.impl.store_cash_flow(feed)
 
     def get_stock_symbol_list(self):
         return self.impl.get_stock_symbol_list()

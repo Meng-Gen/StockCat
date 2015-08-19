@@ -3,10 +3,10 @@
 from stockcat.feed.aries_feed import AriesFeed
 from stockcat.feed.tuple_feed_builder import TupleFeedBuilder
 
-class BalanceSheetFeed(AriesFeed):
+class IncomeStatementFeed(AriesFeed):
     pass
 
-class BalanceSheetFeedBuilder(TupleFeedBuilder):
+class IncomeStatementFeedBuilder(TupleFeedBuilder):
     def build(self, dao):
         tuple_feed = TupleFeedBuilder.build(self, dao)
-        return BalanceSheetFeed(tuple_feed)
+        return IncomeStatementFeed(tuple_feed)

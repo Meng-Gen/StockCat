@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
 
 from stockcat.common.string_utils import StringUtils
+from stockcat.dao.cash_flow_dao import CashFlowDao
 
 import lxml.html
 
@@ -30,7 +31,11 @@ class DeloitteParser():
     def __parse_row_list(self):
         # 7th row is column name list
         lines = self.text.splitlines()[8:]
-        return [self.__parse_row(local_string) for local_string in lines]
+        row_list = []
+        for local_string in lines:
+            row = self.__parse_row(local_string)
+            row_list.append(row) if row else None
+        return row_list
 
     def __parse_row(self, local_string):
         tokens = self.__scan_tokens(local_string)
@@ -134,7 +139,7 @@ class LegacyCashFlowAssembler():
         self.base_xpath = '//html/body/table[@class="hasBorder"]/tr/td/pre'
         self.string_utils = StringUtils()
 
-    def assemble(self, content):
+    def assemble(self, content, stock_symbol, date):
         content = self.string_utils.normalize_string(content)
         html_object = lxml.html.fromstring(content)
         relative_html_object = self.__traverse_to_relative_html_object(html_object)
@@ -142,7 +147,7 @@ class LegacyCashFlowAssembler():
         # Parse deloitte cash flow statement 
         parser = DeloitteParser(relative_html_object.text)
         column_name_list, row_list = parser.parse()
-        return (column_name_list, row_list)
+        return CashFlowDao(column_name_list, row_list, stock_symbol, date)
 
     def __traverse_to_relative_html_object(self, html_object):
         relative_html_object_list = html_object.xpath(self.base_xpath)

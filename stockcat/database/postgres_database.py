@@ -8,6 +8,9 @@ class PostgresDatabase():
         self.store_command = PostgresStoreCommand(connection_string)
         self.get_command = PostgresGetCommnad(connection_string)
 
+    def store(self, feed):
+        return self.store_command.store(feed)
+
     def store_operating_revenue(self, feed):
         self.store_command.store_operating_revenue(feed)
 
@@ -22,6 +25,12 @@ class PostgresDatabase():
 
     def store_balance_sheet(self, feed):
         self.store_command.store_balance_sheet(feed)
+
+    def store_income_statement(self, feed):
+        self.store_command.store_income_statement(feed)
+
+    def store_cash_flow(self, feed):
+        self.store_command.store_cash_flow(feed)
 
     def get_stock_symbol_list(self):
         return self.get_command.get_stock_symbol_list()
