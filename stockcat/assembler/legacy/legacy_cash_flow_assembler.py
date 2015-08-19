@@ -1,7 +1,6 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.assembler.legacy.cash_flow.deloitte_aries_parser import DeloitteAriesParser
-from stockcat.assembler.legacy.cash_flow.deloitte_taurus_parser import DeloitteTaurusParser
+from stockcat.assembler.legacy.cash_flow.aries_parser import AriesParser
 from stockcat.common.string_utils import StringUtils
 from stockcat.dao.cash_flow_dao import CashFlowDao
 
@@ -26,7 +25,5 @@ class LegacyCashFlowAssembler():
         return relative_html_object_list[0]
 
     def __assemble_summary(self, text):
-        try:
-            return DeloitteAriesParser(text).parse()
-        except AssertionError:
-            return DeloitteTaurusParser(text).parse()
+        return AriesParser(text).parse()
+        
