@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 
+from stockcat.assembler.content_screener import ContentScreener
 from stockcat.common.string_utils import StringUtils
 from stockcat.dao.balance_sheet_dao import BalanceSheetDao
 
@@ -8,9 +9,11 @@ import lxml.html
 class XbrlBalanceSheetAssembler():
     def __init__(self):
         self.base_xpath = '//html/body[@id="content_d"]/center/table[@class="result_table hasBorder"]'
+        self.content_screener = ContentScreener()
         self.string_utils = StringUtils()
 
     def assemble(self, content, stock_symbol, date):
+        self.content_screener.screen(content, { 'stock_symbol' : stock_symbol, 'date' : date })
         content = self.string_utils.normalize_string(content)
         html_object = lxml.html.fromstring(content)
         relative_html_object = self.__traverse_to_relative_html_object(html_object)

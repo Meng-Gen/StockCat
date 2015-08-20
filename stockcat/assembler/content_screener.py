@@ -22,6 +22,8 @@ class ContentScreener():
 
     def __screen_big5(self, content, params):
         decoded = content.decode('big5-hkscs', 'ignore')
+        if u'查詢XML申報檔過程發生錯誤，請洽系統人員' in decoded:
+            raise NoRecordAssembleError(params)
         if 'stock_symbol' in params:
             if u'查無(%s)股本形成資料' % (params['stock_symbol']) in decoded:
                 raise NoRecordAssembleError(params)
