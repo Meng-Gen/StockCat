@@ -120,6 +120,22 @@ class StringUtilsTest(unittest.TestCase):
         expected = datetime.date(2011, 1, 1), datetime.date(2011, 3, 31)
         self.assertEqual(actual, expected)
         
+        actual = self.string_utils.from_local_string_to_date_period(u'100年上半年度')
+        expected = datetime.date(2011, 1, 1), datetime.date(2011, 6, 30)
+        self.assertEqual(actual, expected)
+
+        actual = self.string_utils.from_local_string_to_date_period(u'99年上半年度')
+        expected = datetime.date(2010, 1, 1), datetime.date(2010, 6, 30)
+        self.assertEqual(actual, expected)
+
+        actual = self.string_utils.from_local_string_to_date_period(u'100年前三季')
+        expected = datetime.date(2011, 1, 1), datetime.date(2011, 9, 30)
+        self.assertEqual(actual, expected)
+
+        actual = self.string_utils.from_local_string_to_date_period(u'100年度')
+        expected = datetime.date(2011, 1, 1), datetime.date(2011, 12, 31)
+        self.assertEqual(actual, expected)
+
     def test_from_date_to_roc_era_string(self):
         actual = self.string_utils.from_date_to_roc_era_string(datetime.date(2001, 1, 1))
         expected = '90'

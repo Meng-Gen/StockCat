@@ -16,7 +16,7 @@ class TupleFeedBuilder():
 
         account_order = 1
         for row in dao.get_row_list():
-            account, leading_space_count = row[0]
+            account = row[0]
             number_list = row[1:]
             number_len = len(number_list)
             for i in range(stmt_date_len):

@@ -26,6 +26,6 @@ class XbrlIncomeStatementAssemblerTest(unittest.TestCase):
         self.assertEqual(column_name_list[0], u'會計項目')
         self.assertEqual(column_name_list[1], (datetime.date(2014, 1, 1), datetime.date(2014, 9, 30)))
         self.assertEqual(column_name_list[2], (datetime.date(2013, 1, 1), datetime.date(2013, 9, 30)))
-        self.assertEqual(row_list[0], [(u'營業收入', 2)])
-        self.assertEqual(row_list[1], [(u'營業收入合計', 3), 209049734, 162577034, 540285390, 451218350])
+        self.assertEqual(row_list[0], [u'營業收入'])
+        self.assertEqual(row_list[1], [u'營業收入合計', 209049734, 162577034, 540285390, 451218350])
     

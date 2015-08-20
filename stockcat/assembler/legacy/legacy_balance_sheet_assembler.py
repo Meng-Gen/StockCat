@@ -52,10 +52,9 @@ class LegacyBalanceSheetAssembler():
         td_texts = relative_html_object.xpath('./td/text()')
         td_texts = self.__remove_empty_string_from_string_list(td_texts)
 
-        # should be account type and its leading space count (determine the grade of account type)
+        # should be account type
         account_type = td_texts[0].strip()
-        leading_space_count = len(td_texts[0]) - len(td_texts[0].lstrip())
-        row.append((account_type, leading_space_count))
+        row.append(account_type)
 
         # should be number (skip percentage number)
         for i in range(1, len(td_texts), 2):

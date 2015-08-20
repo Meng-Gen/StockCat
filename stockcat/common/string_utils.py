@@ -197,6 +197,33 @@ class DatePeriodBuilder():
             return self.__build_step_4(local_string)
 
     def __build_step_4(self, local_string):
+        try:
+            m = re.search(u'^(\d{2,3})年上半年度$', local_string)
+            whole_year = int(m.group(1)) + 1911 # expect roc era
+            end_date = self.__from_year_quarter_to_date(whole_year, 2)
+            return (datetime.date(whole_year, 1, 1), end_date)
+        except AttributeError:
+            return self.__build_step_5(local_string)
+
+    def __build_step_5(self, local_string):
+        try:
+            m = re.search(u'^(\d{2,3})年前三季$', local_string)
+            whole_year = int(m.group(1)) + 1911 # expect roc era
+            end_date = self.__from_year_quarter_to_date(whole_year, 3)
+            return (datetime.date(whole_year, 1, 1), end_date)
+        except AttributeError:
+            return self.__build_step_6(local_string)
+
+    def __build_step_6(self, local_string):
+        try:
+            m = re.search(u'^(\d{2,3})年度$', local_string)
+            whole_year = int(m.group(1)) + 1911 # expect roc era
+            end_date = self.__from_year_quarter_to_date(whole_year, 4)
+            return (datetime.date(whole_year, 1, 1), end_date)
+        except AttributeError:
+            return self.__build_step_7(local_string)
+
+    def __build_step_7(self, local_string):
         m = re.search(u'^(.*)年前(.*)季$', local_string)
         whole_year = self.__build_chinese_number(m.group(1)) + 1911 # expect roc era
         end_quarter = self.__build_chinese_number(m.group(2))

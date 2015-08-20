@@ -1,10 +1,10 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.assembler.operating_revenue_summary.aries_parser import AriesParser
-from stockcat.assembler.operating_revenue_summary.taurus_parser import TaurusParser
-from stockcat.assembler.operating_revenue_summary.gemini_parser import GeminiParser
-from stockcat.assembler.operating_revenue_summary.cancer_parser import CancerParser
-from stockcat.assembler.operating_revenue_summary.leo_parser import LeoParser
+from stockcat.assembler.operating_revenue_summary_parser.aries_parser import AriesParser
+from stockcat.assembler.operating_revenue_summary_parser.taurus_parser import TaurusParser
+from stockcat.assembler.operating_revenue_summary_parser.gemini_parser import GeminiParser
+from stockcat.assembler.operating_revenue_summary_parser.cancer_parser import CancerParser
+from stockcat.assembler.operating_revenue_summary_parser.leo_parser import LeoParser
 from stockcat.assembler.content_screener import ContentScreener
 from stockcat.common.date_utils import DateUtils
 from stockcat.common.string_utils import StringUtils

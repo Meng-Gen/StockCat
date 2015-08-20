@@ -67,7 +67,7 @@ class Scanner():
                 self.__push_back()
                 break
             self.buffer.append(self.c0)
-        self.tokens.append(Token('TK_ACCOUNT', ''.join(self.buffer)))
+        self.tokens.append(Token('TK_ACCOUNT', ''.join(self.buffer).strip()))
         self.__reset_buffer()
 
     def __scan_number_or_account(self):
@@ -81,7 +81,7 @@ class Scanner():
             if self.__is_chinese_alpha(self.c0):
                 token_type = 'TK_ACCOUNT'
             self.buffer.append(self.c0)
-        self.tokens.append(Token(token_type, ''.join(self.buffer)))
+        self.tokens.append(Token(token_type, ''.join(self.buffer).strip()))
         self.__reset_buffer()
 
     def __is_chinese_alpha(self, c):

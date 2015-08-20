@@ -58,10 +58,9 @@ class XbrlCashFlowAssembler():
 
         td_texts = relative_html_object.xpath('./td/text()')
 
-        # should be account type and its leading space count (determine the grade of account type)
+        # should be account type 
         account_type = td_texts[0].strip()
-        leading_space_count = len(td_texts[0]) - len(td_texts[0].lstrip())
-        row.append((account_type, leading_space_count))
+        row.append(account_type)
 
         # should be number
         for number_string in td_texts[1:]:

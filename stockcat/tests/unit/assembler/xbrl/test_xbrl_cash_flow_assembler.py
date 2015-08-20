@@ -26,4 +26,4 @@ class XbrlCashFlowAssemblerTest(unittest.TestCase):
         self.assertEqual(column_name_list[0], u'會計項目')
         self.assertEqual(column_name_list[1], (datetime.date(2014, 1, 1), datetime.date(2014, 9, 30)))
         self.assertEqual(column_name_list[2], (datetime.date(2013, 1, 1), datetime.date(2013, 9, 30)))
-        self.assertEqual(row_list[0], [(u'營業活動之現金流量－間接法', 2)])
+        self.assertEqual(row_list[0], [u'營業活動之現金流量－間接法'])

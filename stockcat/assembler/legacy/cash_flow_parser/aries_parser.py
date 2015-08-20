@@ -58,11 +58,14 @@ class AriesParser():
                     row = self.__parse_account_paren_number_paren_number_line(line)
                 elif type_list == ['TK_ACCOUNT', 'TK_EOL']:
                     row = self.__parse_account_line(line)
+                elif type_list == ['TK_ACCOUNT', 'TK_ACCOUNT', 'TK_ACCOUNT', 'TK_EOL']:
+                    continue
                 else:
                     raise ValueError
                 row_list.append(row) if row else None
 
         assert visited_column_name_list, 'We should parse column name list'
+        assert len(row_list) > 0, 'We should parse some rows'
         return column_name_list, row_list
 
     # ['TK_ACCOUNT', 'TK_ACCOUNT', 'TK_EOL']
