@@ -17,7 +17,6 @@ class BalanceSheetPipelineTest(unittest.TestCase):
 
     def test_run_2330_in_2014Q3(self):
         self.pipeline.run('2330', datetime.date(2014, 9, 30), ['spider', 'assembler', 'database'])
-        #self.pipeline.run('2330', datetime.date(2014, 9, 30), ['assembler', 'database'])
 
     @unittest.skip("skip long time functional tests")
     def test_run_many_2330_in_2011(self):
