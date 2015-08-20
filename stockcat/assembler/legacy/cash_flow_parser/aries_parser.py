@@ -1,153 +1,22 @@
 #-*- coding: utf-8 -*-
 
+from stockcat.assembler.legacy.cash_flow_parser.scanner import Scanner
+from stockcat.assembler.legacy.cash_flow_parser.source import Source
+from stockcat.common.account_utils import AccountUtils
 from stockcat.common.string_utils import StringUtils
 
 import lxml.html
-
-class Source():
-    def __init__(self, source):
-        self.source = source
-        self.source_size = len(source)
-        self.pos = -1
-        self.c0 = None
-
-    def get_current_char(self):
-        return self.c0
-
-    def advance(self):
-        self.pos += 1
-        if self.pos < self.source_size:
-            self.c0 = self.source[self.pos]
-        else:
-            self.c0 = None
-
-    def push_back(self):
-        self.pos -= 1
-        if self.pos >= 0:
-            self.c0 = self.source[self.pos]
-        else:
-            self.c0 = None
-
-class Token():
-    def __init__(self, token_type, value=None):
-        self.token_type = token_type
-        self.value = value
-
-    def get_token_type(self):
-        return self.token_type
-
-    def get_value(self):
-        return self.value
-
-class Scanner():
-    def __init__(self, source):
-        self.source = source
-        self.c0 = None
-        self.buffer = []
-        self.tokens = []
-        self.curr_token_pos = 0
-        self.string_utils = StringUtils()
-
-    def scan(self):
-        while True:
-            self.__advance()
-            if self.c0 == '\n':
-                self.tokens.append(Token('TK_EOL'))
-            elif self.c0 == '-':
-                # - -- -number
-                self.__advance()
-                if self.c0 == '-':
-                    self.__scan_seperation()
-                elif self.__is_decimal_digit(self.c0):
-                    self.buffer.append('-')
-                    self.__scan_number()
-                else:
-                    self.tokens.append(Token('TK_NUMBER', '-'))
-                    self.__push_back()
-            elif self.c0 == '=':
-                # = ==
-                self.__advance()
-                if self.c0 == '=':
-                    self.__scan_seperation()
-                else:
-                    self.tokens.append(Token('TK_EQUALS'))
-                    self.__push_back()
-            elif self.c0 == '(':
-                self.tokens.append(Token('TK_LEFT_PAREN'))
-            elif self.c0 == ')':
-                self.tokens.append(Token('TK_RIGHT_PAREN'))
-            elif self.__is_chinese_alpha(self.c0):
-                self.__scan_account()
-            elif self.__is_decimal_digit(self.c0):
-                self.__scan_number()
-            if not self.c0:
-                break
-        self.tokens.append(Token('TK_EOS'))
-
-    def get_tokens(self):
-        return self.tokens
-
-    def __scan_seperation(self):
-        while True:
-            self.__advance()
-            if self.c0 == '\n' or self.c0 is None:
-                self.__push_back()
-                break
-        self.tokens.append(Token('TK_SEPERATION'))
-
-    def __scan_account(self):
-        self.buffer.append(self.c0)
-        while True:
-            self.__advance()
-            if self.c0 == '\n' or self.c0 == ' ' or self.c0 is None:
-                self.__push_back()
-                break
-            self.buffer.append(self.c0)
-        self.tokens.append(Token('TK_ACCOUNT', ''.join(self.buffer)))
-        self.__reset_buffer()
-
-    def __scan_number(self):
-        self.buffer.append(self.c0)
-        while True:
-            self.__advance()
-            if self.c0 == '\n' or self.c0 == ' ' or self.c0 == ')' or self.c0 is None:
-                self.__push_back()
-                break
-            self.buffer.append(self.c0)
-        self.tokens.append(Token('TK_NUMBER', ''.join(self.buffer)))
-        self.__reset_buffer()
-
-    def __is_chinese_alpha(self, c):
-        if c >= u'\u4e00' and c <= u'\u9fff':
-            return True
-        if c >= u'\u3400' and c <= u'\u4dff':
-            return True
-        if c >= u'\uf900' and c <= u'\ufaff':
-            return True
-        return False
-
-    def __is_decimal_digit(self, c):
-        return c >= u'0' and c <= u'9'
-
-    def __advance(self):
-        self.source.advance()
-        self.c0 = self.source.get_current_char()
-
-    def __push_back(self):
-        self.source.push_back()
-        self.c0 = self.source.get_current_char()
-
-    def __reset_buffer(self):
-        self.buffer = []
 
 class AriesParser():
     def __init__(self, text):
         self.text = text
         self.head_splitted_account = None
+        self.account_utils = AccountUtils()
         self.string_utils = StringUtils()
 
     def parse(self):
-        lines = self.__scan_lines(self.text)
+        text = self.account_utils.concat_account(self.text)
+        lines = self.__scan_lines(text)
         return self.__parse_lines(lines)
 
     def __scan_lines(self, text):
@@ -192,6 +61,8 @@ class AriesParser():
                 else:
                     raise ValueError
                 row_list.append(row) if row else None
+
+        assert visited_column_name_list, 'We should parse column name list'
         return column_name_list, row_list
 
     # ['TK_ACCOUNT', 'TK_ACCOUNT', 'TK_EOL']

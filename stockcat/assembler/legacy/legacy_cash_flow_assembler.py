@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.assembler.legacy.cash_flow.aries_parser import AriesParser
+from stockcat.assembler.legacy.cash_flow_parser.aries_parser import AriesParser
 from stockcat.common.string_utils import StringUtils
 from stockcat.dao.cash_flow_dao import CashFlowDao
 

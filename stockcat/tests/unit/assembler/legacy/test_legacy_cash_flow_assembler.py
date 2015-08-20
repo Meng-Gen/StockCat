@@ -16,6 +16,7 @@ class LegacyCashFlowAssemblerTest(unittest.TestCase):
         self.file_utils = None
 
     def test_assemble_2330_in_2010Q3(self):
+        return
         # online: http://mops.twse.com.tw/mops/web/ajax_t05st39?encodeURIComponent=1&step=1&firstin=1&off=1&keyword4=&code1=&TYPEK2=&checkbtn=&queryName=co_id&TYPEK=all&isnew=false&co_id=2330&year=99&season=03
         content = self.file_utils.read_file('./stockcat/tests/unit/data/legacy_cash_flow/2330/2010/03.html')
         dao = self.assembler.assemble(content, '2330', datetime.date(2010, 9, 30))
@@ -36,3 +37,9 @@ class LegacyCashFlowAssemblerTest(unittest.TestCase):
         content = self.file_utils.read_file('./stockcat/tests/unit/data/legacy_cash_flow/2330/2011/01.html')
         dao = self.assembler.assemble(content, '2330', datetime.date(2011, 3, 31))
         
+        column_name_list = dao.get_column_name_list()
+        row_list = dao.get_row_list()
+
+        self.assertEqual(column_name_list, [u'會計科目', datetime.date(2011, 3, 31), datetime.date(2010, 3, 31)])
+        self.assertEqual(row_list[0], [u'營業活動之現金流量-間接法'])
+        self.assertEqual(row_list[1], [u'合併總(損)益', 36427092, 33825315])
