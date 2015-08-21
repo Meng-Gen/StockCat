@@ -17,6 +17,16 @@ class PostgresDatabaseTest(unittest.TestCase):
 
     def test_check_table_existed(self):
         self.checker.check_table_existed('stock_symbol')
+        self.checker.check_table_existed('balance_sheet')
+        self.checker.check_table_existed('income_statement')
+        self.checker.check_table_existed('cash_flow')
         self.checker.check_table_existed('operating_revenue')
         self.checker.check_table_existed('capital_increase_history')
         self.checker.check_table_existed('dividend_policy')
+
+    def test_check_balance_sheet_entry_existed(self):
+        entry = { 
+            'stock_symbol' : '2330', 
+            'stmt_date' : datetime.date(2010, 9, 30),
+        }
+        self.checker.check_balance_sheet_entry_existed(entry)

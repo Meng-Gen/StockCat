@@ -22,3 +22,12 @@ class PostgresDatabaseHealthChecker():
         tables = [record[0] for record in records]
         if table not in tables:
             raise ValueError
+
+    def check_balance_sheet_entry_existed(self, entry):
+        print entry
+        connection = psycopg2.connect(self.connection_string)
+        cursor = connection.cursor()
+        cursor.execute(u"select count(1) from balance_sheet where stock_symbol = %(stock_symbol)s and stmt_date = %(stmt_date)s", entry)
+        record = cursor.fetchone()
+        print record
+        connection.close()
