@@ -26,7 +26,8 @@ class PostgresDatabaseTest(unittest.TestCase):
 
     def test_check_balance_sheet_entry_existed(self):
         entry = { 
+            'table' : 'balance_sheet', 
             'stock_symbol' : '2330', 
             'stmt_date' : datetime.date(2010, 9, 30),
         }
-        self.checker.check_balance_sheet_entry_existed(entry)
+        self.checker.check_entry_existed(entry)

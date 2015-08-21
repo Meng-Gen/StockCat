@@ -36,9 +36,9 @@ CREATE TABLE balance_sheet
   stock_symbol text NOT NULL,
   stmt_date date NOT NULL,
   account text NOT NULL,
-  account_order smallint,
+  account_order smallint NOT NULL,
   value double precision,
-  CONSTRAINT balance_sheet_unique_key UNIQUE (release_date, stock_symbol, stmt_date, account)
+  CONSTRAINT balance_sheet_unique_key UNIQUE (release_date, stock_symbol, stmt_date, account, account_order)
 )
 WITH (
   OIDS=FALSE
@@ -59,9 +59,9 @@ CREATE TABLE income_statement
   stock_symbol text NOT NULL,
   stmt_date date NOT NULL,
   account text NOT NULL,
-  account_order smallint,
+  account_order smallint NOT NULL,
   value double precision,
-  CONSTRAINT income_statement_unique_key UNIQUE (release_date, stock_symbol, stmt_date, account)
+  CONSTRAINT income_statement_unique_key UNIQUE (release_date, stock_symbol, stmt_date, account, account_order)
 )
 WITH (
   OIDS=FALSE
@@ -82,9 +82,9 @@ CREATE TABLE cash_flow
   stock_symbol text NOT NULL,
   stmt_date date NOT NULL,
   account text NOT NULL,
-  account_order smallint,
+  account_order smallint NOT NULL,
   value double precision,
-  CONSTRAINT cash_flow_unique_key UNIQUE (release_date, stock_symbol, stmt_date, account)
+  CONSTRAINT cash_flow_unique_key UNIQUE (release_date, stock_symbol, stmt_date, account, account_order)
 )
 WITH (
   OIDS=FALSE
@@ -105,8 +105,9 @@ CREATE TABLE operating_revenue
   stock_symbol text NOT NULL,
   stmt_date date NOT NULL,
   account text NOT NULL,
-  account_order smallint,
-  value double precision
+  account_order smallint NOT NULL,
+  value double precision,
+  CONSTRAINT operating_revenue_unique_key UNIQUE (release_date, stock_symbol, stmt_date, account, account_order)
 )
 WITH (
   OIDS=FALSE
@@ -127,9 +128,9 @@ CREATE TABLE capital_increase_history
   stock_symbol text NOT NULL,
   stmt_date date NOT NULL,
   account text NOT NULL,
-  account_order smallint,
+  account_order smallint NOT NULL,
   value double precision,
-  CONSTRAINT capital_increase_history_unique_key UNIQUE (release_date, stock_symbol, stmt_date, account)
+  CONSTRAINT capital_increase_history_unique_key UNIQUE (release_date, stock_symbol, stmt_date, account, account_order)
 )
 WITH (
   OIDS=FALSE
@@ -150,9 +151,9 @@ CREATE TABLE dividend_policy
   stock_symbol text NOT NULL,
   stmt_date date NOT NULL,
   account text NOT NULL,
-  account_order smallint,
+  account_order smallint NOT NULL,
   value double precision,
-  CONSTRAINT dividend_policy_unique_key UNIQUE (release_date, stock_symbol, stmt_date, account)
+  CONSTRAINT dividend_policy_unique_key UNIQUE (release_date, stock_symbol, stmt_date, account, account_order)
 )
 WITH (
   OIDS=FALSE

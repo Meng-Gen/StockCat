@@ -37,7 +37,10 @@ class AriesPipeline():
         begin_date, end_date = date_period
         for date in self.date_utils.range_date_by_quarter(begin_date, end_date):
             self.run(stock_symbol, date, enable_list)
-            self.__avoid_blocking()
+            self.avoid_blocking()
+
+    def avoid_blocking(self, a=3, b=5):
+        time.sleep(random.randint(a, b))
             
     def __build_param(self, stock_symbol, date, enable_list):
         return { 'stock_symbol' : stock_symbol, 'date' : date, 'enable_list' : enable_list, }
@@ -66,10 +69,7 @@ class AriesPipeline():
             try:
                 self.content_screener.screen(content, param['stock_symbol'], param['date'])
             except OverQueryAssembleError:
-                self.__avoid_blocking()
+                self.avoid_blocking()
             except AssembleError:
                 break
         return param
-
-    def __avoid_blocking(self, a=3, b=5):
-        time.sleep(random.randint(a, b))
