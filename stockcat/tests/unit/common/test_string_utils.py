@@ -115,6 +115,10 @@ class StringUtilsTest(unittest.TestCase):
         actual = self.string_utils.from_local_string_to_date_period(u'九十八年前三季')
         expected = datetime.date(2009, 1, 1), datetime.date(2009, 9, 30)
         self.assertEqual(actual, expected)
+
+        actual = self.string_utils.from_local_string_to_date_period(u'九十八年第一季')
+        expected = datetime.date(2009, 1, 1), datetime.date(2009, 3, 31)
+        self.assertEqual(actual, expected)
         
         actual = self.string_utils.from_local_string_to_date_period(u'100年第一季')
         expected = datetime.date(2011, 1, 1), datetime.date(2011, 3, 31)
