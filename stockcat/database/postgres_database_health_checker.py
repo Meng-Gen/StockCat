@@ -28,16 +28,29 @@ class PostgresDatabaseHealthChecker():
             raise NoTableDatabaseError({'table' : table})
 
     def check_entry_existed(self, entry):
+        # build operation
+        operation = self.__build_operation(entry)
+
         # pass table name as a parameter
         as_is_entry = entry.copy()
         as_is_entry['table'] = psycopg2.extensions.AsIs(entry['table'])
 
         connection = psycopg2.connect(self.connection_string)
         cursor = connection.cursor()
-        cursor.execute(u"select count(1) from %(table)s where stock_symbol = %(stock_symbol)s and stmt_date = %(stmt_date)s", as_is_entry)
+        cursor.execute(operation, as_is_entry)
         record_count, = cursor.fetchone()
         cursor.close()
         connection.close()
 
         if record_count == 0:
             raise NoEntryDatabaseError(entry)
+
+    def __build_operation(self, entry):
+        keys = entry.keys()
+        keys.sort()
+        if keys == ['stmt_date', 'stock_symbol', 'table']:
+            return u"select count(1) from %(table)s where stock_symbol = %(stock_symbol)s and stmt_date = %(stmt_date)s"
+        elif keys == ['stock_symbol', 'table']:
+            return u"select count(1) from %(table)s where stock_symbol = %(stock_symbol)s"
+        else:
+            raise ValueError
