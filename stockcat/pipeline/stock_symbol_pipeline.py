@@ -28,7 +28,7 @@ class StockSymbolPipeline():
     def __run_spider(self, param):
         if 'spider' in param['enable_list']:
             self.spider.crawl('stock_exchange_market')
-            self.__avoid_blocking()
+            self.avoid_blocking()
             self.spider.crawl('otc_market')
         return param
 
@@ -48,5 +48,5 @@ class StockSymbolPipeline():
                 self.database.store(feed)
         return param
 
-    def __avoid_blocking(self, a=3, b=5):
+    def avoid_blocking(self, a=3, b=5):
         time.sleep(random.randint(a, b))

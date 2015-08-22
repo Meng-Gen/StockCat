@@ -48,9 +48,12 @@ class PostgresDatabaseHealthChecker():
     def __build_operation(self, entry):
         keys = entry.keys()
         keys.sort()
+
         if keys == ['stmt_date', 'stock_symbol', 'table']:
             return u"select count(1) from %(table)s where stock_symbol = %(stock_symbol)s and stmt_date = %(stmt_date)s"
         elif keys == ['stock_symbol', 'table']:
             return u"select count(1) from %(table)s where stock_symbol = %(stock_symbol)s"
+        elif keys == ['cfi_code', 'market_category', 'table']:
+            return u"select count(1) from %(table)s where market_category = %(market_category)s and cfi_code = %(cfi_code)s"
         else:
             raise ValueError
