@@ -18,7 +18,8 @@ class OperatingRevenueSummaryPipelineTest(unittest.TestCase):
     def test_run_in_Feb_2013(self):
         entry = { 
             'table' : 'operating_revenue',
-            'stock_symbol' : '2330', 
+            'stock_symbol' : '1101', 
             'stmt_date' : datetime.date(2013, 2, 28),
         }
-        self.pipeline.run(entry['stmt_date'], ['spider', 'assembler', 'database'])        
+        self.pipeline.run(entry['stmt_date'], ['spider', 'assembler', 'database'])
+        self.checker.check_entry_existed(entry)

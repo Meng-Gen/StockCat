@@ -3,7 +3,6 @@
 from stockcat.database.postgres_database_health_checker import PostgresDatabaseHealthChecker
 from stockcat.pipeline.stock_symbol_pipeline import StockSymbolPipeline
 
-import datetime
 import unittest
 
 class StockSymbolPipelineTest(unittest.TestCase):
