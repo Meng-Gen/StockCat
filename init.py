@@ -10,7 +10,8 @@ def main():
     setup_logging() 
     initializer = Initializer()
     #initializer.init_stock_symbol()
-    initializer.init_operating_revenue_summary()
+    #initializer.init_operating_revenue_summary()
+    initializer.init_dividend_policy()
 
 if __name__ == '__main__':
     sys.exit(main())
