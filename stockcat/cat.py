@@ -19,3 +19,10 @@ class Cat():
         from stockcat.state.operating_revenue.state_machine import StateMachine
         state_machine = StateMachine()
         state_machine.run()
+
+    def debug_default_memento(self):
+        from stockcat.state.stock_symbol.state_machine import StateMachine
+        self.logger.info('stock_symbol: {0}'.format(StateMachine().memento.get_default_value()))
+
+        from stockcat.state.operating_revenue.state_machine import StateMachine
+        self.logger.info('operating_revenue: {0}'.format(StateMachine().memento.get_default_value()))

@@ -7,7 +7,8 @@ import sys
 def main():
     setup_logging() 
     cat = Cat()
-    cat.run()
+    #cat.run()
+    cat.debug_default_memento()
     
 if __name__ == '__main__':
     sys.exit(main())
