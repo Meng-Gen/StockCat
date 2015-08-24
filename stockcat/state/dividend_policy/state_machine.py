@@ -23,17 +23,17 @@ class StateMachine():
         self.memento = Memento(memento_path)
 
         # prepare spider, assembler, feed builder, database
-        spider = DividendPolicySpider()
-        assembler = DividendPolicyAssembler()
-        feed_builder = DividendPolicyFeedBuilder()
-        database = Database()
+        self.spider = DividendPolicySpider()
+        self.assembler = DividendPolicyAssembler()
+        self.feed_builder = DividendPolicyFeedBuilder()
+        self.database = Database()
 
         # all states are listed here
         self.initial_state = AriesInitialState(self)
         self.load_state = AriesLoadState(self)
-        self.spider_state = SpiderState(self, spider)
-        self.assembler_state = AssemblerState(self, spider, assembler)
-        self.database_state = DatabaseState(self, feed_builder, database)
+        self.spider_state = SpiderState(self)
+        self.assembler_state = AssemblerState(self)
+        self.database_state = DatabaseState(self)
         self.final_state = AriesFinalState(self)
 
         # current state

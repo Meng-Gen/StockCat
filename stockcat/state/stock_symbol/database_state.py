@@ -5,11 +5,11 @@ from stockcat.state.aries_state import AriesState
 import logging
 
 class DatabaseState(AriesState):
-    def __init__(self, state_machine, feed_builder, database):
+    def __init__(self, state_machine):
         self.logger = logging.getLogger(__name__)
         self.state_machine = state_machine
-        self.feed_builder = feed_builder
-        self.database = database
+        self.feed_builder = state_machine.feed_builder
+        self.database = state_machine.database
 
     def run(self):
         self.logger.info('run [DatabaseState]')

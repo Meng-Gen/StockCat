@@ -1,13 +1,13 @@
 #-*- coding: utf-8 -*-
 
 from stockcat.common.logging_utils import setup_logging
-from stockcat.cat import Cat
+from stockcat.stock_cat import StockCat
 import sys 
 
 def main():
     setup_logging() 
-    cat = Cat()
-    cat.run()
+    stock_cat = StockCat()
+    stock_cat.run()
     #cat.debug_default_memento()
     
 if __name__ == '__main__':

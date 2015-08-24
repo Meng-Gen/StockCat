@@ -2,13 +2,13 @@
 
 import logging
 
-class Cat():
+class StockCat():
     def __init__(self):
         self.logger = logging.getLogger(__name__)
 
     def run(self):
-        #self.run_stock_symbol()
-        #self.run_operating_revenue()
+        self.run_stock_symbol()
+        self.run_operating_revenue()
         self.run_dividend_policy()
 
     def run_stock_symbol(self):

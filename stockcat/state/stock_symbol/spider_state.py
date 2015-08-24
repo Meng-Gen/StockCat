@@ -5,10 +5,10 @@ from stockcat.state.aries_state import AriesState
 import logging
 
 class SpiderState(AriesState):
-    def __init__(self, state_machine, spider):
+    def __init__(self, state_machine):
         self.logger = logging.getLogger(__name__)
         self.state_machine = state_machine
-        self.spider = spider
+        self.spider = state_machine.spider
 
     def run(self):
         self.logger.info('run [SpiderState]')

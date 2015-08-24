@@ -1,6 +1,7 @@
 # Memento
 operating_revenue_memento.json
 stock_symbol_memento.json
+dividend_policy_memento.json
 
 # Mac OSX
 .DS_Store

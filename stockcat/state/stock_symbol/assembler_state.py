@@ -5,11 +5,11 @@ from stockcat.state.aries_state import AriesState
 import logging
 
 class AssemblerState(AriesState):
-    def __init__(self, state_machine, spider, assembler):
+    def __init__(self, state_machine):
         self.logger = logging.getLogger(__name__)
         self.state_machine = state_machine
-        self.spider = spider
-        self.assembler = assembler
+        self.spider = state_machine.spider
+        self.assembler = state_machine.assembler
         self.dao = {}
 
     def run(self):
