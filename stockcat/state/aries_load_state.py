@@ -4,7 +4,7 @@ from stockcat.state.aries_state import AriesState
 
 import logging
 
-class LoadState(AriesState):
+class AriesLoadState(AriesState):
     def __init__(self, state_machine):
         self.logger = logging.getLogger(__name__)
         self.state_machine = state_machine

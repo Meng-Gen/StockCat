@@ -7,7 +7,7 @@ from stockcat.database.database import Database
 
 from stockcat.state.operating_revenue.memento import Memento
 from stockcat.state.aries_initial_state import AriesInitialState
-from stockcat.state.operating_revenue.load_state import LoadState
+from stockcat.state.aries_load_state import AriesLoadState
 from stockcat.state.operating_revenue.spider_state import SpiderState
 from stockcat.state.operating_revenue.assembler_state import AssemblerState
 from stockcat.state.operating_revenue.database_state import DatabaseState
@@ -30,7 +30,7 @@ class StateMachine():
 
         # all states are listed here
         self.initial_state = AriesInitialState(self)
-        self.load_state = LoadState(self)
+        self.load_state = AriesLoadState(self)
         self.spider_state = SpiderState(self, spider)
         self.assembler_state = AssemblerState(self, spider, assembler)
         self.database_state = DatabaseState(self, feed_builder, database)
