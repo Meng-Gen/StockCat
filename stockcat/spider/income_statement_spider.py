@@ -6,5 +6,6 @@ from stockcat.spider.legacy.legacy_income_statement_spider import LegacyIncomeSt
 
 class IncomeStatementSpider(TaurusSpider):
     def __init__(self):
+        TaurusSpider.__init__(self)
         self.ifrs_spider = XbrlFinancialStatementSpider()
         self.legacy_spider = LegacyIncomeStatementSpider()

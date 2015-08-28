@@ -6,27 +6,23 @@ class TaurusSpider():
     def __init__(self):
         self.ifrs_spider = None
         self.legacy_spider = None
+        # IFRS are available after year 2013. Legacy are available before year 2013. 
+        self.splitted_date = datetime.date(2013, 1, 1)
 
-    def crawl(self, stock_symbol, date):
-        # IFRS are available from 2013 to now
-        if date >= datetime.date(2013, 1, 1):
-            return self.ifrs_spider.crawl(stock_symbol, date)
-        # Otherwise we use legacy data
+    def crawl(self, param):
+        if param['date'] >= self.splitted_date:
+            return self.ifrs_spider.crawl(param)
         else:
-            return self.legacy_spider.crawl(stock_symbol, date)
+            return self.legacy_spider.crawl(param)
 
-    def is_crawled(self, stock_symbol, date):
-        # IFRS are available from 2013 to now
-        if date >= datetime.date(2013, 1, 1):
-            return self.ifrs_spider.is_crawled(stock_symbol, date)
-        # Otherwise we use legacy data
+    def is_crawled(self, param):
+        if param['date'] >= self.splitted_date:
+            return self.ifrs_spider.is_crawled(param)
         else:
-            return self.legacy_spider.is_crawled(stock_symbol, date)
+            return self.legacy_spider.is_crawled(param)
 
-    def get_crawled(self, stock_symbol, date):
-        # IFRS are available from 2013 to now
-        if date >= datetime.date(2013, 1, 1):
-            return self.ifrs_spider.get_crawled(stock_symbol, date)
-        # Otherwise we use legacy data
+    def get_crawled(self, param):
+        if param['date'] >= self.splitted_date:
+            return self.ifrs_spider.get_crawled(param)
         else:
-            return self.legacy_spider.get_crawled(stock_symbol, date)
+            return self.legacy_spider.get_crawled(param)

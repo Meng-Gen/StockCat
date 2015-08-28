@@ -14,15 +14,15 @@ class StockSymbolSpider():
             'otc_market' : 'http://isin.twse.com.tw/isin/C_public.jsp?strMode=4',
         }
 
-    def crawl(self, market_type):
-        key = self.key[market_type]
-        url = self.url[market_type]
+    def crawl(self, param):
+        key = self.key[param['market_type']]
+        url = self.url[param['market_type']]
         self.storage.set(key, url)
 
-    def is_crawled(self, market_type):
-        key = self.key[market_type]
+    def is_crawled(self, param):
+        key = self.key[param['market_type']]
         return self.storage.contains(key)
 
-    def get_crawled(self, market_type):
-        key = self.key[market_type]
+    def get_crawled(self, param):
+        key = self.key[param['market_type']]
         return self.storage.get(key)

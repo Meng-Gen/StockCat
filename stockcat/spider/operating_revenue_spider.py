@@ -6,5 +6,6 @@ from stockcat.spider.legacy.legacy_operating_revenue_spider import LegacyOperati
 
 class OperatingRevenueSpider(TaurusSpider):
     def __init__(self):
+        TaurusSpider.__init__(self)
         self.ifrs_spider = IfrsOperatingRevenueSpider()
         self.legacy_spider = LegacyOperatingRevenueSpider()

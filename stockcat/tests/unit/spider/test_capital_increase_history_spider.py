@@ -12,5 +12,6 @@ class CapitalIncreaseHistorySpiderTest(unittest.TestCase):
         self.spider = None
 
     def test_crawl_2498(self):
-        self.spider.crawl('2498')
-        self.assertTrue(self.spider.is_crawled('2498'))
+        param = { 'stock_symbol' : '2498' }
+        self.spider.crawl(param)
+        self.assertTrue(self.spider.is_crawled(param))

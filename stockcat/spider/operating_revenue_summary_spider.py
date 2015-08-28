@@ -8,23 +8,25 @@ class OperatingRevenueSummarySpider():
         self.storage = SpiderStorage()
         self.string_utils = StringUtils()
 
-    def crawl(self, market_type, date):
-        params = self.__parse_params(market_type, date)
-        url = self.__build_url(params)
-        key = self.__build_key(params)
+    def crawl(self, param):
+        param = self.__extend_param(param)
+        url = self.build_url(param)
+        key = self.build_key(param)
         self.storage.set(key, url)
         
-    def is_crawled(self, market_type, date):
-        params = self.__parse_params(market_type, date)
-        key = self.__build_key(params)
+    def is_crawled(self, param):
+        param = self.__extend_param(param)
+        key = self.build_key(param)
         return self.storage.contains(key)
 
-    def get_crawled(self, market_type, date):
-        params = self.__parse_params(market_type, date)
-        key = self.__build_key(params)
+    def get_crawled(self, param):
+        param = self.__extend_param(param)
+        key = self.build_key(param)
         return self.storage.get(key)
         
-    def __parse_params(self, market_type, date):
+    def __extend_param(self, param):
+        market_type = param['market_type']
+        date = param['date']
         return {
             'market_type' : market_type,
             'market_code' : self.__parse_market_code(market_type),
@@ -41,10 +43,10 @@ class OperatingRevenueSummarySpider():
         else:
             raise ValueError
 
-    def __build_url(self, params):
+    def build_url(self, param):
         return '''http://mops.twse.com.tw/nas/t21/%s/t21sc03_%s_%s.html''' \
-                % (params['market_code'], params['roc_era'], params['month'])
+                % (param['market_code'], param['roc_era'], param['month'])
 
-    def __build_key(self, params):
+    def build_key(self, param):
         return '''operating_revenue_summary/%s/%s/%s''' \
-                % (params['market_type'], params['year'], params['month'])
+                % (param['market_type'], param['year'], param['month'])

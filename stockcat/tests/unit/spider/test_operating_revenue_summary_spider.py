@@ -13,9 +13,11 @@ class OperatingRevenueSummarySpiderTest(unittest.TestCase):
         self.spider = None
 
     def test_crawl_stock_exchange_market(self):
-        self.spider.crawl('stock_exchange_market', datetime.date(2014, 9, 30))
-        self.assertTrue(self.spider.is_crawled('stock_exchange_market', datetime.date(2014, 9, 30)))
+        param = { 'market_type' : 'stock_exchange_market', 'date' : datetime.date(2014, 9, 30) }
+        self.spider.crawl(param)
+        self.assertTrue(self.spider.is_crawled(param))
 
     def test_crawl_otc_market(self):
-        self.spider.crawl('otc_market', datetime.date(2014, 9, 30))
-        self.assertTrue(self.spider.is_crawled('otc_market', datetime.date(2014, 9, 30)))
+        param = { 'market_type' : 'otc_market', 'date' : datetime.date(2014, 9, 30) }
+        self.spider.crawl(param)
+        self.assertTrue(self.spider.is_crawled(param))

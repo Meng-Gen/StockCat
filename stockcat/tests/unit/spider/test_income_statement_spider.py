@@ -12,9 +12,12 @@ class IncomeStatementSpiderTest(unittest.TestCase):
     def tearDown(self):
         self.spider = None
 
-    def test_crawl_2330(self):
-        self.spider.crawl("2330", datetime.date(2010, 9, 30))
-        self.assertTrue(self.spider.is_crawled("2330", datetime.date(2010, 9, 30)))
+    def test_crawl_2330_in_2010Q3(self):
+        param = { 'stock_symbol' : '2330', 'date' : datetime.date(2010, 9, 30) }
+        self.spider.crawl(param)
+        self.assertTrue(self.spider.is_crawled(param))
 
-        self.spider.crawl("2330", datetime.date(2014, 9, 30))
-        self.assertTrue(self.spider.is_crawled("2330", datetime.date(2014, 9, 30)))
+    def test_crawl_2330_in_2014Q3(self):
+        param = { 'stock_symbol' : '2330', 'date' : datetime.date(2014, 9, 30) }
+        self.spider.crawl(param)
+        self.assertTrue(self.spider.is_crawled(param))

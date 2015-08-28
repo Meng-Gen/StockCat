@@ -8,29 +8,21 @@ class DividendPolicySpider():
         self.storage = SpiderStorage()
         self.string_utils = StringUtils()
 
-    def crawl(self, stock_symbol):
-        params = self.__parse_params(stock_symbol)
-        url = self.__build_url(params)
-        key = self.__build_key(params)
+    def crawl(self, param):
+        url = self.build_url(param)
+        key = self.build_key(param)
         self.storage.set(key, url)
         
-    def is_crawled(self, stock_symbol):
-        params = self.__parse_params(stock_symbol)
-        key = self.__build_key(params)
+    def is_crawled(self, param):
+        key = self.build_key(param)
         return self.storage.contains(key)
 
-    def get_crawled(self, stock_symbol):
-        params = self.__parse_params(stock_symbol)
-        key = self.__build_key(params)
+    def get_crawled(self, param):
+        key = self.build_key(param)
         return self.storage.get(key)
-        
-    def __parse_params(self, stock_symbol):
-        return {
-            'stock_symbol' : stock_symbol,
-        }
 
-    def __build_url(self, params):
-        return '''http://jdata.yuanta.com.tw/z/zc/zcc/zcc_%s.djhtm''' % (params['stock_symbol'])
+    def build_url(self, param):
+        return '''http://jdata.yuanta.com.tw/z/zc/zcc/zcc_%s.djhtm''' % (param['stock_symbol'])
 
-    def __build_key(self, params):
-        return '''dividend_policy/%s''' % (params['stock_symbol'])
+    def build_key(self, param):
+        return '''dividend_policy/%s''' % (param['stock_symbol'])

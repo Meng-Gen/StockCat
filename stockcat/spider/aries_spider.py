@@ -8,23 +8,25 @@ class AriesSpider():
         self.storage = SpiderStorage()
         self.string_utils = StringUtils()
         
-    def crawl(self, stock_symbol, date):
-        params = self.__parse_params(stock_symbol, date)
-        url = self.build_url(params)
-        key = self.build_key(params)
+    def crawl(self, param):
+        param = self.__extend_param(param)
+        url = self.build_url(param)
+        key = self.build_key(param)
         self.storage.set(key, url)
 
-    def is_crawled(self, stock_symbol, date):
-        params = self.__parse_params(stock_symbol, date)
-        key = self.build_key(params)
+    def is_crawled(self, param):
+        param = self.__extend_param(param)
+        key = self.build_key(param)
         return self.storage.contains(key)
 
-    def get_crawled(self, stock_symbol, date):
-        params = self.__parse_params(stock_symbol, date)
-        key = self.build_key(params)
+    def get_crawled(self, param):
+        param = self.__extend_param(param)
+        key = self.build_key(param)
         return self.storage.get(key)
 
-    def __parse_params(self, stock_symbol, date):
+    def __extend_param(self, param):
+        stock_symbol = param['stock_symbol']
+        date = param['date']
         return {
             'stock_symbol' : stock_symbol,
             'roc_era' : self.string_utils.from_date_to_roc_era_string(date),
@@ -34,8 +36,8 @@ class AriesSpider():
             'month' : self.string_utils.from_date_to_2_digit_month_string(date),
         }
 
-    def build_url(self, params):
+    def build_url(self, param):
         raise NotImplementedError
 
-    def build_key(self, params):
+    def build_key(self, param):
         raise NotImplementedError
