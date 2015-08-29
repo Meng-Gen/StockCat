@@ -1,10 +1,10 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.state.aries_state import AriesState
+from stockcat.state.aries.state import State
 
 import logging
 
-class DatabaseState(AriesState):
+class DatabaseState(State):
     def __init__(self, state_machine):
         self.logger = logging.getLogger(__name__)
         self.state_machine = state_machine

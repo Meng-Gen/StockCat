@@ -9,11 +9,11 @@ class BalanceSheetAssembler():
     def __init__(self):
         self.xbrl_assembler = XbrlBalanceSheetAssembler()
         self.legacy_assembler = LegacyBalanceSheetAssembler()
+        # IFRS are available after year 2013. Legacy are available before year 2013. 
+        self.splitted_date = datetime.date(2013, 1, 1)
 
-    def assemble(self, content, stock_symbol, date):
-        # IFRS are available from 2013 to now
-        if date >= datetime.date(2013, 1, 1):
-            return self.xbrl_assembler.assemble(content, stock_symbol, date)
-        # Otherwise we use legacy data
+    def assemble(self, param):
+        if param['date'] >= self.splitted_date:
+            return self.xbrl_assembler.assemble(param)
         else:
-            return self.legacy_assembler.assemble(content, stock_symbol, date)
+            return self.legacy_assembler.assemble(param)

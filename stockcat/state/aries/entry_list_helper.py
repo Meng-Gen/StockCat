@@ -22,6 +22,12 @@ class EntryListHelper():
             output.append({ 'date' : date })
         return output
 
+    def get_date_list_by_quarter(self, begin_date, end_date):
+        output = []
+        for date in DateUtils().range_date_by_quarter(begin_date, end_date):
+            output.append({ 'date' : date })
+        return output
+
     def get_market_type_list(self):
         return [
             { 'market_type' : 'stock_exchange_market' },

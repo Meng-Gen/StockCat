@@ -3,6 +3,9 @@ operating_revenue_memento.json
 stock_symbol_memento.json
 dividend_policy_memento.json
 capital_increase_history_memento.json
+balance_sheet_memento.json
+income_statement_memento.json
+cash_flow_memento.json
 
 # Mac OSX
 .DS_Store
