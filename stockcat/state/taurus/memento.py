@@ -10,7 +10,7 @@ class Memento(AriesMemento):
         AriesMemento.__init__(self, path)
 
     def get_default_value(self):
-        all_entry_list = self.__get_stock_symbol_list()[:1]
+        all_entry_list = self.__get_param_list()[:1]
         return {
             'state' : 'spider',
             'all_entry_list' : list(all_entry_list),
@@ -31,6 +31,16 @@ class Memento(AriesMemento):
             'todo_entry_list' : value['todo_entry_list'], 
         }
 
-    def __get_stock_symbol_list(self):
+    def __get_param_list(self):
         entry_list = StockSymbolAnalyzer().get_stock_symbol_list()
-        return [entry[0] for entry in entry_list]
+        param_list = []
+        for entry in entry_list:
+            stock_symbol = entry[0]
+            param = {
+                'stock_symbol' : {
+                    'value' : entry[0],
+                    'type' : 'string',
+                },
+            }
+            param_list.append(param)
+        return param_list

@@ -1,62 +1,42 @@
 #-*- coding: utf-8 -*-
 
-import datetime
-import json
+from stockcat.common.json_utils import JsonUtils
+
 import logging
-import os
 
 class AriesMemento():
-    def __init__(self, path):
+    def __init__(self, param):
         self.logger = logging.getLogger(__name__)
-        self.path = path
+        self.json_utils = JsonUtils()
+        self.path = param['path']
+        self.default_value = param['default_value']
+        self.filter_key_list = param['filter_key_list']
         self.value = None
-        self.latest_loaded_value = None
 
     def load(self):
-        self.logger.info('load memento')
-        if os.path.exists(self.path):
-            with open(self.path, 'rt') as f:
-                try:
-                    self.value = self.build_load_value(json.load(f))
-                except ValueError as e:
-                    self.logger.error('failed to load memento (use default instead)', exc_info=True)
-                    self.value = self.get_default_value()
-                except KeyError as e:
-                    self.logger.error('failed to build load value (use default instead)', exc_info=True)
-                    self.value = self.get_default_value()
-        else:
-            self.value = self.get_default_value()
-        self.latest_loaded_value = dict(self.value)
-
+        self.logger.info('load memento: {0}'.format(self.path))
+        try:
+            json = self.json_utils.load(self.path)
+            self.value = self.json_utils.remove_type(json)
+        except IOError as e:
+            self.logger.error('cannot find memento file (use default instead)')
+            self.value = self.default_value 
+        except ValueError as e:
+            self.logger.error('failed to load memento (use default instead)')
+            self.value = self.default_value 
+        except KeyError as e:
+            self.logger.error('failed to build load value (use default instead)')
+            self.value = self.default_value 
+        
     def save(self):
-        self.logger.info('save memento')
-        with open(self.path, 'wt') as f:
-            try:
-                json.dump(self.build_save_value(self.value), f)
-            except TypeError as e:
-                self.logger.error('failed to load memento (use default instead)', exc_info=True)
-                json.dump(self.build_save_value(self.latest_loaded_value), f)
+        self.logger.info('save memento: {0}'.format(self.path))
+        json = self.json_utils.filter_key_list(self.value, self.filter_key_list)
+        print json
+        json = self.json_utils.add_type(json)
+        self.json_utils.save(json, self.path)
 
     def set_value(self, value):
         self.value = value
 
     def get_value(self):
         return self.value
-
-    def get_date_list_from_string_list(self, string_list):
-        return [self.get_date_from_string(string) for string in string_list]
-
-    def get_string_list_from_date_list(self, date_list):
-        return [str(date) for date in date_list]
-
-    def get_date_from_string(self, date_string):
-        return datetime.datetime.strptime(date_string, '%Y-%m-%d').date()
-
-    def get_default_value(self):
-        raise NotImplementedError, 'we should implement the abstract method' 
-
-    def build_load_value(self, value):
-        raise NotImplementedError, 'we should implement the abstract method' 
-
-    def build_save_value(self, value):
-        raise NotImplementedError, 'we should implement the abstract method' 

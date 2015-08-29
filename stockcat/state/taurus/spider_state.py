@@ -9,14 +9,17 @@ class SpiderState(AriesState):
         self.logger = logging.getLogger(__name__)
         self.state_machine = state_machine
         self.spider = state_machine.spider
-        self.todo_entry_list = set()
-        self.done_entry_list = set()
+        self.todo_entry_list = None
+        self.done_entry_list = None
+        self.last_updated_date = None
 
     def run(self):
         self.logger.info('run [SpiderState]')
         self.__set_up()
 
         # prepare to calculate progress
+        done_entry_list = []
+        undone_entry_list = list(self.todo_entry_list)
         entry_count = len(self.todo_entry_list)
         curr_count = 0
         for entry in self.todo_entry_list:
@@ -28,9 +31,11 @@ class SpiderState(AriesState):
             self.spider.crawl(entry)
             self.avoid_blocking()
         
-            # update done_entry_list (will remove from todo_entry_list)
-            self.done_entry_list.add(entry)
-        self.todo_entry_list = self.todo_entry_list - self.done_entry_list
+            # update done/undone entry list
+            done_entry_list.append(entry)
+            undone_entry_list.remove(entry)
+        self.done_entry_list = list(done_entry_list)
+        self.todo_entry_list = list(undone_entry_list)
         
         self.__tear_down()
 
@@ -45,13 +50,14 @@ class SpiderState(AriesState):
         value = self.state_machine.memento.get_value()
         value['state'] = 'spider'
         if value['todo_entry_list']:
-            self.todo_entry_list = set(value['todo_entry_list'])
+            self.todo_entry_list = list(value['todo_entry_list'])
         else:
-            self.todo_entry_list = set(value['all_entry_list'])
-        self.done_entry_list = set()
+            self.todo_entry_list = list(value['all_entry_list'])
+        self.done_entry_list = []
         self.state_machine.memento.save()
 
     def __tear_down(self):
         value = self.state_machine.memento.get_value()
         value['todo_entry_list'] = list(self.todo_entry_list)
+        value['done_entry_list'] = list(self.done_entry_list)
         self.state_machine.memento.save()

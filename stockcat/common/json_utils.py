@@ -32,6 +32,11 @@ class JsonUtils():
                     'value' : json[key],
                     'type' : 'str',
                 }
+            elif value_type is unicode:
+                output[key] = {
+                    'value' : json[key].encode('ascii', 'ignore'),
+                    'type' : 'str',
+                }
             elif value_type is datetime.date:
                 output[key] = {
                     'value' : str(json[key]),
@@ -43,7 +48,7 @@ class JsonUtils():
                     'type' : 'list',
                 }
             else:
-                raise ValueError
+                raise ValueError, value_type
         return output
 
     def remove_type(self, json):
@@ -57,7 +62,7 @@ class JsonUtils():
             elif value_type == 'list':
                 output[key] = [self.remove_type(entry) for entry in value]
             else:
-                raise ValueError
+                raise ValueError, value_type
         return output
 
     def __get_date_from_string(self, date_string):
