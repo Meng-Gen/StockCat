@@ -1,13 +1,13 @@
 #-*- coding: utf-8 -*-
 
 from stockcat.database.database import Database
-from stockcat.state.aries.memento import Memento
-from stockcat.state.aries.initial_state import InitialState
-from stockcat.state.aries.load_state import LoadState
-from stockcat.state.aries.spider_state import SpiderState
-from stockcat.state.aries.assembler_state import AssemblerState
-from stockcat.state.aries.database_state import DatabaseState
-from stockcat.state.aries.final_state import FinalState
+from stockcat.pipeline.state.memento import Memento
+from stockcat.pipeline.state.initial_state import InitialState
+from stockcat.pipeline.state.load_state import LoadState
+from stockcat.pipeline.state.spider_state import SpiderState
+from stockcat.pipeline.state.assembler_state import AssemblerState
+from stockcat.pipeline.state.database_state import DatabaseState
+from stockcat.pipeline.state.final_state import FinalState
 
 import logging
 

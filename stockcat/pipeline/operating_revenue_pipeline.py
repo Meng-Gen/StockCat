@@ -1,15 +1,15 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.state.aries.state_machine import StateMachine
-from stockcat.state.aries.entry_list_helper import EntryListHelper
+from stockcat.pipeline.state.state_machine import StateMachine
+from stockcat.pipeline.state.entry_list_helper import EntryListHelper
 from stockcat.spider.operating_revenue_summary_spider import OperatingRevenueSummarySpider
 from stockcat.assembler.operating_revenue_summary_assembler import OperatingRevenueSummaryAssembler
 from stockcat.feed.operating_revenue_feed import OperatingRevenueSummaryFeedBuilder
 
 import datetime
 
-class OperatingRevenueStateMachine(StateMachine):
-    def __init__(self, memento_path='operating_revenue_memento.json'):
+class OperatingRevenuePipeline(StateMachine):
+    def __init__(self, memento_path='./stockcat/data/memento/operating_revenue.json'):
         self.helper = EntryListHelper()
         memento_param = {
             'path' : memento_path, 

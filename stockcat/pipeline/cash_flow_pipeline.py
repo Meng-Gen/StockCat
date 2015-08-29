@@ -1,15 +1,15 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.state.aries.state_machine import StateMachine
-from stockcat.state.aries.entry_list_helper import EntryListHelper
-from stockcat.spider.income_statement_spider import IncomeStatementSpider
-from stockcat.assembler.income_statement_assembler import IncomeStatementAssembler
-from stockcat.feed.income_statement_feed import IncomeStatementFeedBuilder
+from stockcat.pipeline.state.state_machine import StateMachine
+from stockcat.pipeline.state.entry_list_helper import EntryListHelper
+from stockcat.spider.cash_flow_spider import CashFlowSpider
+from stockcat.assembler.cash_flow_assembler import CashFlowAssembler
+from stockcat.feed.cash_flow_feed import CashFlowFeedBuilder
 
 import datetime
 
-class IncomeStatementStateMachine(StateMachine):
-    def __init__(self, memento_path='income_statement_memento.json'):
+class CashFlowPipeline(StateMachine):
+    def __init__(self, memento_path='./stockcat/data/memento/cash_flow.json'):
         self.helper = EntryListHelper()
         memento_param = {
             'path' : memento_path, 
@@ -18,9 +18,9 @@ class IncomeStatementStateMachine(StateMachine):
         }
         param = {
             'memento' : memento_param,
-            'spider' : IncomeStatementSpider(), 
-            'assembler' : IncomeStatementAssembler(), 
-            'feed_builder' : IncomeStatementFeedBuilder(),
+            'spider' : CashFlowSpider(), 
+            'assembler' : CashFlowAssembler(), 
+            'feed_builder' : CashFlowFeedBuilder(),
         }
         StateMachine.__init__(self, param)
 

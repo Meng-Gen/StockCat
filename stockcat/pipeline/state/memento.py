@@ -19,13 +19,13 @@ class Memento():
             json = self.json_utils.load(self.path)
             self.value = self.json_utils.remove_type(json)
         except IOError as e:
-            self.logger.error('cannot find memento file: {0}'.format(self.path))
+            self.logger.info('cannot find memento file: {0}'.format(self.path))
             self.value = self.default_value 
         except ValueError as e:
-            self.logger.error('failed to load memento: {0}'.format(self.path))
+            self.logger.info('failed to load memento: {0}'.format(self.path))
             self.value = self.default_value 
         except KeyError as e:
-            self.logger.error('failed to build load value: {0}'.format(self.path))
+            self.logger.info('failed to build load value: {0}'.format(self.path))
             self.value = self.default_value 
         
     def save(self):

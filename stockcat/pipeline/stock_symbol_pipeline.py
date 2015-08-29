@@ -1,15 +1,15 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.state.aries.state_machine import StateMachine
-from stockcat.state.aries.entry_list_helper import EntryListHelper
+from stockcat.pipeline.state.state_machine import StateMachine
+from stockcat.pipeline.state.entry_list_helper import EntryListHelper
 from stockcat.spider.stock_symbol_spider import StockSymbolSpider
 from stockcat.assembler.stock_symbol_assembler import StockSymbolAssembler
 from stockcat.feed.stock_symbol_feed import StockSymbolFeedBuilder
 
 import datetime
 
-class StockSymbolStateMachine(StateMachine):
-    def __init__(self, memento_path='stock_symbol_memento.json'):
+class StockSymbolPipeline(StateMachine):
+    def __init__(self, memento_path='./stockcat/data/memento/stock_symbol.json'):
         memento_param = {
             'path' : memento_path, 
             'default_value' : self.__get_default_value(),

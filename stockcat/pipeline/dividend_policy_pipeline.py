@@ -1,15 +1,15 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.state.aries.state_machine import StateMachine
-from stockcat.state.aries.entry_list_helper import EntryListHelper
-from stockcat.spider.capital_increase_history_spider import CapitalIncreaseHistorySpider
-from stockcat.assembler.capital_increase_history_assembler import CapitalIncreaseHistoryAssembler
-from stockcat.feed.capital_increase_history_feed import CapitalIncreaseHistoryFeedBuilder
+from stockcat.pipeline.state.state_machine import StateMachine
+from stockcat.pipeline.state.entry_list_helper import EntryListHelper
+from stockcat.spider.dividend_policy_spider import DividendPolicySpider
+from stockcat.assembler.dividend_policy_assembler import DividendPolicyAssembler
+from stockcat.feed.dividend_policy_feed import DividendPolicyFeedBuilder
 
 import datetime
 
-class CapitalIncreaseHistoryStateMachine(StateMachine):
-    def __init__(self, memento_path='capital_increase_history_memento.json'):
+class DividendPolicyPipeline(StateMachine):
+    def __init__(self, memento_path='./stockcat/data/memento/dividend_policy.json'):
         memento_param = {
             'path' : memento_path, 
             'default_value' : self.__get_default_value(),
@@ -17,9 +17,9 @@ class CapitalIncreaseHistoryStateMachine(StateMachine):
         }
         param = {
             'memento' : memento_param,
-            'spider' : CapitalIncreaseHistorySpider(), 
-            'assembler' : CapitalIncreaseHistoryAssembler(), 
-            'feed_builder' : CapitalIncreaseHistoryFeedBuilder(),
+            'spider' : DividendPolicySpider(), 
+            'assembler' : DividendPolicyAssembler(), 
+            'feed_builder' : DividendPolicyFeedBuilder(),
         }
         StateMachine.__init__(self, param)
 

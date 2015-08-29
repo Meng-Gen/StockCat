@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.state.aries.state import State
+from stockcat.pipeline.state.state import State
 
 import logging
 

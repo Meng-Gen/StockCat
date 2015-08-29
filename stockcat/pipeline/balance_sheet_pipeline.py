@@ -1,15 +1,15 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.state.aries.state_machine import StateMachine
-from stockcat.state.aries.entry_list_helper import EntryListHelper
+from stockcat.pipeline.state.state_machine import StateMachine
+from stockcat.pipeline.state.entry_list_helper import EntryListHelper
 from stockcat.spider.balance_sheet_spider import BalanceSheetSpider
 from stockcat.assembler.balance_sheet_assembler import BalanceSheetAssembler
 from stockcat.feed.balance_sheet_feed import BalanceSheetFeedBuilder
 
 import datetime
 
-class BalanceSheetStateMachine(StateMachine):
-    def __init__(self, memento_path='balance_sheet_memento.json'):
+class BalanceSheetPipeline(StateMachine):
+    def __init__(self, memento_path='./stockcat/data/memento/balance_sheet.json'):
         self.helper = EntryListHelper()
         memento_param = {
             'path' : memento_path, 

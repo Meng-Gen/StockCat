@@ -13,6 +13,9 @@ class JsonUtils():
         return content
 
     def save(self, source_json, dest_path):
+        # if directory is not existed, need to create by ourselves
+        self.__make_directory(dest_path)
+
         with open(dest_path, 'wt') as f:    
             json.dump(source_json, f)
         
@@ -67,3 +70,8 @@ class JsonUtils():
 
     def __get_date_from_string(self, date_string):
         return datetime.datetime.strptime(date_string, '%Y-%m-%d').date()
+
+    def __make_directory(self, filepath):
+        directory = os.path.dirname(os.path.realpath(filepath))
+        if not os.path.exists(directory):
+            os.makedirs(directory)
