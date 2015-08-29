@@ -1,27 +1,27 @@
 #-*- coding: utf-8 -*-
 
-from stockcat.state.aries_state import AriesState
+from stockcat.state.aries.state import State
 
 import logging
 
-class AriesLoadState(AriesState):
+class LoadState(State):
     def __init__(self, state_machine):
         self.logger = logging.getLogger(__name__)
         self.state_machine = state_machine
 
     def run(self):
-        self.logger.info('run [LoadState]')
+        self.logger.info('run load state')
         self.state_machine.memento.load()
 
     def next(self):
         value = self.state_machine.memento.get_value()
         state = value['state']
         if state in ['spider']:
-            self.logger.info('[LoadState] to [SpiderState]')
+            self.logger.info('move load state to spider state')
             return self.state_machine.spider_state
         elif state in ['assembler', 'database']:
-            self.logger.info('[LoadState] to [AssemblerState]')
+            self.logger.info('move load state to assembler state')
             return self.state_machine.assembler_state            
         elif state in ['final']:
-            self.logger.info('[LoadState] to [FinalState]')
+            self.logger.info('move load state to final state')
             return self.state_machine.final_state

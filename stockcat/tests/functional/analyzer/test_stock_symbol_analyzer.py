@@ -14,5 +14,5 @@ class StockSymbolAnalyzerTest(unittest.TestCase):
     
     def test_get_stock_symbol_list(self):
         stock_symbol_list = self.analyzer.get_stock_symbol_list()
-        self.assertEqual(stock_symbol_list[0], ('1101', datetime.date(1962, 2, 9)))
-        self.assertEqual(stock_symbol_list[1], ('1102', datetime.date(1962, 6, 8)))
+        self.assertEqual(stock_symbol_list[0], {'stock_symbol' : '1101', 'listing_date' : datetime.date(1962, 2, 9)})
+        self.assertEqual(stock_symbol_list[1], {'stock_symbol' : '1102', 'listing_date' : datetime.date(1962, 6, 8)})

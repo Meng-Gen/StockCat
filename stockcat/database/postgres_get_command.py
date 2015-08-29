@@ -13,7 +13,7 @@ class PostgresGetCommnad():
         records = cursor.fetchall()
         connection.commit()
         connection.close()
-        return records
+        return [{ 'stock_symbol' : record[0], 'listing_date' : record[1] } for record in records]
 
     def get_capital_increase_by_cash(self, stock_symbol):
         connection = psycopg2.connect(self.connection_string)

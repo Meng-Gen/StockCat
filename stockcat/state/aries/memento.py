@@ -4,7 +4,7 @@ from stockcat.common.json_utils import JsonUtils
 
 import logging
 
-class AriesMemento():
+class Memento():
     def __init__(self, param):
         self.logger = logging.getLogger(__name__)
         self.json_utils = JsonUtils()
