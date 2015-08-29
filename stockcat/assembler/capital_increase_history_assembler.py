@@ -12,8 +12,9 @@ class CapitalIncreaseHistoryAssembler():
         self.content_screener = ContentScreener()
         self.string_utils = StringUtils()
 
-    def assemble(self, content, stock_symbol):
-        self.content_screener.screen(content, { 'stock_symbol' : stock_symbol })
+    def assemble(self, param):
+        content, stock_symbol = param['content'], param['stock_symbol']
+        self.content_screener.screen(param)
         html_object = self.__get_html_object(content)
         relative_html_object = self.__traverse_to_relative_html_object(html_object)
         column_name_list = self.__assemble_column_name_list(relative_html_object)

@@ -12,8 +12,9 @@ class IfrsOperatingRevenueAssembler():
         self.content_screener = ContentScreener()
         self.string_utils = StringUtils()
 
-    def assemble(self, content, stock_symbol, date):
-        self.content_screener.screen(content, { 'stock_symbol' : stock_symbol, 'date': date })
+    def assemble(self, param):
+        content, stock_symbol, date = param['content'], param['stock_symbol'], param['date']
+        self.content_screener.screen(param)
         content = self.string_utils.normalize_string(content)
         html_object = lxml.html.fromstring(content)
         relative_html_object = self.__traverse_to_relative_html_object(html_object)

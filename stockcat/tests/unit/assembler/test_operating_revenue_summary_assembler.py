@@ -18,8 +18,12 @@ class OperatingRevenueSummaryAssemblerTest(unittest.TestCase):
     
     def test_assemble_stock_exchange_market_in_2010(self):
         # online: http://mops.twse.com.tw/nas/t21/sii/t21sc03_99_9.html
-        content = self.file_utils.read_file('./stockcat/tests/unit/data/operating_revenue_summary/stock_exchange_market/2010/9.html')
-        dao = self.assembler.assemble(content, datetime.date(2010, 9, 30))
+        path = './stockcat/tests/unit/data/operating_revenue_summary/stock_exchange_market/2010/9.html'
+        param = {
+            'content' : self.file_utils.read_file(path),
+            'date' : datetime.date(2010, 9, 30)
+        }
+        dao = self.assembler.assemble(param)
 
         actual = dao.get_column_name_list()
         expected = [u'公司代號', u'公司名稱', u'當月營收', u'上月營收', u'去年當月營收', u'上月比較增減(%)', u'去年同月增減(%)', u'當月累計營收', u'去年累計營收', u'前期比較增減(%)']
@@ -30,13 +34,17 @@ class OperatingRevenueSummaryAssemblerTest(unittest.TestCase):
         for row in row_list:
             self.assertEqual(len(row), 10)
 
-        self.assertEqual(dao.get_stmt_date(), datetime.date(2010, 9, 30))
+        self.assertEqual(dao.get_stmt_date(), param['date'])
         self.assertEqual(dao.get_release_date(), datetime.date(2013, 5, 7))
 
     def test_assemble_stock_exchange_market_in_2012(self):
         # online: http://mops.twse.com.tw/nas/t21/sii/t21sc03_101_1.html
-        content = self.file_utils.read_file('./stockcat/tests/unit/data/operating_revenue_summary/stock_exchange_market/2012/1.html')
-        dao = self.assembler.assemble(content, datetime.date(2012, 1, 31))
+        path = './stockcat/tests/unit/data/operating_revenue_summary/stock_exchange_market/2012/1.html'
+        param = {
+            'content' : self.file_utils.read_file(path),
+            'date' : datetime.date(2012, 1, 31)   
+        }
+        dao = self.assembler.assemble(param)
 
         actual = dao.get_column_name_list()
         expected = [u'公司代號', u'公司名稱', u'當月營收', u'上月營收', u'去年當月營收', u'上月比較增減(%)', u'去年同月增減(%)', u'當月累計營收', u'去年累計營收', u'前期比較增減(%)']
@@ -49,13 +57,17 @@ class OperatingRevenueSummaryAssemblerTest(unittest.TestCase):
         for row in row_list:
             self.assertEqual(len(row), 10)
 
-        self.assertEqual(dao.get_stmt_date(), datetime.date(2012, 1, 31))
+        self.assertEqual(dao.get_stmt_date(), param['date'])
         self.assertEqual(dao.get_release_date(), datetime.date(2015, 6, 25))
 
     def test_assemble_stock_exchange_market_in_Feb_2013(self):
         # online: http://mops.twse.com.tw/nas/t21/sii/t21sc03_102_2.html
-        content = self.file_utils.read_file('./stockcat/tests/unit/data/operating_revenue_summary/stock_exchange_market/2013/2.html')
-        dao = self.assembler.assemble(content, datetime.date(2013, 2, 28))
+        path = './stockcat/tests/unit/data/operating_revenue_summary/stock_exchange_market/2013/2.html'
+        param = {
+            'content' : self.file_utils.read_file(path),
+            'date' : datetime.date(2013, 2, 28)
+        }
+        dao = self.assembler.assemble(param)
 
         actual = dao.get_column_name_list()
         expected = [u'公司代號', u'公司名稱', u'當月營收', u'上月營收', u'去年當月營收', u'上月比較增減(%)', u'去年同月增減(%)', u'當月累計營收', u'去年累計營收', u'前期比較增減(%)']
@@ -67,13 +79,17 @@ class OperatingRevenueSummaryAssemblerTest(unittest.TestCase):
         for row in row_list:
             self.assertEqual(len(row), 10)
 
-        self.assertEqual(dao.get_stmt_date(), datetime.date(2013, 2, 28))
+        self.assertEqual(dao.get_stmt_date(), param['date'])
         self.assertEqual(dao.get_release_date(), datetime.date(2015, 6, 25))
 
     def test_assemble_stock_exchange_market_in_2014(self):
         # online: http://mops.twse.com.tw/nas/t21/sii/t21sc03_103_1.html
-        content = self.file_utils.read_file('./stockcat/tests/unit/data/operating_revenue_summary/stock_exchange_market/2014/1.html')
-        dao = self.assembler.assemble(content, datetime.date(2014, 1, 31))
+        path = './stockcat/tests/unit/data/operating_revenue_summary/stock_exchange_market/2014/1.html'
+        param = {
+            'content' : self.file_utils.read_file(path),
+            'date' : datetime.date(2014, 1, 31)
+        }
+        dao = self.assembler.assemble(param)
 
         actual = dao.get_column_name_list()
         expected = [u'公司代號', u'公司名稱', u'當月營收', u'上月營收', u'去年當月營收', u'上月比較增減(%)', u'去年同月增減(%)', u'當月累計營收', u'去年累計營收', u'前期比較增減(%)']
@@ -84,13 +100,17 @@ class OperatingRevenueSummaryAssemblerTest(unittest.TestCase):
         for row in row_list:
             self.assertEqual(len(row), 10)
 
-        self.assertEqual(dao.get_stmt_date(), datetime.date(2014, 1, 31))
+        self.assertEqual(dao.get_stmt_date(), param['date'])
         self.assertEqual(dao.get_release_date(), datetime.date(2015, 2, 1))
 
     def test_assemble_stock_exchange_market_in_2015(self):
         # online: http://mops.twse.com.tw/nas/t21/sii/t21sc03_104_1.html
-        content = self.file_utils.read_file('./stockcat/tests/unit/data/operating_revenue_summary/stock_exchange_market/2015/1.html')
-        dao = self.assembler.assemble(content, datetime.date(2015, 1, 31))
+        path = './stockcat/tests/unit/data/operating_revenue_summary/stock_exchange_market/2015/1.html'
+        param = {
+            'content' : self.file_utils.read_file(path),
+            'date' : datetime.date(2015, 1, 31)
+        }
+        dao = self.assembler.assemble(param)
 
         actual = dao.get_column_name_list()
         expected = [u'公司代號', u'公司名稱', u'當月營收', u'上月營收', u'去年當月營收', u'上月比較增減(%)', u'去年同月增減(%)', u'當月累計營收', u'去年累計營收', u'前期比較增減(%)']
@@ -101,13 +121,17 @@ class OperatingRevenueSummaryAssemblerTest(unittest.TestCase):
         for row in row_list:
             self.assertEqual(len(row), 10)
 
-        self.assertEqual(dao.get_stmt_date(), datetime.date(2015, 1, 31))
+        self.assertEqual(dao.get_stmt_date(), param['date'])
         self.assertEqual(dao.get_release_date(), datetime.date(2015, 8, 16))
 
     def test_assemble_otc_market_in_2010(self):
         # online: http://mops.twse.com.tw/nas/t21/otc/t21sc03_99_9.html
-        content = self.file_utils.read_file('./stockcat/tests/unit/data/operating_revenue_summary/otc_market/2010/9.html')
-        dao = self.assembler.assemble(content, datetime.date(2010, 9, 30))
+        path = './stockcat/tests/unit/data/operating_revenue_summary/otc_market/2010/9.html'
+        param = {
+            'content' : self.file_utils.read_file(path),
+            'date' : datetime.date(2010, 9, 30)
+        }
+        dao = self.assembler.assemble(param)
 
         actual = dao.get_column_name_list()
         expected = [u'公司代號', u'公司名稱', u'當月營收', u'上月營收', u'去年當月營收', u'上月比較增減(%)', u'去年同月增減(%)', u'當月累計營收', u'去年累計營收', u'前期比較增減(%)']
@@ -118,13 +142,17 @@ class OperatingRevenueSummaryAssemblerTest(unittest.TestCase):
         for row in row_list:
             self.assertEqual(len(row), 10)
 
-        self.assertEqual(dao.get_stmt_date(), datetime.date(2010, 9, 30))
+        self.assertEqual(dao.get_stmt_date(), param['date'])
         self.assertEqual(dao.get_release_date(), datetime.date(2013, 5, 7))
 
     def test_assemble_otc_market_in_2014(self):
         # online: http://mops.twse.com.tw/nas/t21/otc/t21sc03_103_9.html
-        content = self.file_utils.read_file('./stockcat/tests/unit/data/operating_revenue_summary/otc_market/2014/9.html')
-        dao = self.assembler.assemble(content, datetime.date(2014, 9, 30))
+        path = './stockcat/tests/unit/data/operating_revenue_summary/otc_market/2014/9.html'
+        param = {
+            'content' : self.file_utils.read_file(path),
+            'date' : datetime.date(2014, 9, 30)
+        }
+        dao = self.assembler.assemble(param)
 
         actual = dao.get_column_name_list()
         expected = [u'公司代號', u'公司名稱', u'當月營收', u'上月營收', u'去年當月營收', u'上月比較增減(%)', u'去年同月增減(%)', u'當月累計營收', u'去年累計營收', u'前期比較增減(%)']
@@ -135,13 +163,17 @@ class OperatingRevenueSummaryAssemblerTest(unittest.TestCase):
         for row in row_list:
             self.assertEqual(len(row), 10)
 
-        self.assertEqual(dao.get_stmt_date(), datetime.date(2014, 9, 30))
+        self.assertEqual(dao.get_stmt_date(), param['date'])
         self.assertEqual(dao.get_release_date(), datetime.date(2015, 8, 16))
 
     def test_assemble_otc_market_in_2015(self):
         # online: http://mops.twse.com.tw/nas/t21/otc/t21sc03_104_1.html
-        content = self.file_utils.read_file('./stockcat/tests/unit/data/operating_revenue_summary/otc_market/2015/1.html')
-        dao = self.assembler.assemble(content, datetime.date(2015, 1, 31))
+        path = './stockcat/tests/unit/data/operating_revenue_summary/otc_market/2015/1.html'
+        param = {
+            'content' : self.file_utils.read_file(path),
+            'date' : datetime.date(2015, 1, 31)
+        }
+        dao = self.assembler.assemble(param)
 
         actual = dao.get_column_name_list()
         expected = [u'公司代號', u'公司名稱', u'當月營收', u'上月營收', u'去年當月營收', u'上月比較增減(%)', u'去年同月增減(%)', u'當月累計營收', u'去年累計營收', u'前期比較增減(%)']
@@ -152,12 +184,16 @@ class OperatingRevenueSummaryAssemblerTest(unittest.TestCase):
         for row in row_list:
             self.assertEqual(len(row), 10)
 
-        self.assertEqual(dao.get_stmt_date(), datetime.date(2015, 1, 31))
+        self.assertEqual(dao.get_stmt_date(), param['date'])
         self.assertEqual(dao.get_release_date(), datetime.date(2015, 8, 16))
 
     def test_assemble_raise_no_record_assemble_error(self):
         # online: http://mops.twse.com.tw/nas/t21/sii/t21sc03_105_1.html
-        content = self.file_utils.read_file('./stockcat/tests/unit/data/error/url_not_found_error.html')
+        path = './stockcat/tests/unit/data/error/url_not_found_error.html'
+        param = {
+            'content' : self.file_utils.read_file(path),
+            'date' : datetime.date(2016, 1, 31)
+        }
         with self.assertRaises(NoRecordAssembleError) as context:
-            self.assembler.assemble(content, datetime.date(2016, 1, 31))
-        self.assertEqual(context.exception.param['date'], datetime.date(2016, 1, 31))   
+            self.assembler.assemble(param)
+        self.assertEqual(context.exception.param['date'], param['date'])   

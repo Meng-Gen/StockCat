@@ -10,8 +10,8 @@ class StockSymbolAssembler():
         self.base_xpath = '//html/body'
         self.string_utils = StringUtils()
 
-    def assemble(self, content):
-        content = self.string_utils.normalize_string(content)
+    def assemble(self, param):
+        content = self.string_utils.normalize_string(param['content'])
         html_object = lxml.html.fromstring(content)
         relative_html_object = self.__traverse_to_relative_html_object(html_object)
         release_date = self.__assemble_release_date(relative_html_object)

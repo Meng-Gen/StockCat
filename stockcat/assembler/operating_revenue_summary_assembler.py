@@ -18,8 +18,9 @@ class OperatingRevenueSummaryAssembler():
         self.date_utils = DateUtils()
         self.string_utils = StringUtils()
 
-    def assemble(self, content, date):
-        self.content_screener.screen(content, { 'date' : date })
+    def assemble(self, param):
+        content, date = param['content'], param['date']
+        self.content_screener.screen(param)
         stmt_date = self.date_utils.get_last_date_of_month(date)
         column_name_list, row_list, release_date = self.__assemble_summary(content)
         return OperatingRevenueSummaryDao(column_name_list, row_list, stmt_date, release_date)

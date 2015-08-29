@@ -11,7 +11,8 @@ class LegacyCashFlowAssembler():
         self.base_xpath = '//html/body/table[@class="hasBorder"]/tr/td/pre'
         self.string_utils = StringUtils()
 
-    def assemble(self, content, stock_symbol, date):
+    def assemble(self, param):
+        content, stock_symbol, date = param['content'], param['stock_symbol'], param['date']
         content = self.string_utils.normalize_string(content)
         html_object = lxml.html.fromstring(content)
         relative_html_object = self.__traverse_to_relative_html_object(html_object)

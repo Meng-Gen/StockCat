@@ -15,10 +15,15 @@ class XbrlBalanceSheetAssemblerTest(unittest.TestCase):
         self.assembler = None
         self.file_utils = None
 
-    def test_assemble_2330(self):
+    def test_assemble_2330_in_2014Q3(self):
         # online: http://mops.twse.com.tw/server-java/t164sb01?step=1&CO_ID=2330&SYEAR=2014&SSEASON=3&REPORT_ID=C
-        content = self.file_utils.read_file('./stockcat/tests/unit/data/xbrl_financial_statement/2330/2014/03.html')
-        dao = self.assembler.assemble(content, '2330', datetime.date(2014, 9, 30))        
+        path = './stockcat/tests/unit/data/xbrl_financial_statement/2330/2014/03.html'
+        param = {
+            'content' : self.file_utils.read_file(path),
+            'stock_symbol' : '2330',
+            'date' : datetime.date(2014, 9, 30),
+        }
+        dao = self.assembler.assemble(param)        
         
         column_name_list = dao.get_column_name_list()
         row_list = dao.get_row_list()

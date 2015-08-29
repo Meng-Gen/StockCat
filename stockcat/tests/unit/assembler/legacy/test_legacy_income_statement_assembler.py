@@ -17,8 +17,13 @@ class LegacyIncomeStatementAssemblerTest(unittest.TestCase):
 
     def test_assemble_2330(self):
         # online: http://mops.twse.com.tw/mops/web/ajax_t05st34?encodeURIComponent=1&step=1&firstin=1&off=1&keyword4=&code1=&TYPEK2=&checkbtn=&queryName=co_id&TYPEK=all&isnew=false&co_id=2330&year=99&season=03
-        content = self.file_utils.read_file('./stockcat/tests/unit/data/legacy_income_statement/2330/2010/03.html')
-        dao = self.assembler.assemble(content, '2330', datetime.date(2010, 9, 30))
+        path = './stockcat/tests/unit/data/legacy_income_statement/2330/2010/03.html'
+        param = {
+            'content' : self.file_utils.read_file(path),
+            'stock_symbol' : '2330',
+            'date' : datetime.date(2010, 9, 30)
+        }
+        dao = self.assembler.assemble(param)
         
         column_name_list = dao.get_column_name_list()
         row_list = dao.get_row_list()

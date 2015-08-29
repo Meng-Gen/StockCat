@@ -18,10 +18,14 @@ class StockCapitalIncreaseHistoryAssemblerTest(unittest.TestCase):
     
     def test_assemble_2498(self):
         # online: http://jdata.yuanta.com.tw/z/zc/zcc/zcc_2498.djhtm
-        content = self.file_utils.read_file('./stockcat/tests/unit/data/dividend_policy/2498.html')
-        dao = self.assembler.assemble(content, '2498')
+        path = './stockcat/tests/unit/data/dividend_policy/2498.html'
+        param = {
+            'content' : self.file_utils.read_file(path),
+            'stock_symbol' : '2498'
+        }
+        dao = self.assembler.assemble(param)
 
-        self.assertEqual(dao.get_stock_symbol(), '2498')
+        self.assertEqual(dao.get_stock_symbol(), param['stock_symbol'])
 
         actual = dao.get_column_name_list()
         expected = [u'年度', u'現金股利', u'盈餘配股', u'公積配股', u'股票股利', u'合計', u'員工配股率%']
@@ -35,7 +39,11 @@ class StockCapitalIncreaseHistoryAssemblerTest(unittest.TestCase):
 
     def test_assemble_raise_no_record_assemble_error(self):
         # online: http://jdata.yuanta.com.tw/z/zc/zcc/zcc_3009.djhtm
-        content = self.file_utils.read_file('./stockcat/tests/unit/data/error/dividend_policy_not_found_error.html')
+        path = './stockcat/tests/unit/data/error/dividend_policy_not_found_error.html'
+        param = {
+            'content' : self.file_utils.read_file(path),
+            'stock_symbol' : '3009'
+        }
         with self.assertRaises(NoRecordAssembleError) as context:
-            self.assembler.assemble(content, '3009')
-        self.assertEqual(context.exception.param['stock_symbol'], '3009')   
+            self.assembler.assemble(param)
+        self.assertEqual(context.exception.param['stock_symbol'], param['stock_symbol'])   
