@@ -1,0 +1,21 @@
+{
+    "state" : {
+        "type" : "str", 
+        "value" : "spider"
+    }, 
+    "all_entry_list" : {
+        "type" : "list", 
+        "value" : [
+            {
+                "date" : {
+                    "type" : "datetime.date", 
+                    "value" : "2010-12-31"
+                }, 
+                "stock_symbol" : {
+                    "type" : "str", 
+                    "value" : "2330"
+                }
+            }
+        ]
+    }
+}
