@@ -19,9 +19,9 @@ class StockCat():
         self.run_operating_revenue()
         #self.run_dividend_policy()
         #self.run_capital_increase_history()
-        #self.run_balance_sheet()
-        #self.run_income_statement()
-        #self.run_cash_flow()
+        self.run_balance_sheet()
+        self.run_income_statement()
+        self.run_cash_flow()
 
     def run_stock_symbol(self):
         StockSymbolStateMachine().run()

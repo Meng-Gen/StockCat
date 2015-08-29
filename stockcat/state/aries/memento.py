@@ -31,7 +31,6 @@ class Memento():
     def save(self):
         self.logger.info('save memento: {0}'.format(self.path))
         json = self.json_utils.filter_key_list(self.value, self.filter_key_list)
-        print json
         json = self.json_utils.add_type(json)
         self.json_utils.save(json, self.path)
 

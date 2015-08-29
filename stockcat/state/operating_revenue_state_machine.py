@@ -25,7 +25,7 @@ class OperatingRevenueStateMachine(StateMachine):
         StateMachine.__init__(self, param)
 
     def __get_default_value(self):
-        entry_list = self.__get_entry_list()
+        entry_list = self.helper.get_operating_revenue_entry_list()
         # !!! DEBUG ONLY !!!
         entry_list = entry_list[:2]
         return {
@@ -34,17 +34,3 @@ class OperatingRevenueStateMachine(StateMachine):
             'todo_entry_list' : list(entry_list),
             'last_updated_date' : datetime.date(1949, 12, 7) 
         }
-
-    def __get_entry_list(self):
-        date_list = self.__get_date_list()
-        market_type_list = self.__get_market_type_list()
-        return self.helper.product(date_list, market_type_list)
-
-    def __get_date_list(self):
-        begin_date = datetime.date(2010, 6, 30)
-        end_date = self.helper.get_now_date()
-        return self.helper.get_date_list_by_month(begin_date, end_date)
-        
-    def __get_market_type_list(self):
-        return self.helper.get_market_type_list()
-
