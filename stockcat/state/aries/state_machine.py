@@ -37,5 +37,9 @@ class StateMachine():
 
     def run(self):
         while self.curr_state != self.final_state:
-            self.curr_state.run()
-            self.curr_state = self.curr_state.next()
+            try:
+                self.curr_state.run()
+                self.curr_state = self.curr_state.next()
+            except KeyboardInterrupt:
+                self.curr_state.tear_down()
+                raise
