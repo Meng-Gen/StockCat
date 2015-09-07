@@ -15,13 +15,13 @@ class StockCat():
         self.logger = logging.getLogger(__name__)
 
     def run(self):
-        self.run_stock_symbol()
-        self.run_operating_revenue()
-        self.run_dividend_policy()
+        #self.run_stock_symbol()
+        #self.run_operating_revenue()
+        #self.run_dividend_policy()
         self.run_capital_increase_history()
-        self.run_balance_sheet()
-        self.run_income_statement()
-        self.run_cash_flow()
+        #self.run_balance_sheet()
+        #self.run_income_statement()
+        #self.run_cash_flow()
 
     def run_stock_symbol(self):
         StockSymbolPipeline().run()

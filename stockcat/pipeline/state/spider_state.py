@@ -31,31 +31,34 @@ class SpiderState(State):
             # update todo entry list
             self.todo_entry_list.remove(entry)
 
+            # avoid exceptional shutdown
+            if curr_count % 10 == 0:
+                self.tear_down()
+
             # wait for next entry
             self.avoid_blocking()
 
         self.tear_down()
 
-    def next(self):
         if not self.todo_entry_list:
-            self.logger.info('move spider state to assembler state')        
-            return self.state_machine.assembler_state            
+            self.logger.info('move spider state to assembler state')
+            self.state_machine.set_value('transition_value', '')
         else:
             self.logger.error('run spider state again (?)')        
-            return self.state_machine.spider_state
+            self.state_machine.set_value('transition_value', 'error')
 
     def set_up(self):
-        value = self.state_machine.memento.get_value()
-        value['state'] = 'spider'
-        if value['todo_entry_list']:
-            self.todo_entry_list = list(value['todo_entry_list'])
+        self.state_machine.set_value('state', 'spider')
+        todo_entry_list = self.state_machine.get_value('todo_entry_list')
+        all_entry_list = self.state_machine.get_value('all_entry_list')
+        if todo_entry_list:
+            self.todo_entry_list = list(todo_entry_list)
         else:
-            self.todo_entry_list = list(value['all_entry_list'])
-        self.last_updated_date = value['last_updated_date']
-        self.state_machine.memento.save()
+            self.todo_entry_list = list(all_entry_list)
+        self.last_updated_date = self.state_machine.get_value('last_updated_date')
+        self.state_machine.save_memento()
 
     def tear_down(self):
-        value = self.state_machine.memento.get_value()
-        value['todo_entry_list'] = list(self.todo_entry_list)
-        value['last_updated_date'] = self.last_updated_date
-        self.state_machine.memento.save()
+        self.state_machine.set_value('todo_entry_list', list(self.todo_entry_list))
+        self.state_machine.set_value('last_updated_date', self.last_updated_date)
+        self.state_machine.save_memento()

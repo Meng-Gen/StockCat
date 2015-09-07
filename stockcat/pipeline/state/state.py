@@ -7,9 +7,6 @@ class State():
     def run(self):
         pass
 
-    def next(self):
-        pass
-
     def set_up(self):
         pass
 

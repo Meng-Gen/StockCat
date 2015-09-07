@@ -11,7 +11,3 @@ class InitialState(State):
     
     def run(self):
         self.logger.info('run initial state')
-
-    def next(self):
-        self.logger.info('move initial state to load state')
-        return self.state_machine.load_state

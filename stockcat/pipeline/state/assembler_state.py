@@ -33,31 +33,33 @@ class AssemblerState(State):
             # build hashable string because dict is unhashable
             self.dao[str(entry)] = self.assembler.assemble(internal_entry)
 
+            # avoid exceptional shutdown
+            if curr_count % 10 == 0:
+                self.tear_down()
+
             # update todo entry list
             self.todo_entry_list.remove(entry)
         
         self.tear_down()
 
-    def next(self):
         if not self.todo_entry_list:
             self.logger.info('move assembler state to database state')        
-            return self.state_machine.database_state            
+            self.state_machine.set_value('transition_value', '')
         else:
             self.logger.error('run assembler state again (?)')        
-            return self.state_machine.spider_state
+            self.state_machine.set_value('transition_value', 'error')
 
     def set_up(self):
-        value = self.state_machine.memento.get_value()
-        value['state'] = 'assembler'
-        if value['todo_entry_list']:
-            self.todo_entry_list = list(value['todo_entry_list'])
+        self.state_machine.set_value('state', 'assembler')
+        todo_entry_list = self.state_machine.get_value('todo_entry_list')
+        all_entry_list = self.state_machine.get_value('all_entry_list')
+        if todo_entry_list:
+            self.todo_entry_list = list(todo_entry_list)
         else:
-            self.todo_entry_list = list(value['all_entry_list'])
-        self.dao_list = []
-        self.state_machine.memento.save()
+            self.todo_entry_list = list(all_entry_list)
+        self.state_machine.save_memento()
 
     def tear_down(self):
-        value = self.state_machine.memento.get_value()
-        value['todo_entry_list'] = list(self.todo_entry_list)
-        value['dao'] = self.dao
-        self.state_machine.memento.save()
+        self.state_machine.set_value('todo_entry_list', list(self.todo_entry_list))
+        self.state_machine.set_value('dao', self.dao)
+        self.state_machine.save_memento()

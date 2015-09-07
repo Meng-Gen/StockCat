@@ -9,5 +9,3 @@ class FinalState(State):
         self.logger = logging.getLogger(__name__)
         self.state_machine = state_machine
     
-    def next(self):
-        raise NotImplementedError, 'we cannot move to next at final state'

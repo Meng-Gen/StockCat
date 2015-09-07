@@ -11,17 +11,5 @@ class LoadState(State):
 
     def run(self):
         self.logger.info('run load state')
-        self.state_machine.memento.load()
-
-    def next(self):
-        value = self.state_machine.memento.get_value()
-        state = value['state']
-        if state in ['spider']:
-            self.logger.info('move load state to spider state')
-            return self.state_machine.spider_state
-        elif state in ['assembler', 'database']:
-            self.logger.info('move load state to assembler state')
-            return self.state_machine.assembler_state            
-        elif state in ['final']:
-            self.logger.info('move load state to final state')
-            return self.state_machine.final_state
+        state = self.state_machine.get_value('state')
+        self.state_machine.set_value('transition_value', state)

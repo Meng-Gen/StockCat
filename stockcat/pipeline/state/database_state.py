@@ -16,7 +16,7 @@ class DatabaseState(State):
         self.logger.info('run database state')
         self.set_up()
 
-        value = self.state_machine.memento.get_value()
+        dao = self.state_machine.get_value('dao')
 
         # prepare to calculate progress
         undone_entry_list = list(self.todo_entry_list)
@@ -28,34 +28,36 @@ class DatabaseState(State):
             self.logger.info('store: {0} (progress: {1}/{2})'.format(entry, curr_count, entry_count))
 
             # store
-            feed = self.feed_builder.build(value['dao'][str(entry)])
+            feed = self.feed_builder.build(dao[str(entry)])
             self.database.store(feed)                
 
             # update todo entry list
             self.todo_entry_list.remove(entry)
 
+            # avoid exceptional shutdown
+            if curr_count % 10 == 0:
+                self.tear_down()
+
         self.tear_down()
 
-    def next(self):
         if not self.todo_entry_list:
-            self.logger.info('move database_state to final_state')
-            return self.state_machine.final_state 
+            self.logger.info('move database state to final state')        
+            self.state_machine.set_value('transition_value', '')
         else:
             self.logger.error('run database state again (?)')        
-            return self.state_machine.database_state
+            self.state_machine.set_value('transition_value', 'error')
 
     def set_up(self):
-        value = self.state_machine.memento.get_value()
-        value['state'] = 'database'
-        if value['todo_entry_list']:
-            self.todo_entry_list = list(value['todo_entry_list'])
+        self.state_machine.set_value('state', 'database')
+        todo_entry_list = self.state_machine.get_value('todo_entry_list')
+        all_entry_list = self.state_machine.get_value('all_entry_list')
+        if todo_entry_list:
+            self.todo_entry_list = list(todo_entry_list)
         else:
-            self.todo_entry_list = list(value['all_entry_list'])
-        self.done_entry_list = []
-        self.state_machine.memento.save()
+            self.todo_entry_list = list(all_entry_list)
+        self.state_machine.save_memento()
 
     def tear_down(self):
-        value = self.state_machine.memento.get_value()
-        value['state'] = 'final'
-        value['todo_entry_list'] = list(self.todo_entry_list)
-        self.state_machine.memento.save()
+        self.state_machine.set_value('state', 'final')
+        self.state_machine.set_value('todo_entry_list', list(self.todo_entry_list))
+        self.state_machine.save_memento()

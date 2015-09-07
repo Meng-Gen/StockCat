@@ -17,6 +17,7 @@ class StateMachine():
 
         # memento for state machine
         self.memento = Memento(param['memento'])
+        self.memento.load()
 
         # prepare database
         self.spider = param['spider']
@@ -25,21 +26,49 @@ class StateMachine():
         self.database = Database()
 
         # all states are listed here
-        self.initial_state = InitialState(self)
-        self.load_state = LoadState(self)
-        self.spider_state = SpiderState(self)
-        self.assembler_state = AssemblerState(self)
-        self.database_state = DatabaseState(self)
-        self.final_state = FinalState(self)
+        self.state_map = {
+            'InitialState' : InitialState(self),
+            'LoadState' : LoadState(self),
+            'SpiderState' : SpiderState(self),
+            'AssemblerState' : AssemblerState(self),
+            'DatabaseState' : DatabaseState(self),
+            'FinalState' : FinalState(self),
+        }
 
-        # current state
-        self.curr_state = self.initial_state
+        # set transition table
+        self.transition_table = param['transition_table'] 
+
+        # set current state
+        self.curr_state = 'InitialState'
 
     def run(self):
-        while self.curr_state != self.final_state:
+        while self.curr_state != 'FinalState':
             try:
-                self.curr_state.run()
-                self.curr_state = self.curr_state.next()
+                self.state_map[self.curr_state].run()
+                self.curr_state = self.next() 
             except KeyboardInterrupt:
-                self.curr_state.tear_down()
+                self.state_map[self.curr_state].tear_down()
                 raise
+
+    def next(self):
+        transition_value = self.get_value('transition_value', '')
+        for entry in self.transition_table:
+            state, next_state, expected_value = entry
+            if (self.curr_state, transition_value) == (state, expected_value):
+                return next_state
+        self.logger.error('transition table is not completed')
+        return 'FinalState'
+
+    def get_value(self, key, default_value=None):
+        memento_value = self.memento.get_value()
+        if key in memento_value:
+            return memento_value[key]
+        else:
+            return default_value
+
+    def set_value(self, key, value):
+        memento_value = self.memento.get_value()
+        memento_value[key] = value
+
+    def save_memento(self):
+        self.memento.save()

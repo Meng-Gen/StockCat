@@ -15,8 +15,19 @@ class CapitalIncreaseHistoryPipeline(StateMachine):
             'default_value' : self.__get_default_value(),
             'filter_key_list' : [ 'state', 'all_entry_list', 'todo_entry_list', 'last_updated_date' ],
         }
+        transition_table = [
+            ('InitialState', 'LoadState', ''),
+            ('LoadState', 'SpiderState', 'spider'),
+            ('LoadState', 'AssemblerState', 'assembler'),
+            ('LoadState', 'AssemblerState', 'database'),
+            ('LoadState', 'FinalState', 'final'),
+            ('SpiderState', 'AssemblerState', ''), 
+            ('AssemblerState', 'DatabaseState', ''), 
+            ('DatabaseState', 'FinalState', ''), 
+        ]
         param = {
             'memento' : memento_param,
+            'transition_table' : transition_table,
             'spider' : CapitalIncreaseHistorySpider(), 
             'assembler' : CapitalIncreaseHistoryAssembler(), 
             'feed_builder' : CapitalIncreaseHistoryFeedBuilder(),
@@ -26,7 +37,7 @@ class CapitalIncreaseHistoryPipeline(StateMachine):
     def __get_default_value(self):
         stock_symbol_list = EntryListHelper().get_stock_symbol_list()
         # !!! DEBUG ONLY !!!
-        stock_symbol_list = stock_symbol_list[:1]
+        stock_symbol_list = stock_symbol_list[:15]
         return {
             'state' : 'spider',
             'all_entry_list' : list(stock_symbol_list),
