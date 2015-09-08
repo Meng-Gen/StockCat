@@ -26,12 +26,14 @@ class AssemblerState(State):
             curr_count += 1
             self.logger.info('assemble: {0} (progress: {1}/{2})'.format(entry, curr_count, entry_count))
 
-            # assemble 
-            internal_entry = dict(entry)
-            internal_entry['content'] = self.spider.get_crawled(internal_entry)
-
-            # build hashable string because dict is unhashable
-            self.dao[str(entry)] = self.assembler.assemble(internal_entry)
+            try:
+                # assemble 
+                internal_entry = dict(entry)
+                internal_entry['content'] = self.spider.get_crawled(internal_entry)
+                # build hashable string because dict is unhashable
+                self.dao[str(entry)] = self.assembler.assemble(internal_entry)
+            except Exception as e:
+                self.logger.error(e)
 
             # avoid exceptional shutdown
             if curr_count % 10 == 0:

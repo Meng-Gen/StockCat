@@ -32,3 +32,5 @@ class ContentScreener():
                 raise NoRecordAssembleError(param)
             if u'(%s)個股代碼錯誤' % (param['stock_symbol']) in decoded:
                 raise NoRecordAssembleError(param)
+        if u'系統通告' in decoded:
+            raise NoRecordAssembleError(param)
