@@ -16,8 +16,19 @@ class CashFlowPipeline(StateMachine):
             'default_value' : self.__get_default_value(),
             'filter_key_list' : [ 'state', 'all_entry_list', 'todo_entry_list', 'last_updated_date' ],
         }
+        transition_table = [
+            ('InitialState', 'LoadState', ''),
+            ('LoadState', 'SpiderState', 'spider'),
+            ('LoadState', 'AssemblerState', 'assembler'),
+            ('LoadState', 'AssemblerState', 'database'),
+            ('LoadState', 'FinalState', 'final'),
+            ('SpiderState', 'AssemblerState', ''), 
+            ('AssemblerState', 'DatabaseState', ''), 
+            ('DatabaseState', 'FinalState', ''), 
+        ]
         param = {
             'memento' : memento_param,
+            'transition_table' : transition_table,
             'spider' : CashFlowSpider(), 
             'assembler' : CashFlowAssembler(), 
             'feed_builder' : CashFlowFeedBuilder(),
@@ -28,8 +39,8 @@ class CashFlowPipeline(StateMachine):
         all_entry_list = self.helper.get_all_financial_statement_entry_list()
         todo_entry_list = self.helper.get_legacy_financial_statement_entry_list()
         # !!! DEBUG ONLY !!!
-        all_entry_list = all_entry_list[67:68]
-        todo_entry_list = todo_entry_list[67:68]
+        #all_entry_list = all_entry_list[67:68]
+        #todo_entry_list = todo_entry_list[67:68]
         return {
             'state' : 'spider',
             'all_entry_list' : list(all_entry_list),
